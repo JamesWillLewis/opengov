@@ -16,11 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration("test-servlet-context.xml")
+@ContextConfiguration("/test-servlet-context.xml")
 public class ReportControllerTest {
 
 	@Autowired
@@ -36,16 +34,19 @@ public class ReportControllerTest {
 
 	@Test
 	public void submitReport() throws Exception {
-		
-		
-		System.out.println(this.mockMvc
-				.perform(
-						get("/rest/bob")
-								.accept(MediaType
-										.parseMediaType("application/xml;charset=UTF-8")))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/xml;charset=UTF-8"))
-				.andReturn().getResponse().getContentAsString());
+
+		System.out
+				.println(this.mockMvc
+						.perform(
+								get("/rest/bob")
+										.accept(MediaType
+												.parseMediaType("application/xml;charset=UTF-8")))
+						.andExpect(status().isOk())
+						.andExpect(
+								content().contentType(
+										"application/xml;charset=UTF-8"))
+						.andReturn().getResponse().getContentAsString());
+
 	}
 
 }
