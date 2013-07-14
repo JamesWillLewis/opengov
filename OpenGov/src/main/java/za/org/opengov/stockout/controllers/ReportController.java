@@ -19,5 +19,13 @@ public class ReportController {
 		
 		return response;
 	}
+	
+	@RequestMapping(value = "{report_id}", method = RequestMethod.POST)
+	public @ResponseBody String getReport(SubmitReportRequestModel submitReportModel) {
+		String response = "";
+
+		
+		return response;
+	}
 
 }
