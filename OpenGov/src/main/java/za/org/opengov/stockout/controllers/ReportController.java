@@ -20,9 +20,9 @@ public class ReportController {
 		return response;
 	}
 	
-	@RequestMapping(value = "{report_id}", method = RequestMethod.POST)
-	public @ResponseBody String getReport(SubmitReportRequestModel submitReportModel) {
-		String response = "";
+	@RequestMapping(value = "{reportID}", method = RequestMethod.GET)
+	public @ResponseBody String getReport(@PathVariable String reportID) {
+		String response = String.format("[Default Response for report ID %S ]", reportID);
 
 		
 		return response;
