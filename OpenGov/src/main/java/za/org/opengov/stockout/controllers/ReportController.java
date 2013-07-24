@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import za.org.opengov.stockout.models.SubmitReportRequestModel;
+import za.org.opengov.stockout.models.rest.SubmitReportRequestModel;
 
 @Controller
 @RequestMapping("stockout/report")
@@ -16,7 +16,6 @@ public class ReportController {
 	public @ResponseBody String submitReport(SubmitReportRequestModel submitReportModel) {
 		String response = "";
 
-		
 		return response;
 	}
 	

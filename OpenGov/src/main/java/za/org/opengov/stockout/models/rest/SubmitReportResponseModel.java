@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.models;
+package za.org.opengov.stockout.models.rest;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
