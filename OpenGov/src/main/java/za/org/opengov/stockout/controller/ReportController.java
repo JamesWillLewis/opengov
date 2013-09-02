@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.controllers;
+package za.org.opengov.stockout.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import za.org.opengov.stockout.models.rest.SubmitReportRequestModel;
+import za.org.opengov.stockout.model.request.SubmitReportRequestModel;
 
 @Controller
 @RequestMapping("stockout/report")

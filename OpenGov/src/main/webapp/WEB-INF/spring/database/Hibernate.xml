@@ -14,12 +14,13 @@
        <props>
          <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
          <prop key="hibernate.show_sql">true</prop>
+         <prop key="hibernate.hbm2ddl.auto">create</prop>
        </props>
     </property>
  
     <property name="annotatedClasses">
 		<list>
-			<!-- value>za.org.opengov.stockout.models.StockoutReport</value -->
+			<value>za.org.opengov.stockout.model.entity.TestEntity</value>
 		</list>
     </property>
  

@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.controllers;
+package za.org.opengov.stockout.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
