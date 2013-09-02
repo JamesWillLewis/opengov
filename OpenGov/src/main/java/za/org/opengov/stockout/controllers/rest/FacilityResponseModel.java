@@ -1,6 +1,4 @@
-package za.org.opengov.stockout.model.request;
-
-
+package za.org.opengov.stockout.controllers.rest;
 
 
 public class FacilityResponseModel {

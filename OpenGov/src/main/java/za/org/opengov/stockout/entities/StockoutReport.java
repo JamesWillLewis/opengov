@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.model.entity;
+package za.org.opengov.stockout.entities;
 
 import javax.persistence.Entity;
 

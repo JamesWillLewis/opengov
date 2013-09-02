@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.controller;
+package za.org.opengov.stockout.controllers.web;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import za.org.opengov.stockout.model.request.FacilityResponseModel;
-import za.org.opengov.stockout.model.request.SubmitReportRequestModel;
+import za.org.opengov.stockout.controllers.rest.FacilityResponseModel;
+import za.org.opengov.stockout.controllers.rest.SubmitReportRequestModel;
 
 @Controller
 @RequestMapping("stockout/facility")
