@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import za.org.opengov.ussd.services.UssdService;
 
-@Controller
-@RequestMapping("ussd")
 /**
  * 
  * This can be easily tested using curl on the command line:
@@ -27,6 +25,8 @@ import za.org.opengov.ussd.services.UssdService;
  * @author Sven Siedentopf
  *
  */
+@Controller
+@RequestMapping("ussd")
 public class UssdController {
 
 	/**
@@ -42,13 +42,13 @@ public class UssdController {
 	 * 
 	 * The address to call this service would be:
 	 * 
-	 * [host-address]:8080/ussd/{service name}
+	 * [host-address]:8080/opengov/ussd/{service name}
 	 * 
 	 * For example
 	 * 
 	 * http://localhost:8080/opengov/ussd/stockout
 	 * 
-	 * Be sure to include neccessary headers. 
+	 * Be sure to include necessary headers. 
 	 * 
 	 * @param ussdRequest
 	 * @return
