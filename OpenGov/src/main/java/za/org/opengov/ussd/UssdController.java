@@ -53,7 +53,7 @@ public class UssdController {
 	 */
 	@RequestMapping(value = "{ussdServiceTag}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public @ResponseBody
-	UssdResponse getStockout(
+	UssdResponse callService(
 			@RequestHeader(value = "msisdn") String msisdn,
 			@RequestHeader(value = "provider") String provider,
 			@RequestHeader(value = "ussdSessionId") String ussdSessionID,
