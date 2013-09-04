@@ -1,4 +1,4 @@
-package za.org.opengov.ussd;
+package za.org.opengov.ussd.channelmobileapi;
 
 import java.util.Map;
 
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import za.org.opengov.ussd.services.UssdService;
 
 @Controller
 @RequestMapping("ussd")

@@ -1,10 +1,11 @@
-package za.org.opengov.ussd.services;
+package za.org.opengov.ussd.services.stockout;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import za.org.opengov.ussd.UssdRequest;
-import za.org.opengov.ussd.UssdResponse;
+import za.org.opengov.ussd.channelmobileapi.UssdRequest;
+import za.org.opengov.ussd.channelmobileapi.UssdResponse;
 
 /**
  * Take note:

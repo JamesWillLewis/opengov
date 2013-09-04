@@ -1,8 +1,8 @@
-package za.org.opengov.ussd.services;
+package za.org.opengov.ussd.services.stockout;
 
 import org.springframework.stereotype.Repository;
 
-import za.org.opengov.ussd.UssdDao;
+import za.org.opengov.ussd.services.UssdDao;
 
 /**
  * Data for the service will be found here

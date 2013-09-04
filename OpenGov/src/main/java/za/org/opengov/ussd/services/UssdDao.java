@@ -1,4 +1,4 @@
-package za.org.opengov.ussd;
+package za.org.opengov.ussd.services;
 
 
 public interface UssdDao {
