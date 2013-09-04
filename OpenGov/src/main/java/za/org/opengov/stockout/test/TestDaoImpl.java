@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.test.dao;
+package za.org.opengov.stockout.test;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import org.hibernate.ejb.criteria.CriteriaBuilderImpl;
 import org.springframework.stereotype.Repository;
 
 import za.org.opengov.common.AbstractDaoImpl;
-import za.org.opengov.stockout.test.model.TestEntity;
 
 @Repository("testRepo")
 public class TestDaoImpl extends AbstractDaoImpl<TestEntity, Long> implements TestDao {
@@ -18,7 +17,7 @@ public class TestDaoImpl extends AbstractDaoImpl<TestEntity, Long> implements Te
 
 	@Override
 	public List<TestEntity> findAllTests() {
-		return findByCriteria(null);
+		return findAll();
 	}
 
 

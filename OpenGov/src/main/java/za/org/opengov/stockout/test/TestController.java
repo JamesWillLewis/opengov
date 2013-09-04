@@ -1,12 +1,13 @@
-package za.org.opengov.stockout.test.controller;
+package za.org.opengov.stockout.test;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import za.org.opengov.stockout.test.model.TestEntity;
-import za.org.opengov.stockout.test.service.TestService;
 
 
 @Controller
@@ -17,14 +18,9 @@ public class TestController {
 	private TestService testService;
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String getTestList()
+	public @ResponseBody List<TestEntity> getTestList()
 	{
-		String response = "";
-		for(TestEntity entity: testService.getAllTests()){
-			response += entity.getName() + "\n";
-		}
-		
-		return response;
+		return testService.getAllTests();
 	}
 	
 }

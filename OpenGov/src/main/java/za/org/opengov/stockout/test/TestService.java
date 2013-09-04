@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.test.service;
+package za.org.opengov.stockout.test;
 
 import java.util.List;
 
@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import za.org.opengov.stockout.test.dao.TestDaoImpl;
-import za.org.opengov.stockout.test.model.TestEntity;
 
 
 @Service("testService")

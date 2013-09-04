@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.stockoutreport;
+package za.org.opengov.stockout.supplydepot;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,10 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="SOWS_STOCKOUT_REPORT")
-public class StockoutReport {
+@Table(name="SOWS_SUPPLY_DEPOT")
+public class SupplyDepot {
 
 	private Long uid;
 

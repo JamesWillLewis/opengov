@@ -18,15 +18,21 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 			</props>
 		</property>
-
-		<property name="annotatedClasses">
+		
+		<property name="packagesToScan">
 			<list>
-				<value>za.org.opengov.stockout.test.model.TestEntity</value>
+				<value>za.org.opengov.**.*</value>
 			</list>
 		</property>
+
+		<!-- property name="annotatedClasses">
+			<list>
+	
+			</list>
+		</property> -->
 
 	</bean>
 

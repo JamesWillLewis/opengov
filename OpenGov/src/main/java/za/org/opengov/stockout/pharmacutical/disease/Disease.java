@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.stockoutreport;
+package za.org.opengov.stockout.pharmacutical.disease;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,10 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="SOWS_STOCKOUT_REPORT")
-public class StockoutReport {
+@Table(name="SOWS_PHARM_DISEASE")
+public class Disease {
 
 	private Long uid;
 

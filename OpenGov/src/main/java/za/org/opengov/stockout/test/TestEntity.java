@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.test.model;
+package za.org.opengov.stockout.test;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +18,7 @@ public class TestEntity {
 	private Integer age;
 	private String address;
 	
-	public TestEntity(Long id, String name, String surname, Integer age) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.age = age;
+	public TestEntity() {
 	}
 
 	@Id
