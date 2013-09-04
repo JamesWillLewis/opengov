@@ -28,12 +28,6 @@
 			</list>
 		</property>
 
-		<!-- property name="annotatedClasses">
-			<list>
-	
-			</list>
-		</property> -->
-
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />

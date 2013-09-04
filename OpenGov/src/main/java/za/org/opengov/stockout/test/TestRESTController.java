@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-@RequestMapping("stockout/test")
-public class TestController {
+@RequestMapping("stockout/rest/test")
+public class TestRESTController {
 	
 	@Autowired
 	private TestService testService;
