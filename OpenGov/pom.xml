@@ -163,7 +163,7 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- AOP dependency -->
+		<!-- library dependency for transaction management aspect -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>

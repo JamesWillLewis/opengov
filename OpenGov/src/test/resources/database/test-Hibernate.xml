@@ -20,7 +20,7 @@
  
     <property name="annotatedClasses">
 		<list>
-			<value>za.org.opengov.stockout.test.TestEntity</value>
+			<value>za.org.opengov.stockout.domain.test.TestEntity</value>
 		</list>
     </property>
  
