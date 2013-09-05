@@ -12,6 +12,11 @@ import javax.persistence.Table;
 public class SupplyDepot {
 
 	private Long uid;
+	private String name;
+	private String location;
+	
+	public SupplyDepot() {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +28,24 @@ public class SupplyDepot {
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}
+
+	@Column(name = "NAME")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "LOCATION")
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	
 }

@@ -12,6 +12,10 @@ import javax.persistence.Table;
 public class Supplier {
 	
 	private Long uid;
+	private String companyName;
+	
+	public Supplier() {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +26,14 @@ public class Supplier {
 
 	public void setUid(Long uid) {
 		this.uid = uid;
+	}
+
+	@Column(name="COMPANY_NAME")
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 }

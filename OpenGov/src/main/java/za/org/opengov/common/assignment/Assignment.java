@@ -13,16 +13,18 @@ import za.org.opengov.common.issue.Issue;
 import za.org.opengov.common.staffmember.StaffMember;
 
 @Entity
-@Table(name="OPENGOV_ASSIGNMENT")
+@Table(name = "OPENGOV_ASSIGNMENT")
 public class Assignment {
 
 	private Long uid;
 	private Issue issue;
 	private StaffMember staffMember;
 	
-	
+	public Assignment() {
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
 	public Long getUid() {
 		return uid;
@@ -33,7 +35,7 @@ public class Assignment {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="FK_ISSUE")
+	@JoinColumn(name = "FK_ISSUE")
 	public Issue getIssue() {
 		return issue;
 	}
@@ -43,7 +45,7 @@ public class Assignment {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="FK_STAFF_MEMBER")
+	@JoinColumn(name = "FK_STAFF_MEMBER")
 	public StaffMember getStaffMember() {
 		return staffMember;
 	}
@@ -51,7 +53,5 @@ public class Assignment {
 	public void setStaffMember(StaffMember staffMember) {
 		this.staffMember = staffMember;
 	}
-	
-	
-	
+
 }

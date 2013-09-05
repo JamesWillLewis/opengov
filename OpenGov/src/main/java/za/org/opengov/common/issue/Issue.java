@@ -24,6 +24,9 @@ public class Issue {
 	private String details;
 	private boolean requireFollowUp;
 
+	public Issue() {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
@@ -81,7 +84,7 @@ public class Issue {
 		this.priority = priority;
 	}
 
-	@Column(name = "DETAILS", length=512)
+	@Column(name = "DETAILS", length = 512)
 	public String getDetails() {
 		return details;
 	}
@@ -90,7 +93,7 @@ public class Issue {
 		this.details = details;
 	}
 
-	@Column(name="REQUIRE_FOLLOWUP")
+	@Column(name = "REQUIRE_FOLLOWUP")
 	public boolean getRequireFollowUp() {
 		return requireFollowUp;
 	}
@@ -98,7 +101,5 @@ public class Issue {
 	public void setRequireFollowUp(boolean requireFollowUp) {
 		this.requireFollowUp = requireFollowUp;
 	}
-	
-	
 
 }

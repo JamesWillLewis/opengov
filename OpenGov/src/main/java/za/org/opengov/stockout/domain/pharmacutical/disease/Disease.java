@@ -12,6 +12,11 @@ import javax.persistence.Table;
 public class Disease {
 
 	private Long uid;
+	private String name;
+	
+	
+	public Disease() {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +27,14 @@ public class Disease {
 
 	public void setUid(Long uid) {
 		this.uid = uid;
+	}
+
+	@Column(name="NAME")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
