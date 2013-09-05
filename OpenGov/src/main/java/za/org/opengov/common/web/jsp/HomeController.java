@@ -1,4 +1,4 @@
-package za.org.opengov.common;
+package za.org.opengov.common.web.jsp;
 
 import java.text.DateFormat;
 import java.util.Date;

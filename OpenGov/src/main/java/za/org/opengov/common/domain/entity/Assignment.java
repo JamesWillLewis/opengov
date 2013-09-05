@@ -1,4 +1,4 @@
-package za.org.opengov.common.assignment;
+package za.org.opengov.common.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import za.org.opengov.common.issue.Issue;
-import za.org.opengov.common.staffmember.StaffMember;
 
 @Entity
 @Table(name = "OPENGOV_ASSIGNMENT")

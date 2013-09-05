@@ -1,4 +1,4 @@
-package za.org.opengov.common;
+package za.org.opengov.common.domain.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import za.org.opengov.common.domain.dao.AbstractDao;
 
 
 public abstract class AbstractDaoImpl<E, I extends Serializable> implements AbstractDao<E,I> {

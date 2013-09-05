@@ -6,7 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.ejb.criteria.CriteriaBuilderImpl;
 import org.springframework.stereotype.Repository;
 
-import za.org.opengov.common.AbstractDaoImpl;
+import za.org.opengov.common.domain.dao.impl.AbstractDaoImpl;
 import za.org.opengov.stockout.domain.dao.TestDao;
 import za.org.opengov.stockout.domain.entity.TestEntity;
 

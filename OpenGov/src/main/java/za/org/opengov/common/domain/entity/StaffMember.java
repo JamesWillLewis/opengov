@@ -1,7 +1,9 @@
-package za.org.opengov.common.staffmember;
+package za.org.opengov.common.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,15 +11,26 @@ import javax.persistence.Table;
 @Table(name="OPENGOV_STAFF_MEMBER")
 public class StaffMember {
 	
+	private Long uid;
 	private String staffCode;
 	private String name;
 	private String surname;
 	
 	public StaffMember() {
 	}
-
+	
 	@Id
-	@Column(name="STAFF_CODE", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "UID", unique = true, nullable = false)
+	public Long getUid() {
+		return uid;
+	}
+	
+	public void setUid(Long uid) {
+		this.uid = uid;
+	}
+
+	@Column(name="STAFF_CODE")
 	public String getStaffCode() {
 		return staffCode;
 	}

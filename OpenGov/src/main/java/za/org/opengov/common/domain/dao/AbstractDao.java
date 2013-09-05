@@ -1,4 +1,4 @@
-package za.org.opengov.common;
+package za.org.opengov.common.domain.dao;
 
 import java.io.Serializable;
 import java.util.List;
