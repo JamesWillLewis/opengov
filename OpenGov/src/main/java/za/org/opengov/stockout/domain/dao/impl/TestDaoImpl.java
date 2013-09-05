@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.domain.dao;
+package za.org.opengov.stockout.domain.dao.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.hibernate.ejb.criteria.CriteriaBuilderImpl;
 import org.springframework.stereotype.Repository;
 
 import za.org.opengov.common.AbstractDaoImpl;
+import za.org.opengov.stockout.domain.dao.TestDao;
 import za.org.opengov.stockout.domain.entity.TestEntity;
 
 @Repository("testRepo")

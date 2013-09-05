@@ -17,8 +17,7 @@ public class UssdStockoutDao implements UssdDao {
 
 	@Override
 	public String getMenu(int id) {
-		
-		return null;
+		return "The request was succesfully delegated to the stockout service with menu chosen: " + id;
 	}
 	
 }
