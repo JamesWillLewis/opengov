@@ -1,5 +1,9 @@
 package za.org.opengov.ussd.service.stockout;
 
+import java.util.Properties;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import za.org.opengov.ussd.service.UssdDao;
@@ -14,10 +18,13 @@ import za.org.opengov.ussd.service.UssdDao;
  */
 @Repository("ussdStockoutDao")
 public class UssdStockoutDao implements UssdDao {
+	
+	@Resource(name="ussdStockoutEN")
+	private Properties menuData;
 
 	@Override
 	public String getMenu(int id) {
-		return "The request was succesfully delegated to the stockout service with menu chosen: " + id;
+		return menuData.getProperty("ussd.stockout." + id);
 	}
 	
 }
