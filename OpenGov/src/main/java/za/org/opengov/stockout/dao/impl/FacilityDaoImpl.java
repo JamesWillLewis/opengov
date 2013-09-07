@@ -7,7 +7,7 @@ import za.org.opengov.stockout.dao.FacilityDao;
 import za.org.opengov.stockout.entity.Facility;
 
 @Repository("facilityDao")
-public class FacilityDaoImpl extends AbstractDaoImpl<Facility, Long> implements FacilityDao {
+public class FacilityDaoImpl extends AbstractDaoImpl<Facility, String> implements FacilityDao {
 
 	protected FacilityDaoImpl() {
 		super(Facility.class);

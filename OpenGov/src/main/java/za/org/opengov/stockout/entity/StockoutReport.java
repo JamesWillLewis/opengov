@@ -29,7 +29,7 @@ public class StockoutReport {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "UID", unique = true, nullable = false)
 	public Long getUid() {
 		return uid;

@@ -7,7 +7,7 @@ import za.org.opengov.stockout.dao.medical.ProductDao;
 import za.org.opengov.stockout.entity.medical.Product;
 
 @Repository("productDao")
-public class ProductDaoImpl extends AbstractDaoImpl<Product, Long> implements
+public class ProductDaoImpl extends AbstractDaoImpl<Product, String> implements
 		ProductDao {
 
 	protected ProductDaoImpl() {

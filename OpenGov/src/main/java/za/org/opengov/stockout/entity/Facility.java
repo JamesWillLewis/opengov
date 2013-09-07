@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "SOWS_FACILITY")
 public class Facility {
 
-	private Long uid;
+	private String uid;
 	private SupplyDepot supplyDepot;
 	private String officialDOHName;
 	private String localName;
@@ -28,13 +28,12 @@ public class Facility {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
-	public Long getUid() {
+	public String getUid() {
 		return uid;
 	}
 
-	public void setUid(Long uid) {
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 

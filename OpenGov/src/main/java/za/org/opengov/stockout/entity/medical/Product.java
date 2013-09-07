@@ -16,13 +16,12 @@ import javax.persistence.Table;
 @Table(name="SOWS_PHARM_PRODUCT")
 public class Product {
 	
-	private Long uid;
+	private String uid;
 	private Medicine medicine;
 	private Supplier supplier;
 	private Dosage dosage;
 	private int volume;
 	private String name;
-	private String code;
 	private double priceExclVAT;
 	private double priceInclVAT;
 	private Long numberInStock;
@@ -32,13 +31,12 @@ public class Product {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
-	public Long getUid() {
+	public String getUid() {
 		return uid;
 	}
 
-	public void setUid(Long uid) {
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 
@@ -88,15 +86,6 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Column(name="CODE")
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	@Column(name="PRICE_EXCL_VAT")
