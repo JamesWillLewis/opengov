@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import za.org.opengov.stockout.service.StockoutReportService;
 import za.org.opengov.ussd.controller.UssdRequest;
 import za.org.opengov.ussd.controller.UssdResponse;
 import za.org.opengov.ussd.controller.cm.CMUssdRequest;
@@ -19,6 +20,9 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 	@Autowired
 	private UssdStockoutDao stockoutDao;
+	
+	@Autowired 
+	private StockoutReportService stockoutReportService;
 
 	@Override
 	public CMUssdResponse createUssdResponse(CMUssdRequest request) {
