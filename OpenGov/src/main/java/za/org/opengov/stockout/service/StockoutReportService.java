@@ -1,7 +1,12 @@
 package za.org.opengov.stockout.service;
 
+import java.util.List;
+
+import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.Subject;
+import za.org.opengov.stockout.entity.medical.Disease;
+import za.org.opengov.stockout.entity.medical.Product;
 
 public interface StockoutReportService {
 
@@ -29,5 +34,18 @@ public interface StockoutReportService {
 			Subject reporter, Subject reportee, String cause,
 			boolean reportedToDOH, boolean resolved)
 			throws IllegalArgumentException;
+	
+	//public boolean submitStockoutReportForProduct();
+	
+	
+	//public List<Disease> getListOfDiseases();
+	
+	//public List<Product> getRecentlyReportedStockoutsForDisease();
+	
+	//public List<Product> getRecentlyReportedStockouts();
+	
+
+	
+	
 
 }
