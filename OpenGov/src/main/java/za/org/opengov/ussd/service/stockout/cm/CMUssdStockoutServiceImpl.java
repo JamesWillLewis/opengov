@@ -13,6 +13,7 @@ import za.org.opengov.ussd.controller.UssdResponse;
 import za.org.opengov.ussd.controller.cm.CMUssdRequest;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 import za.org.opengov.ussd.service.stockout.UssdStockoutDao;
+import za.org.opengov.ussd.util.KeyValueStore;
 
 /**
  * Take note: When a REST call is made, the request will be delegated to the
@@ -20,6 +21,9 @@ import za.org.opengov.ussd.service.stockout.UssdStockoutDao;
  */
 @Service("cm.stockout")
 public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
+	
+	@Autowired
+	private KeyValueStore keyValueStore;
 
 	@Autowired
 	private UssdStockoutDao stockoutDao;

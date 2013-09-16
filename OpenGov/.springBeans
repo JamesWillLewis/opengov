@@ -10,6 +10,8 @@
 		<config>src/main/webapp/WEB-INF/spring/database/DataSource.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/database/Hibernate.xml</config>
 		<config>src/test/resources/test-dao-context.xml</config>
+		<config>src/test/resources/database/test-DataSource.xml</config>
+		<config>src/test/resources/database/test-Hibernate.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
