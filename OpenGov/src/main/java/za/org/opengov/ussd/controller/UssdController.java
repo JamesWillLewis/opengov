@@ -2,6 +2,8 @@ package za.org.opengov.ussd.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import za.org.opengov.ussd.service.UssdService;
@@ -23,8 +25,8 @@ public abstract class UssdController <REQ extends UssdRequest, RES extends UssdR
 	private Map<String, UssdService<REQ, RES>> ussdServices;
 
 	protected RES delegateToServices(String serviceTag,
-			REQ ussdRequest) {
-		return ussdServices.get(USSD_PROTOCOL_PREFIX + '.' + serviceTag).createUssdResponse(ussdRequest);
+			REQ ussdRequest,HttpSession session) {
+		return ussdServices.get(USSD_PROTOCOL_PREFIX + '.' + serviceTag).createUssdResponse(ussdRequest,session);
 	}
 
 }

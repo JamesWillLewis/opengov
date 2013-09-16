@@ -7,5 +7,4 @@
 
 	<util:properties id="ussdStockoutEN"
 		location="classpath:/locale/ussd_stockout_EN.properties" />
-
 </beans>
