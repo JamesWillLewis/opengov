@@ -14,4 +14,6 @@ public interface FacilityService {
 	 */
 	public Facility validateFacilityCode(String facilityCode);
 	
+	public void saveFacility(Facility facility);
+	
 }
