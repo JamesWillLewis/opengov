@@ -1,5 +1,8 @@
 package za.org.opengov.ussd.service;
 
+
+import javax.servlet.http.HttpSession;
+
 import za.org.opengov.ussd.controller.UssdRequest;
 import za.org.opengov.ussd.controller.UssdResponse;
 

@@ -21,10 +21,13 @@ public class UssdStockoutDao implements UssdDao {
 	
 	@Resource(name="ussdStockoutEN")
 	private Properties menuData;
-
+	
+	
 	@Override
-	public String getMenu(int id) {
-		return menuData.getProperty("ussd.stockout." + id);
+	public String getMenu(int menuId) {
+		return menuData.getProperty("ussd.stockout." + menuId);	
 	}
+
+
 	
 }

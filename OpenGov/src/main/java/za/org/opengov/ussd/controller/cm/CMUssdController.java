@@ -1,15 +1,22 @@
 package za.org.opengov.ussd.controller.cm;
 
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import za.org.opengov.ussd.controller.UssdController;
-
+import za.org.opengov.ussd.util.KeyValueStore;
 /**
  * 
  * This can be easily tested using curl on the command line:
@@ -24,12 +31,12 @@ import za.org.opengov.ussd.controller.UssdController;
 @Controller
 @RequestMapping("ussd/cm")
 public class CMUssdController extends UssdController<CMUssdRequest, CMUssdResponse>{
-
-
+	
+	
 	public CMUssdController() {
 		super("cm");
 	}
-
+	
 	/**
 	 * This would be called via a USSD gateway, as an HTTP message, with a GET
 	 * method, and various headers with values.
@@ -47,6 +54,7 @@ public class CMUssdController extends UssdController<CMUssdRequest, CMUssdRespon
 	 * @param ussdRequest
 	 * @return
 	 */
+	
 	@RequestMapping(value = "{ussdServiceTag}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public @ResponseBody
 	CMUssdResponse callService(
@@ -65,15 +73,14 @@ public class CMUssdController extends UssdController<CMUssdRequest, CMUssdRespon
 		System.out.println("Request String: " + request);
 		System.out.println("Request ID: " + requestID);
 		
+		
 		//construct request object from HTTP headers
 		CMUssdRequest ussdRequest = new CMUssdRequest(msisdn, provider, ussdSessionID, request, requestID);
 
 		//delegates to service tier
 		CMUssdResponse response = delegateToServices(ussdServiceTag, ussdRequest);
-
+		
 		return response;
 	}
-	
-
 
 }

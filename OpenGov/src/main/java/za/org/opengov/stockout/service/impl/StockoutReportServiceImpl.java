@@ -1,5 +1,12 @@
 package za.org.opengov.stockout.service.impl;
 
+import java.util.List;
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.ejb.criteria.CriteriaBuilderImpl;
+import org.hibernate.internal.CriteriaImpl.CriterionEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +76,22 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 
 		return submitStockoutReport(stockoutReport);
 	}
+	
+	@Override
+	public List<StockoutReport> getRecentlyReportedStockouts(int limit) {		
+		
+		List<StockoutReport> recentReports = 
+				stockoutReportDao.findMostRecentStockouts(limit);
+
+		return recentReports;
+	}
+
+	@Override
+	public List<StockoutReport> getRecentlyReportedStockoutsForDisease() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 
 }

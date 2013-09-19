@@ -1,5 +1,9 @@
 package za.org.opengov.stockout.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import za.org.opengov.common.dao.impl.AbstractDaoImpl;
@@ -11,6 +15,17 @@ public class StockoutReportDaoImpl extends AbstractDaoImpl<StockoutReport, Long>
 
 	protected StockoutReportDaoImpl() {
 		super(StockoutReport.class);
+	}
+
+	@Override
+	public List<StockoutReport> findMostRecentStockouts(int limit) {
+		
+		Criteria criteria = getCurrentSession().createCriteria(StockoutReport.class);
+		criteria.createAlias("issue", "issue");
+		criteria.addOrder(Order.desc("issue.startTimestamp"));
+		criteria.setMaxResults(limit);
+		
+		return criteria.list();
 	}
 
 }

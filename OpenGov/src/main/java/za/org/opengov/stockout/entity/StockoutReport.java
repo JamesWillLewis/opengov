@@ -7,8 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import za.org.opengov.common.entity.Issue;
 import za.org.opengov.stockout.entity.medical.Product;
 
 
@@ -17,6 +19,7 @@ import za.org.opengov.stockout.entity.medical.Product;
 public class StockoutReport {
 
 	private Long uid;
+	private Issue issue;
 	private Product product;
 	private Facility facility;
 	private Subject reporter;
@@ -37,6 +40,16 @@ public class StockoutReport {
 
 	public void setUid(Long uid) {
 		this.uid = uid;
+	}
+	
+	@OneToOne
+	@JoinColumn(name="FK_ISSUE")
+	public Issue getIssue() {
+		return issue;
+	}
+	
+	public void setIssue(Issue issue) {
+		this.issue = issue;
 	}
 
 	@ManyToOne

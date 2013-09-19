@@ -32,6 +32,7 @@ public class CMUssdResponse implements UssdResponse {
 	public void setRequestID(String requestID) {
 		this.requestID = requestID;
 	}
+	
 
 	
 }
