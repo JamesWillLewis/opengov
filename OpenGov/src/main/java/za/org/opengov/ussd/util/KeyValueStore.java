@@ -24,5 +24,9 @@ public class KeyValueStore {
 	public Object get(String key){
 		return concurrentKeyValueStore.get(key);
 	}
+	
+	public Object remove(String key){
+		return concurrentKeyValueStore.remove(key);
+	}
 
 }

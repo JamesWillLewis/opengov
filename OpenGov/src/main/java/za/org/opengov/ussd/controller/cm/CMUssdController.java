@@ -30,7 +30,6 @@ import za.org.opengov.ussd.util.KeyValueStore;
  */
 @Controller
 @RequestMapping("ussd/cm")
-@SessionAttributes("clinicCode")
 public class CMUssdController extends UssdController<CMUssdRequest, CMUssdResponse>{
 	
 	
@@ -64,7 +63,7 @@ public class CMUssdController extends UssdController<CMUssdRequest, CMUssdRespon
 			@RequestHeader(value = "ussdSessionId") String ussdSessionID,
 			@RequestHeader(value = "request") String request,
 			@RequestHeader(value = "requestid") String requestID,
-			@PathVariable String ussdServiceTag,HttpSession session) {
+			@PathVariable String ussdServiceTag) {
 
 		//just for testing
 		System.out.println("Invoking USSD service: " + ussdServiceTag);
@@ -79,7 +78,7 @@ public class CMUssdController extends UssdController<CMUssdRequest, CMUssdRespon
 		CMUssdRequest ussdRequest = new CMUssdRequest(msisdn, provider, ussdSessionID, request, requestID);
 
 		//delegates to service tier
-		CMUssdResponse response = delegateToServices(ussdServiceTag, ussdRequest,session);
+		CMUssdResponse response = delegateToServices(ussdServiceTag, ussdRequest);
 		
 		return response;
 	}

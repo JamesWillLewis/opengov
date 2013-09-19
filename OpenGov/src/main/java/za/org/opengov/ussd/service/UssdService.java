@@ -8,7 +8,7 @@ import za.org.opengov.ussd.controller.UssdResponse;
 
 public interface UssdService<REQ extends UssdRequest, RES extends UssdResponse> {
 
-	public RES createUssdResponse(REQ request,HttpSession session);
+	public RES createUssdResponse(REQ request);
 
 
 }

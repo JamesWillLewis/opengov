@@ -25,8 +25,8 @@ public abstract class UssdController <REQ extends UssdRequest, RES extends UssdR
 	private Map<String, UssdService<REQ, RES>> ussdServices;
 
 	protected RES delegateToServices(String serviceTag,
-			REQ ussdRequest,HttpSession session) {
-		return ussdServices.get(USSD_PROTOCOL_PREFIX + '.' + serviceTag).createUssdResponse(ussdRequest,session);
+			REQ ussdRequest) {
+		return ussdServices.get(USSD_PROTOCOL_PREFIX + '.' + serviceTag).createUssdResponse(ussdRequest);
 	}
 
 }
