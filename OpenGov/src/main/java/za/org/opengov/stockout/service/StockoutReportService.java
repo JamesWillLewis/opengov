@@ -35,14 +35,13 @@ public interface StockoutReportService {
 			boolean reportedToDOH, boolean resolved)
 			throws IllegalArgumentException;
 	
-
+	
 	
 	public List<StockoutReport> getRecentlyReportedStockoutsForDisease();
 	
 	public List<StockoutReport> getRecentlyReportedStockouts(int limit);
 	
-	
-	
+	public List<StockoutReport> getStockoutReport(String productCode, String facilityCode);
 	
 
 }

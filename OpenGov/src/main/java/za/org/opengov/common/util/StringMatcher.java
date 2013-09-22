@@ -30,8 +30,7 @@ public class StringMatcher {
 		elements.add(new Element(stringMatchable));
 	}
 
-	public StringMatchable getClosestMatch(
-			StringMatchable stringMatchableToMatch) {
+	public StringMatchable getClosestMatch(String stringMatchableToMatch) {
 
 		if (stringMatchableToMatch == null) {
 			throw new IllegalArgumentException(
@@ -43,7 +42,7 @@ public class StringMatcher {
 
 		for (Element nextElement : elements) {
 			nextElement.distance = computeLevenshteinDistance(
-					stringMatchableToMatch.getStringToMatch(),
+					stringMatchableToMatch,
 					nextElement.stringMatchable.getStringToMatch());
 			if (nextElement.distance < closestMatchable.distance) {
 				closestMatchable = nextElement;
@@ -82,7 +81,7 @@ public class StringMatcher {
 	}
 
 	private int computeLevenshteinDistance(String s1, String s2) {
-		
+
 		s1 = s1.toLowerCase();
 		s2 = s2.toLowerCase();
 

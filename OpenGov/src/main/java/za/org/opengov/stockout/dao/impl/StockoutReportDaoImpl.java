@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import za.org.opengov.common.dao.impl.AbstractDaoImpl;
@@ -24,6 +25,18 @@ public class StockoutReportDaoImpl extends AbstractDaoImpl<StockoutReport, Long>
 		criteria.createAlias("issue", "issue");
 		criteria.addOrder(Order.desc("issue.startTimestamp"));
 		criteria.setMaxResults(limit);
+		
+		return criteria.list();
+	}
+
+	@Override
+	public List<StockoutReport> findForFacilityAndProduct(String productCode,
+			String facilityCode) {
+		Criteria criteria = getCurrentSession().createCriteria(StockoutReport.class);
+		criteria.createAlias("product", "p");
+		criteria.createAlias("facility", "f");
+		criteria.add(Restrictions.like("p.uid", productCode.trim()).ignoreCase());
+		criteria.add(Restrictions.like("f.uid", facilityCode.trim()).ignoreCase());
 		
 		return criteria.list();
 	}

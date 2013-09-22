@@ -1,7 +1,23 @@
 package za.org.opengov.stockout.service.medical;
 
-public interface ProductService {
+import java.util.List;
 
-	//public List<Product> getOrderedProductList();
+import za.org.opengov.stockout.entity.medical.Product;
+
+public interface ProductService {
+	
+
+	public List<Product> getProductsInAlphabeticRange();
+	
+	public Product getMostCommonStockoutForFacility(String facilityCode);
+	
+	/**
+	 * Performs string closeness matching and returns the nearest matching
+	 * product to the specified product name. 
+	 * 
+	 * @param productName
+	 * @return
+	 */
+	public Product getClosestMatch(String productName);
 	
 }

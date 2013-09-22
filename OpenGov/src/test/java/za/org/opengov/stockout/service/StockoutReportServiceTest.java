@@ -149,5 +149,44 @@ public class StockoutReportServiceTest {
 				.getIssue().getStartTimestamp());
 
 	}
+	
+	@Test
+	@Rollback(true)
+	public void testGetStockoutReport(){
+		StockoutReport report1 = new StockoutReport();
+		StockoutReport report2 = new StockoutReport();
+		StockoutReport report3 = new StockoutReport();
+		
+		Facility facility = new Facility();
+		facility.setUid("the_fac");
+		facilityDao.saveOrUpdate(facility);
+		
+		Product product = new Product();
+		product.setUid("prod");
+		productDao.saveOrUpdate(product);
+		
+		Product product2 = new Product();
+		product2.setUid("prod2");
+		productDao.saveOrUpdate(product2);
+		
+		
+		report1.setFacility(facility);
+		report1.setProduct(product);
+		report2.setFacility(facility);
+		report2.setProduct(product);
+		report3.setFacility(facility);
+		report3.setProduct(product2);
+		
+		reportService.submitStockoutReport(report1);
+		reportService.submitStockoutReport(report2);
+		reportService.submitStockoutReport(report3);
+	
+		List<StockoutReport> reports = reportService.getStockoutReport(" ProD  " , " the_FAC  ");
+		
+		
+		Assert.assertEquals(reports.size(), 2);
+		
+		
+	}
 
 }

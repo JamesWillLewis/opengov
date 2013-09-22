@@ -7,6 +7,9 @@ import za.org.opengov.stockout.entity.StockoutReport;
 
 public interface StockoutReportDao extends AbstractDao<StockoutReport, Long> {
 
-	List<StockoutReport> findMostRecentStockouts(int limit);
+	public List<StockoutReport> findMostRecentStockouts(int limit);
+
+	public List<StockoutReport> findForFacilityAndProduct(String productCode,
+			String facilityCode);
 
 }

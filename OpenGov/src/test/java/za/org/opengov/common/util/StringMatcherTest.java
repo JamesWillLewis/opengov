@@ -35,9 +35,8 @@ public class StringMatcherTest {
 
 	@Test
 	public void testGetClosestMatch() {
-		StringMatchableSample sample = new StringMatchableSample("hello");
 		assertEquals("Get Closest Match", sample1,
-				stringMatcher.getClosestMatch(sample));
+				stringMatcher.getClosestMatch("hello"));
 	}
 
 	@Test

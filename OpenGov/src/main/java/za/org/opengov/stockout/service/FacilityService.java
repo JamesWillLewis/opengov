@@ -16,4 +16,6 @@ public interface FacilityService {
 	
 	public void saveFacility(Facility facility);
 	
+	public Facility getClosestMatch(String facilityIdentifier);
+	
 }

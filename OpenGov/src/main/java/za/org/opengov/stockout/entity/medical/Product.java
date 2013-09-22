@@ -11,20 +11,49 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import za.org.opengov.common.util.StringMatchable;
+
 
 @Entity
 @Table(name="SOWS_PHARM_PRODUCT")
 public class Product {
 	
+	/**
+	 * Product code (UID)
+	 */
 	private String uid;
+	/**
+	 * The actual medicine which constitutes this particular brand. 
+	 * A product name would be Panado, and the medicine is Paracetamol.
+	 */
 	private Medicine medicine;
+	/**
+	 *	The company which produces the product. (i.e Adcock Ingram)
+	 */
 	private Supplier supplier;
+	/**
+	 * Dosage mass/form of the product.
+	 */
 	private Dosage dosage;
+	/**
+	 * Quantity of dosages for this product. 
+	 */
 	private int volume;
+	/**
+	 * Product/brand name of the product. (i.e. Panado)
+	 */
 	private String name;
+	/**
+	 * Price in ZAR exclusive of tax
+	 */
 	private double priceExclVAT;
+	/**
+	 * Price in ZAR inclusive of tax
+	 */
 	private double priceInclVAT;
-	private Long numberInStock;
+	/**
+	 * Shelf life of the product (specified as a time period, not the actual expiry date)
+	 */
 	private Date shelfLifeDateTimePeriod;
 	
 	public Product() {
@@ -106,15 +135,6 @@ public class Product {
 		this.priceInclVAT = priceInclVAT;
 	}
 
-	@Column(name="NUMBER_IN_STOCK")
-	public Long getNumberInStock() {
-		return numberInStock;
-	}
-
-	public void setNumberInStock(Long numberInStock) {
-		this.numberInStock = numberInStock;
-	}
-
 	@Column(name="SHELF_LIFE_TIME_PERIOD")
 	public Date getShelfLifeDateTimePeriod() {
 		return shelfLifeDateTimePeriod;
@@ -123,6 +143,5 @@ public class Product {
 	public void setShelfLifeDateTimePeriod(Date shelfLifeDateTimePeriod) {
 		this.shelfLifeDateTimePeriod = shelfLifeDateTimePeriod;
 	}
-	
 	
 }
