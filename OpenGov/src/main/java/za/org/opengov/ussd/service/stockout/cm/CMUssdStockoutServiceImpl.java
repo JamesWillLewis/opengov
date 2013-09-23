@@ -84,6 +84,9 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					displayText = stockoutDao.getMenu(21);
 					displayText += "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
 					
+					String[] recentStockouts = {"Medicine1","Medicine2","Medicine3","Medicine4"};
+					keyValueStore.put("recentStockouts."+sessionId,recentStockouts);
+					
 					//method that retrieves commonly reported stock out, from a clinic
 					//*****Need clinic name entered earlier
 					//StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
@@ -109,8 +112,9 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				
 				if (requestMedicine>=1 && requestMedicine<=7){ //process medicine selection 1-8
 					
+					String[] recentStockout = (String[]) keyValueStore.get("recentStockouts."+sessionId);
 					//StockoutDao.retrieveCommonStockoutsIndex(keyValueStore.get("facilityName."+request.getUssdSessionId()),index);
-					displayText = "Medicine1";
+					displayText = recentStockout[requestMedicine-1];
 					keyValueStore.put("medicineName."+sessionId, displayText);
 					displayText+= " " + stockoutDao.getMenu(4);
 					menuRequest +=2;
@@ -175,6 +179,9 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					
 					displayText = stockoutDao.getMenu(21);
 					displayText += "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
+					
+					String[] recentStockouts = {"Medicine1","Medicine2","Medicine3","Medicine4"};
+					keyValueStore.put("recentStockouts."+sessionId,recentStockouts);
 					
 					//method that retrieves commonly reported stock out, from a clinic
 					//*****Need clinic name entered earlier

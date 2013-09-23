@@ -17,16 +17,21 @@ public class KeyValueStore {
 	public KeyValueStore() {
 	}
 	
-	public Object put(String key, String Object){
+	public Object put(String key,String Object){
+		return concurrentKeyValueStore.put(key, Object);
+	}
+	
+	public Object put(String key,String[] Object){
 		return concurrentKeyValueStore.put(key, Object);
 	}
 	
 	public Object get(String key){
 		return concurrentKeyValueStore.get(key);
 	}
-	
+		
 	public Object remove(String key){
 		return concurrentKeyValueStore.remove(key);
+		
 	}
 
 }
