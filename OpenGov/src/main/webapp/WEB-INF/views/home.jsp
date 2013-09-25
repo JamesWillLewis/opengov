@@ -8,6 +8,7 @@
 <h1>
 	OpenGov Management Portal 
 </h1>
+<img alt="" src="resources/img/opengov300x300.png">
 
 <P>  The time on the server is ${serverTime}. </P>
 
