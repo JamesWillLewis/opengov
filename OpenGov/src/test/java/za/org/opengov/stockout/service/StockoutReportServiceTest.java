@@ -90,39 +90,18 @@ public class StockoutReportServiceTest {
 		StockoutReport report4 = new StockoutReport();
 		StockoutReport report5 = new StockoutReport();
 
-		// create issues
-		Issue issue1 = new Issue();
-		Issue issue2 = new Issue();
-		Issue issue3 = new Issue();
-		Issue issue4 = new Issue();
-		Issue issue5 = new Issue();
-
 		// set different submission times for issues
 		Calendar date = Calendar.getInstance();
 		date.set(2009, 5, 5);
-		issue1.setStartTimestamp(date.getTime());
+		report1.setTimestamp(date.getTime());
 		date.set(2008, 5, 5);
-		issue2.setStartTimestamp(date.getTime());
+		report2.setTimestamp(date.getTime());
 		date.set(2010, 5, 5);
-		issue3.setStartTimestamp(date.getTime());
+		report3.setTimestamp(date.getTime());
 		date.set(2005, 5, 5);
-		issue4.setStartTimestamp(date.getTime());
+		report4.setTimestamp(date.getTime());
 		date.set(2013, 5, 5);
-		issue5.setStartTimestamp(date.getTime());
-
-		// persist issues
-		issueDao.saveOrUpdate(issue1);
-		issueDao.saveOrUpdate(issue2);
-		issueDao.saveOrUpdate(issue3);
-		issueDao.saveOrUpdate(issue4);
-		issueDao.saveOrUpdate(issue5);
-
-		// assign issues to stockout reports
-		report1.setIssue(issue1);
-		report2.setIssue(issue2);
-		report3.setIssue(issue3);
-		report4.setIssue(issue4);
-		report5.setIssue(issue5);
+		report5.setTimestamp(date.getTime());
 
 		// submit stockout reports
 		reportService.submitStockoutReport(report1);
@@ -139,54 +118,18 @@ public class StockoutReportServiceTest {
 
 		Assert.assertEquals(limit, reports.size());
 
-		Assert.assertEquals(issue5.getStartTimestamp(), reports.get(0)
-				.getIssue().getStartTimestamp());
-		Assert.assertEquals(issue3.getStartTimestamp(), reports.get(1)
-				.getIssue().getStartTimestamp());
-		Assert.assertEquals(issue1.getStartTimestamp(), reports.get(2)
-				.getIssue().getStartTimestamp());
-		Assert.assertEquals(issue2.getStartTimestamp(), reports.get(3)
-				.getIssue().getStartTimestamp());
+		Assert.assertEquals(report5.getTimestamp(), reports.get(0)
+				.getTimestamp());
+		Assert.assertEquals(report3.getTimestamp(), reports.get(1)
+				.getTimestamp());
+		Assert.assertEquals(report1.getTimestamp(), reports.get(2)
+				.getTimestamp());
+		Assert.assertEquals(report2.getTimestamp(), reports.get(3)
+				.getTimestamp());
 
 	}
 	
-	@Test
-	@Rollback(true)
-	public void testGetStockoutReport(){
-		StockoutReport report1 = new StockoutReport();
-		StockoutReport report2 = new StockoutReport();
-		StockoutReport report3 = new StockoutReport();
-		
-		Facility facility = new Facility();
-		facility.setUid("the_fac");
-		facilityDao.saveOrUpdate(facility);
-		
-		Product product = new Product();
-		product.setUid("prod");
-		productDao.saveOrUpdate(product);
-		
-		Product product2 = new Product();
-		product2.setUid("prod2");
-		productDao.saveOrUpdate(product2);
-		
-		
-		report1.setFacility(facility);
-		report1.setProduct(product);
-		report2.setFacility(facility);
-		report2.setProduct(product);
-		report3.setFacility(facility);
-		report3.setProduct(product2);
-		
-		reportService.submitStockoutReport(report1);
-		reportService.submitStockoutReport(report2);
-		reportService.submitStockoutReport(report3);
-	
-		List<StockoutReport> reports = reportService.getStockoutReport(" ProD  " , " the_FAC  ");
-		
-		
-		Assert.assertEquals(reports.size(), 2);
-		
-		
-	}
+
+
 
 }

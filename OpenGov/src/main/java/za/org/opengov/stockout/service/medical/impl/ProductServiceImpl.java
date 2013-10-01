@@ -21,13 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getProductsInAlphabeticRange() {
-
 		return null;
-	}
-
-	@Override
-	public Product getMostCommonStockoutForFacility(String facilityCode) {
-		return productDao.getMostCommonStockoutForFacility(facilityCode);
 	}
 
 	@Override
@@ -63,6 +57,12 @@ public class ProductServiceImpl implements ProductService {
 			return product.getName();
 		}
 
+	}
+
+	@Override
+	public void saveProduct(Product product) {
+		product.setUid(product.getUid().toUpperCase());
+		productDao.saveOrUpdate(product);
 	}
 
 }

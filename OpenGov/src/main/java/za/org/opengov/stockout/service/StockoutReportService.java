@@ -41,7 +41,5 @@ public interface StockoutReportService {
 	
 	public List<StockoutReport> getRecentlyReportedStockouts(int limit);
 	
-	public List<StockoutReport> getStockoutReport(String productCode, String facilityCode);
-	
 
 }

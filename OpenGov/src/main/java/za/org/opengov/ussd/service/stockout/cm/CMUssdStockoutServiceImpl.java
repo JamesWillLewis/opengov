@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutReportService;
+import za.org.opengov.stockout.service.medical.ProductService;
 import za.org.opengov.ussd.controller.UssdRequest;
 import za.org.opengov.ussd.controller.UssdResponse;
 import za.org.opengov.ussd.controller.cm.CMUssdRequest;
@@ -23,10 +25,16 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 	private KeyValueStore keyValueStore;
 
 	@Autowired
-	private UssdStockoutDao stockoutDao;
+	private UssdStockoutDao ussdStockoutDao;
 
 	@Autowired
 	private StockoutReportService stockoutReportService;
+	
+	@Autowired
+	private FacilityService facilityService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	public CMUssdResponse createUssdResponse(CMUssdRequest request) {
@@ -47,7 +55,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 			case 0: // welcome message..clinic code prompt
 
-				displayText = stockoutDao.getMenu(0);
+				displayText = ussdStockoutDao.getMenu(0);
 				++menuRequest;
 
 				break;
@@ -57,18 +65,21 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				displayText = request.getRequest();
 				// stockoutDao.checkClinic(request.getRequest());****database
 				// call
+				
+				// ------ facility = facilityService.getClosestMatch(facilityIdentifier)
+				// ------ facilityService.validateFacilityCode(facility.getUid);
 
 				if (!displayText.equals("failed")) {
 					// Need to set clinic name so that it can be re-used later
 					keyValueStore.put(
 							"facilityName." + request.getUssdSessionId(),
 							displayText);
-					displayText += " " + stockoutDao.getMenu(1);
+					displayText += " " + ussdStockoutDao.getMenu(1);
 					++menuRequest;
 
 				} else {
 					// displayed failed message and redisplay same menu
-					displayText += " " + stockoutDao.getMenu(92);
+					displayText += " " + ussdStockoutDao.getMenu(92);
 					throw new NumberFormatException();
 				}
 
@@ -76,7 +87,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 			case 2: // process service request,get list of recent medicines
 
-				displayText = stockoutDao.getMenu(91); // set error message for
+				displayText = ussdStockoutDao.getMenu(91); // set error message for
 														// incorrect string
 														// input and invalid
 														// integer selection
@@ -85,7 +96,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				if (requestSelection >= 1 && requestSelection <= 3) {
 
-					displayText = stockoutDao.getMenu(21);
+					displayText = ussdStockoutDao.getMenu(21);
 					displayText += "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
 
 					// method that retrieves commonly reported stock out, from a
@@ -93,8 +104,10 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					// *****Need clinic name entered earlier
 					// StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
 					// **************************************************************
+					
+					// ------- productService.getMostCommonStockoutForFacility(facilityCode)
 
-					displayText += stockoutDao.getMenu(22);
+					displayText += ussdStockoutDao.getMenu(22);
 
 					keyValueStore.put("service." + request.getUssdSessionId(),
 							Integer.toString(requestSelection));
@@ -110,7 +123,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 			case 3: // process user selection of recent reports or manual
 					// medicine name entry
 
-				displayText = stockoutDao.getMenu(91);
+				displayText = ussdStockoutDao.getMenu(91);
 
 				int requestMedicine = Integer.parseInt(request.getRequest());
 
@@ -122,13 +135,13 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					// StockoutDao.retrieveCommonStockoutsIndex(keyValueStore.get("facilityName."+request.getUssdSessionId()),index);
 					displayText = "Medicine1";
 					keyValueStore.put("medicineName." + sessionId, displayText);
-					displayText += " " + stockoutDao.getMenu(4);
+					displayText += " " + ussdStockoutDao.getMenu(4);
 					menuRequest += 2;
 
 				} else if (requestMedicine == 8) { // display enter medicine
 													// name prompt
 
-					displayText = stockoutDao.getMenu(3);
+					displayText = ussdStockoutDao.getMenu(3);
 					++menuRequest;
 
 				} else {// user enters a number less than 1 or greater than 8
@@ -143,17 +156,19 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				// displayText =
 				// stockoutDao.CheckAndFindNearestMatch(request.getRequest());
+				
+				// ------- still to add, since it requires coordinates
 
 				displayText = request.getRequest();
 
 				if (!displayText.equals("failed")) { // medicine name found, go
 														// to next menu
 
-					displayText += " " + stockoutDao.getMenu(4);
+					displayText += " " + ussdStockoutDao.getMenu(4);
 					++menuRequest;
 
 				} else { // medicine name not found
-					displayText += " " + stockoutDao.getMenu(92);
+					displayText += " " + ussdStockoutDao.getMenu(92);
 					throw new NumberFormatException();
 				}
 				break;
@@ -175,18 +190,23 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					switch (service) {
 					case 1:
 						// StockoutDao.reportStockout(medicineName,facilityName);
+						
+						// ------------- stockoutReportService.submitStockoutReport
 						displayText = medicineName + " in " + facilityName
-								+ " " + stockoutDao.getMenu(5);
+								+ " " + ussdStockoutDao.getMenu(5);
 						break;
 					case 2:
 						// displayText =
 						// StockoutDao.getStatus(MedicineName,facilityName);
-						displayText = stockoutDao.getMenu(6);
+						
+						// --------- stockoutReportService.getStockoutReport(productCode, facilityCode)
+						
+						displayText = ussdStockoutDao.getMenu(6);
 						break;
 					case 3:
 						// displayText =
 						// stockoutDao.findNearestNeighbourWithStock(medicineName,facilityName);
-						displayText = stockoutDao.getMenu(7);
+						displayText = ussdStockoutDao.getMenu(7);
 						break;
 					}
 
@@ -194,7 +214,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				} else if (requestOption == 2) {
 
-					displayText = stockoutDao.getMenu(21);
+					displayText = ussdStockoutDao.getMenu(21);
 					displayText += "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
 
 					// method that retrieves commonly reported stock out, from a
@@ -203,19 +223,19 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					// StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
 					// **************************************************************
 
-					displayText += stockoutDao.getMenu(22);
+					displayText += ussdStockoutDao.getMenu(22);
 					menuRequest = 3;
 
 				} else if (requestOption == 3) {
 					displayText = keyValueStore
 							.get("facilityName." + sessionId)
 							+ " "
-							+ stockoutDao.getMenu(1);
+							+ ussdStockoutDao.getMenu(1);
 					menuRequest = 2;
 
 				} else {
 
-					displayText = stockoutDao.getMenu(91);
+					displayText = ussdStockoutDao.getMenu(91);
 					throw new NumberFormatException();
 				}
 

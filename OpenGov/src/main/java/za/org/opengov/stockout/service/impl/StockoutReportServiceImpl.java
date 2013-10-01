@@ -55,23 +55,23 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 			facility = facilityDao.findById(facilityCode);
 		} else {
 			throw new IllegalArgumentException(
-					"Facility code must be specified");
+					"Valid facility code must be specified");
 		}
 
 		Product product;
 		if (productCode != null && !productCode.isEmpty()) {
 			product = productDao.findById(productCode);
 		} else {
-			throw new IllegalArgumentException("Product code must be specified");
+			throw new IllegalArgumentException("Valid product code must be specified");
 		}
 
 		StockoutReport stockoutReport = new StockoutReport();
 
 		stockoutReport.setCause(cause);
-		stockoutReport.setFacility(facility);
-		stockoutReport.setProduct(product);
+		//stockoutReport.setFacility(facility);
+		//stockoutReport.setProduct(product);
 		stockoutReport.setReportedToDOH(reportedToDOH);
-		stockoutReport.setResolved(resolved);
+		//stockoutReport.setResolved(resolved);
 		stockoutReport.setReporter(reporter);
 		stockoutReport.setReportee(reportee);
 
@@ -91,12 +91,8 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 	public List<StockoutReport> getRecentlyReportedStockoutsForDisease() {
 		throw new NotYetImplementedException();
 	}
+	
 
-	@Override
-	public List<StockoutReport> getStockoutReport(String productCode,
-			String facilityCode) {
-		return stockoutReportDao.findForFacilityAndProduct(productCode,
-				facilityCode);
-	}
+
 
 }

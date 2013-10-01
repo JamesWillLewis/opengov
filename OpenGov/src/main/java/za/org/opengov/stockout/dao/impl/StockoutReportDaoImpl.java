@@ -22,8 +22,7 @@ public class StockoutReportDaoImpl extends AbstractDaoImpl<StockoutReport, Long>
 	public List<StockoutReport> findMostRecentStockouts(int limit) {
 		
 		Criteria criteria = getCurrentSession().createCriteria(StockoutReport.class);
-		criteria.createAlias("issue", "issue");
-		criteria.addOrder(Order.desc("issue.startTimestamp"));
+		criteria.addOrder(Order.desc("timestamp"));
 		criteria.setMaxResults(limit);
 		
 		return criteria.list();

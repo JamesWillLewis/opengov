@@ -1,5 +1,7 @@
 package za.org.opengov.stockout.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,27 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import za.org.opengov.common.entity.Issue;
-import za.org.opengov.stockout.entity.medical.Product;
-
-
 @Entity
-@Table(name="SOWS_STOCKOUT_REPORT")
+@Table(name = "SOWS_STOCKOUT_REPORT")
 public class StockoutReport {
 
 	private Long uid;
-	private Issue issue;
-	private Product product;
-	private Facility facility;
+	private Stockout stockout;
 	private Subject reporter;
 	private Subject reportee;
 	private String cause;
 	private boolean reportedToDOH;
-	private boolean resolved;
-	
+	private Date timestamp;
+
 	public StockoutReport() {
 	}
 
@@ -41,39 +36,19 @@ public class StockoutReport {
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}
-	
-	@OneToOne
-	@JoinColumn(name="FK_ISSUE")
-	public Issue getIssue() {
-		return issue;
+
+	@ManyToOne
+	@JoinColumn(name = "FK_STOCKOUT")
+	public Stockout getStockout() {
+		return stockout;
 	}
-	
-	public void setIssue(Issue issue) {
-		this.issue = issue;
+
+	public void setStockout(Stockout stockout) {
+		this.stockout = stockout;
 	}
 
 	@ManyToOne
-	@JoinColumn(name="FK_PRODUCT")
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="FK_FACILITY")
-	public Facility getFacility() {
-		return facility;
-	}
-
-	public void setFacility(Facility facility) {
-		this.facility = facility;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="FK_REPORTER")
+	@JoinColumn(name = "FK_REPORTER")
 	public Subject getReporter() {
 		return reporter;
 	}
@@ -83,7 +58,7 @@ public class StockoutReport {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="FK_REPORTEE")
+	@JoinColumn(name = "FK_REPORTEE")
 	public Subject getReportee() {
 		return reportee;
 	}
@@ -92,7 +67,7 @@ public class StockoutReport {
 		this.reportee = reportee;
 	}
 
-	@Column(name="CAUSE")
+	@Column(name = "CAUSE")
 	public String getCause() {
 		return cause;
 	}
@@ -101,7 +76,7 @@ public class StockoutReport {
 		this.cause = cause;
 	}
 
-	@Column(name="REPORTED_TO_DOH")
+	@Column(name = "REPORTED_TO_DOH")
 	public boolean getReportedToDOH() {
 		return reportedToDOH;
 	}
@@ -110,14 +85,13 @@ public class StockoutReport {
 		this.reportedToDOH = reportedToDOH;
 	}
 
-	@Column(name="IS_RESOLVED")
-	public boolean getResolved() {
-		return resolved;
+	@Column(name = "TIMESTAMP")
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
-	public void setResolved(boolean resolved) {
-		this.resolved = resolved;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
-	
-	
+
 }

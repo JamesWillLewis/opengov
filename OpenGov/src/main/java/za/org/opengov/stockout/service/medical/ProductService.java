@@ -6,10 +6,10 @@ import za.org.opengov.stockout.entity.medical.Product;
 
 public interface ProductService {
 	
+	public void saveProduct(Product product);
 
 	public List<Product> getProductsInAlphabeticRange();
 	
-	public Product getMostCommonStockoutForFacility(String facilityCode);
 	
 	/**
 	 * Performs string closeness matching and returns the nearest matching
