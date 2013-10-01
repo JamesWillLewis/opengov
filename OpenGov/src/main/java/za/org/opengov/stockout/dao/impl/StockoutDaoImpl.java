@@ -44,27 +44,35 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 
 		criteria.createAlias("facility", "f");
 		criteria.createAlias("product", "p");
-		
+
 		criteria.add(Restrictions.like("f.uid", facilityCode).ignoreCase());
 		criteria.add(Restrictions.like("p.uid", productCode).ignoreCase());
 
-		return (Stockout) criteria.setMaxResults(1).list().get(0);
+		List<Stockout> stockouts = criteria.setMaxResults(1).list();
+		if (stockouts.isEmpty()) {
+			return null;
+		} else {
+			return (Stockout) stockouts.get(0);
+		}
 	}
 
 	@Override
-	public Stockout getMostCommonlyReportedStockoutForFacility(String facilityCode) {
+	public Stockout getMostCommonlyReportedStockoutForFacility(
+			String facilityCode) {
 
 		String query = "SELECT sr FROM StockoutReport sr, Product pr, Stockout so "
-				+ "WHERE UPPER(sr.stockout.facility) LIKE UPPER(:facCode) " 
-				+ "GROUP BY sr.stockout "
-				+ "ORDER BY count(*) DESC ";
+				+ "WHERE UPPER(sr.stockout.facility) LIKE UPPER(:facCode) "
+				+ "GROUP BY sr.stockout " + "ORDER BY count(*) DESC ";
 
-		StockoutReport stockoutReport = (StockoutReport) getCurrentSession().createQuery(query)
-				.setString("facCode", facilityCode).setMaxResults(1).list()
-				.get(0);
+		List<StockoutReport> stockoutReports = getCurrentSession()
+				.createQuery(query).setString("facCode", facilityCode)
+				.setMaxResults(1).list();
 
-
-		return stockoutReport.getStockout();
+		if (stockoutReports.isEmpty()) {
+			return null;
+		} else {
+			return stockoutReports.get(0).getStockout();
+		}
 	}
 
 }

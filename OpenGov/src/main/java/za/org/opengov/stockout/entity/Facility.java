@@ -1,14 +1,15 @@
 package za.org.opengov.stockout.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -23,6 +24,11 @@ public class Facility {
 	private String municipality;
 	private String region;
 	private FacilityType facilityType;
+	
+	private double longitudeDecimalDegrees;
+	private double latitudeDecimalDegress;
+	
+	private Set<Stockout> stockouts;
 	
 	public Facility() {
 	}
@@ -91,6 +97,33 @@ public class Facility {
 
 	public void setFacilityType(FacilityType facilityType) {
 		this.facilityType = facilityType;
+	}
+	
+	@Column(name = "LATITUDE")
+	public double getLatitudeDecimalDegress() {
+		return latitudeDecimalDegress;
+	}
+	
+	public void setLatitudeDecimalDegress(double latitudeDecimalDegress) {
+		this.latitudeDecimalDegress = latitudeDecimalDegress;
+	}
+	
+	@Column(name = "LONGITUDE")
+	public double getLongitudeDecimalDegrees() {
+		return longitudeDecimalDegrees;
+	}
+	
+	public void setLongitudeDecimalDegrees(double longitudeDecimalDegrees) {
+		this.longitudeDecimalDegrees = longitudeDecimalDegrees;
+	}
+	
+	@OneToMany(mappedBy="facility")
+	public Set<Stockout> getStockouts() {
+		return stockouts;
+	}
+	
+	public void setStockouts(Set<Stockout> stockouts) {
+		this.stockouts = stockouts;
 	}
 
 }

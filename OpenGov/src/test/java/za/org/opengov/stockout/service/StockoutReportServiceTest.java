@@ -22,8 +22,10 @@ import za.org.opengov.common.entity.Issue;
 import za.org.opengov.stockout.dao.FacilityDao;
 import za.org.opengov.stockout.dao.medical.ProductDao;
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.medical.Product;
+import za.org.opengov.stockout.service.medical.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -42,6 +44,15 @@ public class StockoutReportServiceTest {
 
 	@Autowired
 	private IssueDao issueDao;
+	
+	@Autowired
+	private FacilityService facilityService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private StockoutService stockoutService;
 
 	private final String PRODUCT_CODE = "P123";
 	private final String FACILITY_CODE = "F123";
@@ -76,7 +87,46 @@ public class StockoutReportServiceTest {
 	@Test
 	@Rollback(true)
 	public void testSubmitStockoutReport() {
-		// System.out.println("COUNT " + productDao.findAll().size());
+		
+		Facility facility1 = new Facility();
+		facility1.setUid("CT_KAYA");
+		facility1.setLocalName("Kayalitsha clinic");
+		
+		Facility facility2 = new Facility();
+		facility2.setUid("CT_CF");
+		facility2.setLocalName("Cape Flats clinic");
+	
+		facilityService.saveFacility(facility1);
+		facilityService.saveFacility(facility2);
+		
+		Product product1 = new Product();
+		product1.setUid("PRC_1");
+		product1.setName("Panado");
+		
+		Product product2 = new Product();
+		product2.setUid("PRC_2");
+		product2.setName("Painamol");
+		
+		
+		productService.saveProduct(product1);
+		productService.saveProduct(product2);
+		
+		Product p = productService.getClosestMatch("panaada");
+		Facility f = facilityService.getClosestMatch("kayalitcha");
+		
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
+		
+		
+		StockoutReport report = reportService.getRecentlyReportedStockouts(1).get(0);
+		Stockout stockout = report.getStockout();
+		Assert.assertEquals("PRC_1", stockout.getProduct().getUid());
+		Assert.assertEquals("CT_KAYA", stockout.getFacility().getUid());
+		
+		List<Stockout> stockouts = stockoutService.getAllStockoutsForFacility(f.getUid());
+		Assert.assertEquals(1, stockouts.size());
 	}
 
 	@Test

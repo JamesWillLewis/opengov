@@ -10,6 +10,7 @@ import za.org.opengov.common.util.StringMatchable;
 import za.org.opengov.common.util.StringMatcher;
 import za.org.opengov.stockout.dao.FacilityDao;
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 
 @Service("facilityService")
@@ -48,7 +49,7 @@ public class FacilityServiceImpl implements FacilityService {
 			matcher.addStringMatchable(nameWrapper);
 		}
 		StringMatchable matchable = matcher.getClosestMatch(facilityIdentifier);
-		
+
 		if (matchable instanceof FacilityCodeWrapper) {
 			return ((FacilityCodeWrapper) matchable).getFacility();
 		} else if (matchable instanceof FacilityNameWrapper) {
@@ -56,6 +57,41 @@ public class FacilityServiceImpl implements FacilityService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public Facility getNearestFacilityWithStock(Product product,
+			Facility originFacility) {
+		List<Facility> facilitiesWithStock = getAllFacilitiesWithStock(product);
+
+		double originLng = originFacility.getLongitudeDecimalDegrees();
+		double originLat = originFacility.getLatitudeDecimalDegress();
+
+		Facility closestFacility = null;
+		double bestDistance = Double.MAX_VALUE;
+
+		// search for the nearest facility using Euclidean distance (as the crow
+		// flies)
+		// using the facility's coordinates
+		for (Facility f : facilitiesWithStock) {
+			double destLng = f.getLongitudeDecimalDegrees();
+			double destLat = f.getLatitudeDecimalDegress();
+
+			double distance = Math.sqrt((destLng - originLng)
+					* (destLng - originLng) + (destLat - originLat)
+					* (destLat - originLat));
+			if (distance < bestDistance) {
+				bestDistance = distance;
+				closestFacility = f;
+			}
+		}
+
+		return closestFacility;
+	}
+
+	@Override
+	public List<Facility> getAllFacilitiesWithStock(Product product) {
+		return facilityDao.findAllWithoutStockoutOfProduct(product.getUid());
 	}
 
 	private class FacilityCodeWrapper implements StringMatchable {

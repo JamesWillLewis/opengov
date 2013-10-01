@@ -134,6 +134,12 @@ public class StockoutServiceTest {
 	}
 	
 	@Test
+	public void testGetStockoutWithNull() {
+		Stockout stockout = stockoutService.getStockout("FAC2", "PrOD5");
+		System.out.println(stockout);
+	}
+	
+	@Test
 	@Rollback(true)
 	public void testGetMostCommonStockoutForFacility() {
 		Product product1 = new Product();
@@ -192,7 +198,7 @@ public class StockoutServiceTest {
 		report4.setStockout(stockout3);
 		report5.setStockout(stockout3);
 		report6.setStockout(stockout2);
-		report7.setStockout(stockout3);
+		report7.setStockout(stockout4);
 		report8.setStockout(stockout4);
 
 		reportService.submitStockoutReport(report1);
@@ -205,10 +211,10 @@ public class StockoutServiceTest {
 		reportService.submitStockoutReport(report8);
 
 		// also check to ensure case is ignored
-		Stockout mostCommon = stockoutService.getMostCommonlyReportedStockoutForFacility("FACILITY1");
-
+		Stockout mostCommon = stockoutService.getMostCommonlyReportedStockoutForFacility("facility1");
+		
 		assertEquals(stockout2.getUid(), mostCommon.getUid());
-
+		
 	}
 
 	

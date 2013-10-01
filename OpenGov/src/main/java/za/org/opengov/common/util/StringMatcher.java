@@ -41,9 +41,13 @@ public class StringMatcher {
 		closestMatchable.distance = Integer.MAX_VALUE;
 
 		for (Element nextElement : elements) {
+			String toCompare = nextElement.stringMatchable.getStringToMatch();
+			if (toCompare == null) {
+				// a null string is considered an empty string
+				toCompare = "";
+			}
 			nextElement.distance = computeLevenshteinDistance(
-					stringMatchableToMatch,
-					nextElement.stringMatchable.getStringToMatch());
+					stringMatchableToMatch, toCompare);
 			if (nextElement.distance < closestMatchable.distance) {
 				closestMatchable = nextElement;
 			}
@@ -64,9 +68,14 @@ public class StringMatcher {
 		}
 
 		for (Element nextElement : elements) {
+			String toCompare = nextElement.stringMatchable.getStringToMatch();
+			if (toCompare == null) {
+				// a null string is considered an empty string
+				toCompare = "";
+			}
 			nextElement.distance = computeLevenshteinDistance(
-					stringMatchableToMatch.getStringToMatch(),
-					nextElement.stringMatchable.getStringToMatch());
+					stringMatchableToMatch.getStringToMatch(), toCompare);
+
 		}
 
 		Collections.sort(elements);

@@ -1,6 +1,9 @@
 package za.org.opengov.stockout.service;
 
+import java.util.List;
+
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.medical.Product;
 
 public interface FacilityService {
 
@@ -17,5 +20,9 @@ public interface FacilityService {
 	public void saveFacility(Facility facility);
 	
 	public Facility getClosestMatch(String facilityIdentifier);
+	
+	public List<Facility> getAllFacilitiesWithStock(Product product);
+	
+	public Facility getNearestFacilityWithStock(Product product, Facility originFacility);
 	
 }
