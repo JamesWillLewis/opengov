@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -214,6 +215,89 @@ public class StockoutServiceTest {
 		Stockout mostCommon = stockoutService.getMostCommonlyReportedStockoutForFacility("facility1");
 		
 		assertEquals(stockout2.getUid(), mostCommon.getUid());
+		
+		
+		Stockout mostCommon2 = stockoutService.getMostCommonlyReportedStockoutForFacility("sadsadadasddasd");
+		Assert.assertNull(mostCommon2);
+		
+	}
+	
+	@Test
+	@Rollback(true)
+	public void testGetMostCommonStockoutsForFacility() {
+		Product product1 = new Product();
+		product1.setUid("PRODUCT 1");
+		Product product2 = new Product();
+		product2.setUid("PRODUCT 2");
+		Product product3 = new Product();
+		product3.setUid("PRODUCT 3");
+
+		productService.saveProduct(product1);
+		productService.saveProduct(product2);
+		productService.saveProduct(product3);
+		
+		Facility facility1 = new Facility();
+		facility1.setUid("facility1");
+		Facility facility2 = new Facility();
+		facility2.setUid("facility2");
+
+		facilityService.saveFacility(facility1);
+		facilityService.saveFacility(facility2);
+		
+		Stockout stockout1 = new Stockout();
+		Stockout stockout2 = new Stockout();
+		Stockout stockout3 = new Stockout();
+		Stockout stockout4 = new Stockout();
+		
+		stockout1.setProduct(product1);
+		stockout1.setFacility(facility1);
+		
+		stockout2.setProduct(product2);
+		stockout2.setFacility(facility1);
+		
+		stockout3.setProduct(product3);
+		stockout3.setFacility(facility1);
+		
+		stockout4.setProduct(product3);
+		stockout4.setFacility(facility2);
+		
+		stockoutService.saveStockout(stockout1);
+		stockoutService.saveStockout(stockout2);
+		stockoutService.saveStockout(stockout3);
+		stockoutService.saveStockout(stockout4);
+
+		StockoutReport report1 = new StockoutReport();
+		StockoutReport report2 = new StockoutReport();
+		StockoutReport report3 = new StockoutReport();
+		StockoutReport report4 = new StockoutReport();
+		StockoutReport report5 = new StockoutReport();
+		StockoutReport report6 = new StockoutReport();
+		StockoutReport report7 = new StockoutReport();
+		StockoutReport report8 = new StockoutReport();
+
+		report1.setStockout(stockout1);
+		report2.setStockout(stockout2);
+		report3.setStockout(stockout2);
+		report4.setStockout(stockout3);
+		report5.setStockout(stockout3);
+		report6.setStockout(stockout2);
+		report7.setStockout(stockout4);
+		report8.setStockout(stockout4);
+
+		reportService.submitStockoutReport(report1);
+		reportService.submitStockoutReport(report2);
+		reportService.submitStockoutReport(report3);
+		reportService.submitStockoutReport(report4);
+		reportService.submitStockoutReport(report5);
+		reportService.submitStockoutReport(report6);
+		reportService.submitStockoutReport(report7);
+		reportService.submitStockoutReport(report8);
+
+		List<Stockout> mostCommons = stockoutService.getMostCommonlyReportedStockoutsForFacility("facility1",3);
+		
+		assertEquals(stockout2.getUid(), mostCommons.get(0).getUid());
+		assertEquals(stockout3.getUid(), mostCommons.get(1).getUid());
+		assertEquals(stockout1.getUid(), mostCommons.get(2).getUid());
 		
 	}
 

@@ -57,22 +57,18 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 	}
 
 	@Override
-	public Stockout getMostCommonlyReportedStockoutForFacility(
-			String facilityCode) {
+	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
+			String facilityCode, int limit) {
 
-		String query = "SELECT sr FROM StockoutReport sr, Product pr, Stockout so "
+		String query = "SELECT sr.stockout FROM StockoutReport sr "
 				+ "WHERE UPPER(sr.stockout.facility) LIKE UPPER(:facCode) "
 				+ "GROUP BY sr.stockout " + "ORDER BY count(*) DESC ";
 
-		List<StockoutReport> stockoutReports = getCurrentSession()
+		List<Stockout> stockoutReports = getCurrentSession()
 				.createQuery(query).setString("facCode", facilityCode)
-				.setMaxResults(1).list();
+				.setMaxResults(limit).list();
 
-		if (stockoutReports.isEmpty()) {
-			return null;
-		} else {
-			return stockoutReports.get(0).getStockout();
-		}
+		return stockoutReports;
 	}
 
 }

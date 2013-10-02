@@ -2,11 +2,9 @@ package za.org.opengov.stockout.service.impl;
 
 import java.util.List;
 
-import org.hibernate.criterion.Restrictions;
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import za.org.opengov.stockout.dao.StockoutDao;
 import za.org.opengov.stockout.entity.Stockout;
@@ -15,7 +13,7 @@ import za.org.opengov.stockout.service.StockoutService;
 @Service("stockoutService")
 @Transactional
 public class StockoutServiceImpl implements StockoutService {
-	
+
 	@Autowired
 	private StockoutDao stockoutDao;
 
@@ -45,8 +43,22 @@ public class StockoutServiceImpl implements StockoutService {
 	}
 
 	@Override
-	public Stockout getMostCommonlyReportedStockoutForFacility(String facilityCode) {
-		return stockoutDao.getMostCommonlyReportedStockoutForFacility(facilityCode);
+	public Stockout getMostCommonlyReportedStockoutForFacility(
+			String facilityCode) {
+		List<Stockout> stockouts = stockoutDao
+				.getMostCommonlyReportedStockoutsForFacility(facilityCode, 1);
+		if (stockouts.isEmpty()) {
+			return null;
+		} else {
+			return stockouts.get(0);
+		}
+	}
+
+	@Override
+	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
+			String facilityCode, int limit) {
+		return stockoutDao.getMostCommonlyReportedStockoutsForFacility(
+				facilityCode, limit);
 	}
 
 }
