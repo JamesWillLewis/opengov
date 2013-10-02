@@ -133,7 +133,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					
 					for(int index=0;index<stockouts.size();index++){
 						
-						displayText += (index+1) + "." + stockouts.get(index).getProduct() + "\n";
+						displayText += (index+1) + "." + stockouts.get(index).getProduct().getName() + "\n";
 					}
 					//or 
 
@@ -169,7 +169,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 																	// selection
 																	// 1-8
 
-					List<Stockout> stockouts = (List) keyValueStore.get("commonStockouts." + sessionId);
+					List<Stockout> stockouts = (List<Stockout>) keyValueStore.get("commonStockouts." + sessionId);
 						
 					
 					Product selectedProduct = stockouts.get(requestMedicine - 1).getProduct();
@@ -207,9 +207,9 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				
 
-				if (!searchProduct.equals(null)) { // medicine name found, go
+				if ((searchProduct != null)) { // medicine name found, go
 														// to next menu
-
+					keyValueStore.put("productName." + sessionId,searchProduct);
 					displayText = searchProduct.getName() + " " + stockoutDao.getMenu(4);
 					++menuRequest;
 
@@ -261,7 +261,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						Stockout stockout = stockoutService.getStockout(selectedFacilityCode, selectedProductCode);
 						//-----------------------------------------------------------------------------
 						
-						displayText = stockout.getIssue().getState().toString() + stockoutDao.getMenu(6);
+						displayText = stockoutDao.getMenu(6) + " " + stockout.getIssue().getState().toString();
 						break;
 					case 3:
 						// displayText =
@@ -305,7 +305,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					
 					for(int index=0;index<stockouts.size();index++){
 						
-						displayText += (index+1) + "." + stockouts.get(index).getFacility() + "\n";
+						displayText += (index+1) + "." + stockouts.get(index).getProduct().getName() + "\n";
 					}
 					
 					//-----------------------------------------------------------------------------
