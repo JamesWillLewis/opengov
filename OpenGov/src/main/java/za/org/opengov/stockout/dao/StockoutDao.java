@@ -16,6 +16,8 @@ public interface StockoutDao extends AbstractDao<Stockout, Long> {
 			String facilityCode);
 	
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(String facilityCode, int limit);
+
+	public List<Stockout> findAllOrderedUnresolvedStockouts();
 	
 
 }

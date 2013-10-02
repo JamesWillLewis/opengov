@@ -3,6 +3,7 @@ package za.org.opengov.stockout.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -69,6 +70,15 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 				.setMaxResults(limit).list();
 
 		return stockoutReports;
+	}
+
+	@Override
+	public List<Stockout> findAllOrderedUnresolvedStockouts() {
+		Criteria criteria = getCurrentSession().createCriteria(Stockout.class);
+		criteria.add(Restrictions.eq("resolved", 0));
+		criteria.createAlias("issue", "i");
+		criteria.addOrder(Order.asc("i.priority"));
+		return criteria.list();
 	}
 
 }

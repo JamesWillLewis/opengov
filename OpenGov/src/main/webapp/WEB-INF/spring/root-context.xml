@@ -28,6 +28,7 @@
 			<list>
 				<value>classpath:/properties/mail.properties</value>
 				<value>classpath:/properties/database.properties</value>
+				<value>classpath:/properties/cron.properties</value>
 			</list>
 		</property>
 	</bean>

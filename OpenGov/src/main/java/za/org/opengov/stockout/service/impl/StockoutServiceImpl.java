@@ -61,4 +61,9 @@ public class StockoutServiceImpl implements StockoutService {
 				facilityCode, limit);
 	}
 
+	@Override
+	public List<Stockout> getAllUnresolvedStockouts() {
+		return stockoutDao.findAllOrderedUnresolvedStockouts();
+	}
+
 }

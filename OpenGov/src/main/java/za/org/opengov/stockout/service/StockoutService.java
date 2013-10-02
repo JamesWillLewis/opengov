@@ -19,5 +19,7 @@ public interface StockoutService {
 	public Stockout getMostCommonlyReportedStockoutForFacility(String facilityCode);
 	
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(String facilityCode, int limit);
+
+	public List<Stockout> getAllUnresolvedStockouts();
 	
 }
