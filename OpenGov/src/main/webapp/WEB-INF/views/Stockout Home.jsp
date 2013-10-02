@@ -26,6 +26,7 @@
 			.google-map-canvas,
 			.google-map-canvas *{ .box-sizing(content-box); }
 	</style>
+	
 <script type="text/javascript" 
      src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
  

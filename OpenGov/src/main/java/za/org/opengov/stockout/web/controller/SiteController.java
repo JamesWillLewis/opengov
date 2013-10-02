@@ -42,6 +42,8 @@ public class SiteController {
 		return("Stockout Home");
 	}
 	
-	//@RequestMapping(value="/recentStockouts",method=RequestMethod.Get)
-	//public String 
+	@RequestMapping(value="/reportStockouts",method=RequestMethod.GET)
+	public String getReportPage(Model model){
+		return("Report_Page");
+	}
 }

@@ -22,7 +22,7 @@
           <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li> 
-          <li><a href="#about">Report Stock-out</a></li>
+          <li><a href="reportStockouts">Report Stock-out</a></li>
            <li><a href="#contact">Contacts</a></li>
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
             <ul class="dropdown-menu">
