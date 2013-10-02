@@ -3,12 +3,9 @@ package za.org.opengov.ussd.service.stockout.cm;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import za.org.opengov.stockout.service.StockoutReportService;
-import za.org.opengov.ussd.controller.UssdRequest;
-import za.org.opengov.ussd.controller.UssdResponse;
 import za.org.opengov.ussd.controller.cm.CMUssdRequest;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 import za.org.opengov.ussd.service.stockout.UssdStockoutDao;
