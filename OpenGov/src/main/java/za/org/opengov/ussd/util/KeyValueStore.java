@@ -20,6 +20,9 @@ public class KeyValueStore {
 	public Object put(String key,String Object){
 		return concurrentKeyValueStore.put(key, Object);
 	}
+	public Object put(String key,Object object){
+		return concurrentKeyValueStore.put(key, object);
+	}
 	
 	public Object put(String key,String[] Object){
 		return concurrentKeyValueStore.put(key, Object);
