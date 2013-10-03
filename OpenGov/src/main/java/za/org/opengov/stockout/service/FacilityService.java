@@ -2,10 +2,11 @@ package za.org.opengov.stockout.service;
 
 import java.util.List;
 
+import za.org.opengov.common.service.AbstractService;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.medical.Product;
 
-public interface FacilityService {
+public interface FacilityService extends AbstractService<Facility, String>  {
 
 	/**
 	 * Validates the existence of the specified facility, as uniquely

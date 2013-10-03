@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.common.util.StringMatchable;
 import za.org.opengov.common.util.StringMatcher;
 import za.org.opengov.stockout.dao.FacilityDao;
@@ -15,28 +16,32 @@ import za.org.opengov.stockout.service.FacilityService;
 
 @Service("facilityService")
 @Transactional
-public class FacilityServiceImpl implements FacilityService {
+public class FacilityServiceImpl extends
+		AbstractServiceImpl<FacilityDao, Facility, String> implements
+		FacilityService {
 
 	@Autowired
-	private FacilityDao facilityDao;
+	public FacilityServiceImpl(FacilityDao dao) {
+		super(dao);
+	}
 
 	@Override
 	public Facility validateFacilityCode(String facilityCode) {
 		facilityCode = facilityCode.toUpperCase().trim();
-		Facility facility = facilityDao.findById(facilityCode);
+		Facility facility = dao.findById(facilityCode);
 		return facility;
 	}
 
 	@Override
 	public void saveFacility(Facility facility) {
 		facility.setUid(facility.getUid().toUpperCase());
-		facilityDao.saveOrUpdate(facility);
+		put(facility);
 	}
 
 	@Override
 	public Facility getClosestMatch(String facilityIdentifier) {
 
-		List<Facility> facilities = facilityDao.findAll();
+		List<Facility> facilities = dao.findAll();
 
 		StringMatcher matcher = new StringMatcher();
 
@@ -91,7 +96,7 @@ public class FacilityServiceImpl implements FacilityService {
 
 	@Override
 	public List<Facility> getAllFacilitiesWithStock(Product product) {
-		return facilityDao.findAllWithoutStockoutOfProduct(product.getUid());
+		return dao.findAllWithoutStockoutOfProduct(product.getUid());
 	}
 
 	private class FacilityCodeWrapper implements StringMatchable {
