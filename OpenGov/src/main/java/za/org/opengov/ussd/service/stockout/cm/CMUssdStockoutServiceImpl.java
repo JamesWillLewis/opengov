@@ -79,7 +79,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				Facility facility = facilityService.getClosestMatch(displayText);
 				//-----------------------------------------------------------------------------
 
-				if (!facility.equals(null)) {
+				if (facility != null) {
 					// Need to set clinic name so that it can be re-used later
 					keyValueStore.put(
 							"facilityName." + request.getUssdSessionId(),
