@@ -2,6 +2,7 @@ package za.org.opengov.stockout.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "SOWS_STOCKOUT_REPORT")
@@ -37,7 +40,7 @@ public class StockoutReport {
 		this.uid = uid;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "FK_STOCKOUT")
 	public Stockout getStockout() {
 		return stockout;

@@ -1,5 +1,9 @@
 package za.org.opengov.stockout.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,6 +27,7 @@ public class Stockout {
 	private Product product;
 	private Facility facility;
 	private boolean resolved;
+	private Set<StockoutReport> stockoutReports = new HashSet<StockoutReport>();
 
 	public Stockout() {
 	}
@@ -74,6 +80,15 @@ public class Stockout {
 
 	public void setResolved(boolean resolved) {
 		this.resolved = resolved;
+	}
+	
+	@OneToMany(mappedBy="stockout", cascade=CascadeType.ALL)
+	public Set<StockoutReport> getStockoutReports() {
+		return stockoutReports;
+	}
+	
+	public void setStockoutReports(Set<StockoutReport> stockoutReports) {
+		this.stockoutReports = stockoutReports;
 	}
 
 }

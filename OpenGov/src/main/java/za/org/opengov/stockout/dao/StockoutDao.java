@@ -23,4 +23,5 @@ public interface StockoutDao extends AbstractDao<Stockout, Long> {
 	public List<Stockout> getStockoutsForFacilityOrderedByTimestamp(
 			String facilityCode, int limit);
 
+	
 }

@@ -1,5 +1,6 @@
 package za.org.opengov.stockout.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -28,7 +29,7 @@ public class Facility {
 	private double longitudeDecimalDegrees;
 	private double latitudeDecimalDegress;
 	
-	private Set<Stockout> stockouts;
+	private Set<Stockout> stockouts = new HashSet<Stockout>();
 	
 	public Facility() {
 	}
