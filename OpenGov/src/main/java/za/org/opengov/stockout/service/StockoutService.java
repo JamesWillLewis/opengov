@@ -3,6 +3,7 @@ package za.org.opengov.stockout.service;
 import java.util.List;
 
 import za.org.opengov.stockout.entity.Stockout;
+import za.org.opengov.stockout.entity.StockoutReport;
 
 public interface StockoutService {
 
@@ -21,5 +22,7 @@ public interface StockoutService {
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(String facilityCode, int limit);
 
 	public List<Stockout> getAllUnresolvedStockouts();
+	
+	public List<Stockout> getMostRecentStockoutsForFacility(String facilityCode, int limit);
 	
 }

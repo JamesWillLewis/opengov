@@ -14,10 +14,13 @@ public interface StockoutDao extends AbstractDao<Stockout, Long> {
 
 	public Stockout findByProductAndFacility(String productCode,
 			String facilityCode);
-	
-	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(String facilityCode, int limit);
+
+	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
+			String facilityCode, int limit);
 
 	public List<Stockout> findAllOrderedUnresolvedStockouts();
-	
+
+	public List<Stockout> getStockoutsForFacilityOrderedByTimestamp(
+			String facilityCode, int limit);
 
 }

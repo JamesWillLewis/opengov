@@ -66,4 +66,9 @@ public class StockoutServiceImpl implements StockoutService {
 		return stockoutDao.findAllOrderedUnresolvedStockouts();
 	}
 
+	@Override
+	public List<Stockout> getMostRecentStockoutsForFacility(String facilityCode, int limit) {
+		return stockoutDao.getStockoutsForFacilityOrderedByTimestamp(facilityCode, limit);
+	}
+
 }

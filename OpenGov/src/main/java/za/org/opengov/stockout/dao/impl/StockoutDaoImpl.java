@@ -81,4 +81,15 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		return criteria.list();
 	}
 
+	@Override
+	public List<Stockout> getStockoutsForFacilityOrderedByTimestamp(
+			String facilityCode, int limit) {
+		Criteria criteria = getCurrentSession().createCriteria(Stockout.class);
+		criteria.createAlias("issue", "i");
+		criteria.addOrder(Order.desc("i.startTimestamp"));
+		criteria.setMaxResults(limit);
+		
+		return criteria.list();
+	}
+
 }
