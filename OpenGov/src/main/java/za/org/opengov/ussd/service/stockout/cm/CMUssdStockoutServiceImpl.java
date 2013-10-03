@@ -163,20 +163,26 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				displayText = stockoutDao.getMenu(91);
 
 				int requestMedicine = Integer.parseInt(request.getRequest());
-
-				if (requestMedicine >= 1 && requestMedicine <= 7) { // process
+				
+				List<Stockout> commonStockouts = (List<Stockout>) keyValueStore.get("commonStockouts." + sessionId);
+				
+				if (requestMedicine >= 1 && requestMedicine <= 7 && commonStockouts.size()>=requestMedicine) { // process
 																	// medicine
 																	// selection
-																	// 1-8
-
-					List<Stockout> stockouts = (List<Stockout>) keyValueStore.get("commonStockouts." + sessionId);
+																// 1-8
+					Product selectedProduct = commonStockouts.get(requestMedicine - 1).getProduct();
+					if (selectedProduct != null){
 						
+						displayText = selectedProduct.getName();
+						keyValueStore.put("productName." + sessionId,selectedProduct);
+						displayText += " " + stockoutDao.getMenu(4);
+						menuRequest += 2;	
+					} else
+					{
+						throw new NumberFormatException();
+					}
 					
-					Product selectedProduct = stockouts.get(requestMedicine - 1).getProduct();
-					displayText = selectedProduct.getName();
-					keyValueStore.put("productName." + sessionId,selectedProduct);
-					displayText += " " + stockoutDao.getMenu(4);
-					menuRequest += 2;
+					
 
 				} else if (requestMedicine == 8) { // display enter medicine
 													// name prompt
