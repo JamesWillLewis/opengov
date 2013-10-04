@@ -75,7 +75,7 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 	@Override
 	public List<Stockout> findAllOrderedUnresolvedStockouts() {
 		Criteria criteria = getCurrentSession().createCriteria(Stockout.class);
-		criteria.add(Restrictions.eq("resolved", 0));
+		criteria.add(Restrictions.eq("resolved", false));
 		criteria.createAlias("issue", "i");
 		criteria.addOrder(Order.asc("i.priority"));
 		return criteria.list();

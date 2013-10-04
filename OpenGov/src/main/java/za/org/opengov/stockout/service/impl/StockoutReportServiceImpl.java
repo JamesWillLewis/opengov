@@ -41,12 +41,12 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 
 	@Autowired
 	private FacilityDao facilityDao;
-	
+
 	@Autowired
 	private StockoutService stockoutService;
-	
+
 	@Autowired
-	private IssueDao issueDao; 
+	private IssueDao issueDao;
 
 	@Override
 	@Transactional(readOnly = false)
@@ -60,15 +60,15 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 	@Override
 	@Transactional(readOnly = false)
 	public long submitStockoutReport(String productCode, String facilityCode,
-			Subject reporter, Subject reportee, String cause,
-			boolean reportedToDOH, boolean resolved)
+			Subject reporter, String cause, boolean reportedToDOH)
 			throws IllegalArgumentException {
 
 		Facility facility;
 		if (facilityCode != null && !facilityCode.isEmpty()) {
 			facility = facilityDao.findById(facilityCode);
-			if(facility == null){
-				throw new IllegalArgumentException("No such facility found with code: " + facilityCode);
+			if (facility == null) {
+				throw new IllegalArgumentException(
+						"No such facility found with code: " + facilityCode);
 			}
 		} else {
 			throw new IllegalArgumentException(
@@ -78,50 +78,44 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 		Product product;
 		if (productCode != null && !productCode.isEmpty()) {
 			product = productDao.findById(productCode);
-			if(product == null){
-				throw new IllegalArgumentException("No such product found with code: " + productCode);
+			if (product == null) {
+				throw new IllegalArgumentException(
+						"No such product found with code: " + productCode);
 			}
 		} else {
-			throw new IllegalArgumentException("Valid product code must be specified");
+			throw new IllegalArgumentException(
+					"Valid product code must be specified");
 		}
 
 		StockoutReport stockoutReport = new StockoutReport();
-		
-		//check whether this stockout has been reported before
-		Stockout stockout = stockoutService.getStockout(facilityCode, productCode);
-		//this is a new stockout
-		if(stockout == null){
-			//open an issue
+
+		// check whether this stockout has been reported before
+		Stockout stockout = stockoutService.getStockout(facilityCode,
+				productCode);
+		// this is a new stockout
+		if (stockout == null) {
+			// open an issue
 			Issue issue = new Issue();
 			issue.setStartTimestamp(Calendar.getInstance().getTime());
 			issue.setPriority(0);
-			issue.setSeverity(1);
+			issue.setSeverity(5);
 			issue.setState(IssueState.OPEN);
 			issueDao.saveOrUpdate(issue);
-			
-			
-			//create a new stockout
+
+			// create a new stockout
 			stockout = new Stockout();
 			stockout.setFacility(facility);
 			stockout.setProduct(product);
 			stockout.setResolved(false);
 			stockout.setIssue(issue);
-			
-			stockoutService.saveStockout(stockout);
-		} else{
-			//is an old stockout, so raise severity
-			stockout.getIssue().setSeverity(stockout.getIssue().getSeverity()+1);
-			issueDao.saveOrUpdate(stockout.getIssue());
-			stockoutService.saveStockout(stockout);
 		}
-
+		stockout.getStockoutReports().add(stockoutReport);
 		stockoutReport.setStockout(stockout);
 		stockoutReport.setCause(cause);
-		//set timestamp to submitted time
+		// set timestamp to submitted time
 		stockoutReport.setTimestamp(Calendar.getInstance().getTime());
 		stockoutReport.setReportedToDOH(reportedToDOH);
 		stockoutReport.setReporter(reporter);
-		stockoutReport.setReportee(reportee);
 
 		return submitStockoutReport(stockoutReport);
 	}
@@ -139,8 +133,5 @@ public class StockoutReportServiceImpl implements StockoutReportService {
 	public List<StockoutReport> getRecentlyReportedStockoutsForDisease() {
 		throw new NotYetImplementedException();
 	}
-	
-
-
 
 }

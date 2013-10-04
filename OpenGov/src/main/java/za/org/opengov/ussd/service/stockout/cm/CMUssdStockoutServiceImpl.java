@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.StockoutReport;
+import za.org.opengov.stockout.entity.Subject;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutReportService;
@@ -248,8 +249,10 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						//must be the correct facility and product code
 						String productCode = selectedProduct.getUid();
 						String facilityCode = selectedFacility.getUid();
-						stockoutReportService.submitStockoutReport(productCode, facilityCode, null,
-								null, null, false, false);
+						Subject subject = new Subject();
+						subject.setContactNumber(request.getMsisdn());
+						stockoutReportService.submitStockoutReport(productCode, facilityCode, subject,
+								"stockout of product", false);
 						//-----------------------------------------------------------------------------
 						
 						

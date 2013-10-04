@@ -31,8 +31,8 @@ public interface StockoutReportService {
 	 * @throws IllegalArgumentException if productCode or facilityCode are null or empty strings.
 	 */
 	public long submitStockoutReport(String productCode, String facilityCode,
-			Subject reporter, Subject reportee, String cause,
-			boolean reportedToDOH, boolean resolved)
+			Subject reporter, String cause,
+			boolean reportedToDOH)
 			throws IllegalArgumentException;
 	
 	

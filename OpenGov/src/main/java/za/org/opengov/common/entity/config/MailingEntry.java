@@ -1,9 +1,11 @@
 package za.org.opengov.common.entity.config;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ public class MailingEntry {
 
 	private String address;
 	private String name;
-	private Set<MailingRole> mailingRoles;
+	private Set<MailingRole> mailingRoles = new HashSet<MailingRole>();
 	
 	public MailingEntry() {
 	}

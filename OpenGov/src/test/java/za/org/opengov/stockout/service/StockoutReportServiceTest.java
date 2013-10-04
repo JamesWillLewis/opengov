@@ -114,10 +114,10 @@ public class StockoutReportServiceTest {
 		Product p = productService.getClosestMatch("panaada");
 		Facility f = facilityService.getClosestMatch("kayalitcha");
 		
-		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
-		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
-		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
-		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, null, null, false, false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test", false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test", false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test", false);
+		reportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test", false);
 		
 		
 		StockoutReport report = reportService.getRecentlyReportedStockouts(1).get(0);

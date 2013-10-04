@@ -17,7 +17,7 @@ public class Medicine {
 	private Long uid;
 	private Disease disease;
 	private String name;
-	private String diseaseClass;
+	private MedicineClass medicineClass;
 
 	public Medicine() {
 	}
@@ -52,13 +52,14 @@ public class Medicine {
 		this.name = name;
 	}
 
-	@Column(name="CLASS")
-	public String getDiseaseClass() {
-		return diseaseClass;
+	@ManyToOne
+	@JoinColumn(name="FK_MEDICINE_CLASS")
+	public MedicineClass getMedicineClass() {
+		return medicineClass;
 	}
-
-	public void setDiseaseClass(String diseaseClass) {
-		this.diseaseClass = diseaseClass;
+	
+	public void setMedicineClass(MedicineClass medicineClass) {
+		this.medicineClass = medicineClass;
 	}
 	
 	

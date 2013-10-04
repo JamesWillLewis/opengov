@@ -29,6 +29,8 @@
 				<value>classpath:/properties/mail.properties</value>
 				<value>classpath:/properties/database.properties</value>
 				<value>classpath:/properties/cron.properties</value>
+				<value>classpath:/properties/configuration_defaults.properties </value>
+				<value>classpath:/locale/mail_body_EN.properties </value>
 			</list>
 		</property>
 	</bean>
@@ -46,6 +48,11 @@
 				<prop key="mail.smtp.starttls.enable">true</prop>
 			</props>
 		</property>
+	</bean>
+	
+	<bean id="stockoutNotificationSender" class="za.org.opengov.stockout.schedule.StockoutNotificationService">
+		<property name="sender" value="${mail.username}"/>
+		<property name="stockoutReportRoleTag" value="#STOCKOUT_MAIL_LIST"></property>
 	</bean>
 
 </beans>

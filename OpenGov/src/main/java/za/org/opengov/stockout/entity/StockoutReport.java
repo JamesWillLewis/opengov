@@ -50,7 +50,7 @@ public class StockoutReport {
 		this.stockout = stockout;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "FK_REPORTER")
 	public Subject getReporter() {
 		return reporter;
@@ -60,7 +60,7 @@ public class StockoutReport {
 		this.reporter = reporter;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "FK_REPORTEE")
 	public Subject getReportee() {
 		return reportee;
