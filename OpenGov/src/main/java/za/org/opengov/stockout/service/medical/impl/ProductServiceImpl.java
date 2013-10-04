@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.common.util.StringMatchable;
 import za.org.opengov.common.util.StringMatcher;
 import za.org.opengov.stockout.dao.medical.ProductDao;
@@ -14,7 +15,13 @@ import za.org.opengov.stockout.service.medical.ProductService;
 
 @Service("productService")
 @Transactional
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product, String> implements ProductService {
+
+	@Autowired
+	public ProductServiceImpl(ProductDao dao) {
+		super(dao);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Autowired
 	private ProductDao productDao;
@@ -63,6 +70,30 @@ public class ProductServiceImpl implements ProductService {
 	public void saveProduct(Product product) {
 		product.setUid(product.getUid().toUpperCase());
 		productDao.saveOrUpdate(product);
+	}
+
+	@Override
+	public Product get(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void remove(Product entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Product> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void put(Product entity) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

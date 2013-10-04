@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
@@ -10,6 +9,11 @@
 
 	<util:properties id="ussdStockoutEN"
 		location="classpath:/locale/ussd_stockout_EN.properties" />
+
+	<util:properties id="configurationDefaults"
+		location="classpath:/properties/configuration_defaults.properties" />
+
+
 
 	<aop:aspectj-autoproxy />
 	<task:annotation-driven />
@@ -29,8 +33,6 @@
 				<value>classpath:/properties/mail.properties</value>
 				<value>classpath:/properties/database.properties</value>
 				<value>classpath:/properties/cron.properties</value>
-				<value>classpath:/properties/configuration_defaults.properties </value>
-				<value>classpath:/locale/mail_body_EN.properties </value>
 			</list>
 		</property>
 	</bean>
@@ -49,9 +51,10 @@
 			</props>
 		</property>
 	</bean>
-	
-	<bean id="stockoutNotificationSender" class="za.org.opengov.stockout.schedule.StockoutNotificationService">
-		<property name="sender" value="${mail.username}"/>
+
+	<bean id="stockoutNotificationService"
+		class="za.org.opengov.stockout.schedule.StockoutNotificationService">
+		<property name="sender" value="${mail.username}" />
 		<property name="stockoutReportRoleTag" value="#STOCKOUT_MAIL_LIST"></property>
 	</bean>
 

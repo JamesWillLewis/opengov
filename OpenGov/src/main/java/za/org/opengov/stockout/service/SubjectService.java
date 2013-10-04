@@ -1,5 +1,8 @@
 package za.org.opengov.stockout.service;
 
-public interface SubjectService {
+import za.org.opengov.common.service.AbstractService;
+import za.org.opengov.stockout.entity.Subject;
+
+public interface SubjectService extends AbstractService<Subject, Long>{
 
 }

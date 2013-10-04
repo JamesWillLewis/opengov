@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 
 import za.org.opengov.common.entity.config.MailingEntry;
 import za.org.opengov.common.service.config.MailingEntryService;
+import za.org.opengov.common.service.config.SystemParameterService;
 import za.org.opengov.common.util.MailUtil;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.service.StockoutService;
 
-@Component("stockoutNotificationService")
+@Component
 public class StockoutNotificationService {
 
 	@Autowired
@@ -24,15 +25,16 @@ public class StockoutNotificationService {
 
 	@Autowired
 	private MailUtil mailUtil;
-	
+
 	@Autowired
 	private MailingEntryService mailingEntryService;
-	
-	private String sender;
-	
-	private String stockoutReportRoleTag;
 
-	
+	@Autowired
+	private SystemParameterService systemParameterService;
+
+	private String sender;
+
+	private String stockoutReportRoleTag;
 
 	/**
 	 * Send email notifications to email list, every Monday, at 11:00 AM.
@@ -40,20 +42,24 @@ public class StockoutNotificationService {
 	 */
 	@Scheduled(cron = "${cron.stockout.notification}")
 	public void sendNotifications() {
-		sendStockoutNotifications();
+		if (systemParameterService.getParam("stockout.notifications.enabled")
+				.equals("1")) {
+			sendStockoutNotifications();
+		}
 	}
 
 	public void sendStockoutNotifications() {
 		stockoutService.updateAllStockoutPriorities();
 		List<Stockout> stockouts = stockoutService.getAllUnresolvedStockouts();
 
-		List<MailingEntry> mailingList = mailingEntryService.getAllMailingEntriesForRole(stockoutReportRoleTag); 
+		List<MailingEntry> mailingList = mailingEntryService
+				.getAllMailingEntriesForRole(stockoutReportRoleTag);
 
 		String mail = "there are " + stockouts.size()
 				+ " stockouts with priority "
 				+ stockouts.get(0).getIssue().getPriority();
-		//TODO
-		//mailUtil.sendMail(sender, to, "StockOut report", mail);
+		// TODO
+		 mailUtil.sendMail(sender, "james.will.lewis@gmail.com", "StockOut report", mail);
 
 	}
 
@@ -64,14 +70,13 @@ public class StockoutNotificationService {
 	public String getSender() {
 		return sender;
 	}
-	
+
 	public void setStockoutReportRoleTag(String stockoutReportRoleTag) {
 		this.stockoutReportRoleTag = stockoutReportRoleTag;
 	}
-	
+
 	public String getStockoutReportRoleTag() {
 		return stockoutReportRoleTag;
 	}
-	
 
 }

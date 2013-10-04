@@ -5,18 +5,24 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import za.org.opengov.common.service.IssueService;
+import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.StockoutDao;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.service.StockoutService;
 
 @Service("stockoutService")
 @Transactional
-public class StockoutServiceImpl implements StockoutService {
+public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stockout, Long> implements StockoutService {
+
+	@Autowired
+	public StockoutServiceImpl(StockoutDao dao) {
+		super(dao);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Autowired
 	private StockoutDao stockoutDao;

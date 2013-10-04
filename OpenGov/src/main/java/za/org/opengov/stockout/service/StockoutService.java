@@ -2,10 +2,10 @@ package za.org.opengov.stockout.service;
 
 import java.util.List;
 
+import za.org.opengov.common.service.AbstractService;
 import za.org.opengov.stockout.entity.Stockout;
-import za.org.opengov.stockout.entity.StockoutReport;
 
-public interface StockoutService {
+public interface StockoutService extends AbstractService<Stockout, Long>{
 
 	public void saveStockout(Stockout stockout);
 

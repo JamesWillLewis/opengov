@@ -2,13 +2,11 @@ package za.org.opengov.stockout.service;
 
 import java.util.List;
 
-import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.common.service.AbstractService;
 import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.Subject;
-import za.org.opengov.stockout.entity.medical.Disease;
-import za.org.opengov.stockout.entity.medical.Product;
 
-public interface StockoutReportService {
+public interface StockoutReportService extends AbstractService<StockoutReport, Long>{
 
 	/**
 	 * Submit a stock-out report.

@@ -1,15 +1,9 @@
 package za.org.opengov.stockout.service.impl;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.cfg.NotYetImplementedException;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.ejb.criteria.CriteriaBuilderImpl;
-import org.hibernate.internal.CriteriaImpl.CriterionEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.common.dao.IssueDao;
 import za.org.opengov.common.entity.Issue;
 import za.org.opengov.common.entity.IssueState;
-import za.org.opengov.common.service.IssueService;
+import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.FacilityDao;
 import za.org.opengov.stockout.dao.StockoutReportDao;
 import za.org.opengov.stockout.dao.medical.ProductDao;
@@ -31,7 +25,13 @@ import za.org.opengov.stockout.service.StockoutService;
 
 @Service("stockoutReportService")
 @Transactional
-public class StockoutReportServiceImpl implements StockoutReportService {
+public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutReportDao, StockoutReport, Long> implements StockoutReportService {
+
+	@Autowired
+	public StockoutReportServiceImpl(StockoutReportDao dao) {
+		super(dao);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Autowired
 	private StockoutReportDao stockoutReportDao;
