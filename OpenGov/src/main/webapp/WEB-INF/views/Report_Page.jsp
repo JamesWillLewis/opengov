@@ -53,17 +53,13 @@
       					<input type="text" class="form-control input-sm" 
       					id="inputDesignation" placeholder="Enter Designation" style="visibility:hidden">
       				</div>
-      				<div class="form-group">
-      					<label for="datepicker">Date of Report</label>
-						   
-						   <div id="datepicker" class="input-append date datepicker" data-date-format="dd-mm-yyyy" data-date="12-02-2012">
-    						<input class="span2 datepicker" type="text" readonly="" value="10-05-2013" size="16"></input>
-    							<span class="add-on">
-        						<i class="icon-calendar"></i>
-    							</span>
-								
-							</div>			
-						  </div>
+						  	<label for="datepicker">Date of First Occurrence</label>
+						     <div class="input-group input-append date" id="datepicker" data-date="05-10-2013" data-date-format="dd-mm-yyyy">
+    							<span class="input-group-addon add-on"><i class="glyhicon glyphicon-calendar"></i></span>
+    							<input class="form-control span2" type="text" value="05-10-2013" readonly>
+    							</div>
+    	
+	
     					<div class="form-group">
 						<label for="select">Province</label>
       					<select id="select" class="form-control input-sm">
