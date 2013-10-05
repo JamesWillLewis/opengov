@@ -8,7 +8,27 @@
 <title>Report a Stockout</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+ 		
  		<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+ 		 		<link href="resources/css/datepicker.css" rel="stylesheet"  type="text/css"/>
+ 				<script src="resources/js/jquery-1.10.2.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+		<script src="resources/js/bootstrap-datepicker.js"></script>
+	
+	<script language="javascript">
+           
+		function enableElement(theId) { 
+             document.getElementById(theId.id).style.visibility = "visible";
+           }
+		function disableElement(theId){
+			document.getElementById(theId.id).style.visibility = "hidden";	
+		}
+		
+		$( document ).ready(function() {
+		    $('#datepicker').datepicker();
+		});
+		
+       </script>
 
 </head>
 <body>
@@ -24,14 +44,48 @@
 					<div class="form-group">
 						 <label for="select">* Designation</label>
       					<select id="select" class="form-control input-sm">
-        				<option>Activist</option>
-        				<option>Nurse</option>
-        				<option>Healthcare Worker</option>
-        				<option>DOH official</option>
+        				<option onclick=disableElement(inputDesignation)>Activist</option>
+        				<option onclick=disableElement(inputDesignation)>Nurse</option>
+        				<option onclick=disableElement(inputDesignation)>Healthcare Worker</option>
+        				<option onclick=disableElement(inputDesignation)>DOH official</option>
+        				<option onclick=enableElement(inputDesignation)>Other</option>
       					</select>
+      					<input type="text" class="form-control input-sm" 
+      					id="inputDesignation" placeholder="Enter Designation" style="visibility:hidden">
+      				</div>
       				<div class="form-group">
-      					<label for="currDate">Date of Report</label>
-						<div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">      				</div>
+      					<label for="datepicker">Date of Report</label>
+						   
+						   <div id="datepicker" class="input-append date datepicker" data-date-format="dd-mm-yyyy" data-date="12-02-2012">
+    						<input class="span2 datepicker" type="text" readonly="" value="10-05-2013" size="16"></input>
+    							<span class="add-on">
+        						<i class="icon-calendar"></i>
+    							</span>
+								
+							</div>			
+						  </div>
+    					<div class="form-group">
+						<label for="select">Province</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>Gauteng</option>
+        				<option>Western Cape</option>
+        				<option>etc</option>
+      					</select>
+    				</div>
+    				<div class="form-group">
+						 <label for="select">Name of Facility</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>Facility 1</option>
+        				<option>etc</option>
+      					</select>
+    				</div>
+    				<div class="form-group">
+						 <label for="inputPhone">Cellphone Number</label>
+      					<input type="text" class="form-control input-sm" id="inputName" placeholder="">
+    				</div>
+    				<div class="form-group">
+						 <label for="inputPhone">Email Address</label>
+      					<input type="text" class="form-control input-sm" id="inputName" placeholder="">
     				</div>
 				</form>
 			</div>
