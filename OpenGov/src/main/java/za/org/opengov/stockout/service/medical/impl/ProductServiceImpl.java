@@ -1,5 +1,6 @@
 package za.org.opengov.stockout.service.medical.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,27 +74,12 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product,
 	}
 
 	@Override
-	public Product get(String identifier) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void remove(Product entity) {
+	public void populateDatabaseFromCSV(File file, String seperator,
+			String textDelimeter) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public List<Product> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public void put(Product entity) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

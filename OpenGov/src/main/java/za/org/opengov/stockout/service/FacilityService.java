@@ -1,5 +1,6 @@
 package za.org.opengov.stockout.service;
 
+import java.io.File;
 import java.util.List;
 
 import za.org.opengov.common.service.AbstractService;
@@ -25,5 +26,8 @@ public interface FacilityService extends AbstractService<Facility, String>  {
 	public List<Facility> getAllFacilitiesWithStock(Product product);
 	
 	public Facility getNearestFacilityWithStock(Product product, Facility originFacility);
+	
+	public void populateDatabaseFromCSV(File file, String seperator,
+			String textDelimeter);
 	
 }

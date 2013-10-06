@@ -1,5 +1,6 @@
 package za.org.opengov.stockout.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,13 @@ public class FacilityServiceImpl extends
 			return facility.getLocalName();
 		}
 
+	}
+
+	@Override
+	public void populateDatabaseFromCSV(File file, String seperator,
+			String textDelimeter) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

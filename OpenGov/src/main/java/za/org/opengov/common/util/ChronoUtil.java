@@ -2,6 +2,12 @@ package za.org.opengov.common.util;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author James Lewis
+ * @deprecated Instead use the Joda library (org.joda.time)
+ */
+@Deprecated
 public class ChronoUtil {
 
 	public static final long MILLIS_IN_SECOND = 1000;
@@ -17,7 +23,6 @@ public class ChronoUtil {
 
 		public ChronoDifference(long diffSeconds, long diffMinutes,
 				long diffHours, long diffDays) {
-			super();
 			this.diffSeconds = diffSeconds;
 			this.diffMinutes = diffMinutes;
 			this.diffHours = diffHours;
@@ -27,7 +32,6 @@ public class ChronoUtil {
 	}
 
 	public static ChronoDifference getChronoDifference(Date former, Date latter) {
-
 		long diff = latter.getTime() - former.getTime();
 
 		long diffSeconds = diff / MILLIS_IN_SECOND % 60;

@@ -4,6 +4,11 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
+/**
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ *
+ */
 @Aspect
 public class LoggingAspect {
 	
