@@ -267,7 +267,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						Stockout stockout = stockoutService.getStockout(selectedFacilityCode, selectedProductCode);
 						//-----------------------------------------------------------------------------
 						
-						displayText = stockoutDao.getMenu(6) + " " + stockout.getIssue().getState().toString();
+						displayText = stockoutDao.getMenu(6) + " " + stockout.getIssue().getState().toString() + stockoutDao.getMenu(8);
 						break;
 					case 3:
 						// displayText =
@@ -278,7 +278,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						
 						//-----------------------------------------------------------------------------
 						
-						displayText = stockoutDao.getMenu(7) + " " + closestFacility.getLocalName();
+						displayText = stockoutDao.getMenu(7) + " " + closestFacility.getLocalName() + stockoutDao.getMenu(8);
 						break;
 					}
 
