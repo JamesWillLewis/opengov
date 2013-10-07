@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,10 +39,16 @@ public class CSVParser {
 
 		try {
 			while ((line = reader.readLine()) != null) {
+				
+				System.out.println(line);
+
 				String[] tokens = line.split(separatorToken + "(?=([^"
 						+ textDelimiter + "]*" + textDelimiter + "[^"
-						+ textDelimiter + "]*" + textDelimiter + ")*[^ "
-						+ textDelimiter + "]*$)");
+						+ textDelimiter + "]*" + textDelimiter + ")*[^"
+						+ textDelimiter + "]*$)", -1);
+				
+				System.out.println(tokens.length);
+				System.out.println(Arrays.toString(tokens));
 
 				ArrayList<String> newRow = new ArrayList<String>(tokens.length);
 
@@ -87,7 +94,7 @@ public class CSVParser {
 		return csvMatrix.get(index);
 	}
 
-	public List<List<String>> getCsvMatrix() {
+	public List<List<String>> getRows() {
 		return csvMatrix;
 	}
 

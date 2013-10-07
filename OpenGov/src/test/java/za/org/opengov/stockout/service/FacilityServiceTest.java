@@ -49,7 +49,7 @@ public class FacilityServiceTest {
 
 		Facility facility = new Facility();
 		facility.setLocalName("TEST LOCAL NAME");
-		facility.setRegion("TEST REGION");
+		facility.setDistrict("TEST REGION");
 		facility.setUid("#TEST_CODE");
 
 		//obviously assuming no facility was added with this code
@@ -60,7 +60,7 @@ public class FacilityServiceTest {
 		Facility testFac = facilityService.validateFacilityCode("   #tEst_COde   ");
 		assertNotNull(testFac);
 		assertEquals(testFac.getLocalName(), "TEST LOCAL NAME");
-		assertEquals(testFac.getRegion(), "TEST REGION");
+		assertEquals(testFac.getDistrict(), "TEST REGION");
 
 	}
 	

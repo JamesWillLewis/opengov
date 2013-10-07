@@ -22,12 +22,12 @@ public class Facility {
 	private SupplyDepot supplyDepot;
 	private String officialDOHName;
 	private String localName;
-	private String municipality;
-	private String region;
+	private String town;
+	private String district;
 	private FacilityType facilityType;
 	
-	private double longitudeDecimalDegrees;
-	private double latitudeDecimalDegress;
+	private Double longitudeDecimalDegrees;
+	private Double latitudeDecimalDegress;
 	
 	private Set<Stockout> stockouts = new HashSet<Stockout>();
 	
@@ -72,22 +72,22 @@ public class Facility {
 		this.localName = localName;
 	}
 
-	@Column(name = "MUNICIPALITY")
-	public String getMunicipality() {
-		return municipality;
+	@Column(name = "TOWN")
+	public String getTown() {
+		return town;
 	}
 
-	public void setMunicipality(String municipality) {
-		this.municipality = municipality;
+	public void setTown(String town) {
+		this.town = town;
 	}
 
-	@Column(name = "REGION")
-	public String getRegion() {
-		return region;
+	@Column(name = "DISTRICT")
+	public String getDistrict() {
+		return district;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 
 	@Column(name = "FACILITY_TYPE")
@@ -101,20 +101,20 @@ public class Facility {
 	}
 	
 	@Column(name = "LATITUDE")
-	public double getLatitudeDecimalDegress() {
+	public Double getLatitudeDecimalDegress() {
 		return latitudeDecimalDegress;
 	}
 	
-	public void setLatitudeDecimalDegress(double latitudeDecimalDegress) {
+	public void setLatitudeDecimalDegress(Double latitudeDecimalDegress) {
 		this.latitudeDecimalDegress = latitudeDecimalDegress;
 	}
 	
 	@Column(name = "LONGITUDE")
-	public double getLongitudeDecimalDegrees() {
+	public Double getLongitudeDecimalDegrees() {
 		return longitudeDecimalDegrees;
 	}
 	
-	public void setLongitudeDecimalDegrees(double longitudeDecimalDegrees) {
+	public void setLongitudeDecimalDegrees(Double longitudeDecimalDegrees) {
 		this.longitudeDecimalDegrees = longitudeDecimalDegrees;
 	}
 	

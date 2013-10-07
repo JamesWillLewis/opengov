@@ -1,5 +1,8 @@
 package za.org.opengov.stockout.service.medical.impl;
 
+import java.util.List;
+
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +14,25 @@ import za.org.opengov.stockout.service.medical.MedicineService;
 
 @Service("medicineService")
 @Transactional
-public class MedicineServiceImpl extends AbstractServiceImpl<MedicineDao, Medicine, Long> implements MedicineService {
+public class MedicineServiceImpl extends
+		AbstractServiceImpl<MedicineDao, Medicine, Long> implements
+		MedicineService {
 
 	@Autowired
 	public MedicineServiceImpl(MedicineDao dao) {
 		super(dao);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Medicine findByName(String name) {
+		List<Medicine> medicines = dao.findByCriteria(Restrictions.like("name",
+				name));
+		if (medicines.isEmpty()) {
+			return null;
+		} else {
+			return medicines.get(0);
+		}
 	}
 
 }

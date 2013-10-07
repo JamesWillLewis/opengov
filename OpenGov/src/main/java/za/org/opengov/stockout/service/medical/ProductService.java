@@ -23,5 +23,7 @@ public interface ProductService extends AbstractService<Product, String> {
 
 	public void populateDatabaseFromCSV(File file, String seperator,
 			String textDelimeter);
+	
+	public String generateProductCode(String name);
 
 }

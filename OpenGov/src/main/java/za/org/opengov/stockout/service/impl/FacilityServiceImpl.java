@@ -1,6 +1,8 @@
 package za.org.opengov.stockout.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
+import za.org.opengov.common.util.CSVParser;
 import za.org.opengov.common.util.StringMatchable;
 import za.org.opengov.common.util.StringMatcher;
 import za.org.opengov.stockout.dao.FacilityDao;
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.FacilityType;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 
@@ -140,9 +144,74 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public void populateDatabaseFromCSV(File file, String seperator,
-			String textDelimeter) {
-		// TODO Auto-generated method stub
+			String textDelimeter, FacilityType facilityType) {
+		try {
+			CSVParser parser = new CSVParser(new FileInputStream(file),
+					seperator, textDelimeter);
+
+			for (List<String> row : parser.getRows()) {
+				Facility facility = new Facility();
+
+				String name = row.get(0);
+				
+				
+				String location = "";
+				String[] locationString;
+				//some rows are missing location info
+				if (row.size() == 2) {
+					location = row.get(1);
+					locationString = location.split(",");
+					
+					facility.setTown(locationString[0].trim());
+					if(locationString.length == 2){
+						facility.setDistrict(locationString[1].trim());
+					} 
+				}
+				 
+
+				facility.setOfficialDOHName(name);
+				facility.setLocalName(name);
+				facility.setUid(generateFacilityCode(name));
+				facility.setFacilityType(facilityType);
+
+				
+
+				saveFacility(facility);
+			}
+
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not load CSV file: " + file.getPath());
+		}
+	}
+
+	@Override
+	public String generateFacilityCode(String name) {
+
+		name = name.trim();
 		
+		int stringPartLength = 3;
+		String stringPart = "";
+
+		// capture string part
+		if (stringPartLength > name.length()) {
+			stringPart = name;
+		} else {
+			stringPart = name.substring(0, stringPartLength);
+		}
+		
+		stringPart = stringPart.toUpperCase();
+
+		int numberPart = 1;
+		String wholeID = stringPart;
+
+		Facility sameIDFacility = get(wholeID);
+		while (sameIDFacility != null) {
+			wholeID = stringPart + numberPart;
+			numberPart++;
+			sameIDFacility = get(wholeID);
+		}
+
+		return wholeID;
 	}
 
 }
