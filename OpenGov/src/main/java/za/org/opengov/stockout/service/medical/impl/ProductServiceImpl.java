@@ -3,6 +3,10 @@ package za.org.opengov.stockout.service.medical.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,9 @@ import za.org.opengov.stockout.service.medical.ProductService;
 
 @Service("productService")
 @Transactional
-public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product, String> implements ProductService {
+public class ProductServiceImpl extends
+		AbstractServiceImpl<ProductDao, Product, String> implements
+		ProductService {
 
 	@Autowired
 	public ProductServiceImpl(ProductDao dao) {
@@ -32,7 +38,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product,
 
 	@Autowired
 	private ProductDao productDao;
-	
+
 	@Autowired
 	private MedicineService medicineService;
 
@@ -85,47 +91,84 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product,
 	@Override
 	public void populateDatabaseFromCSV(File file, String seperator,
 			String textDelimeter) {
-		
+
 		CSVParser parser;
 		try {
-			parser = new CSVParser(new FileInputStream(file),
-					seperator, textDelimeter);
-			
+			parser = new CSVParser(new FileInputStream(file), seperator,
+					textDelimeter);
+
 			for (List<String> row : parser.getRows()) {
-				
+
 				String medicineName = row.get(0);
 				String dosage = row.get(1);
-				String productName = row.get(8);
-				
-				//add the medicine if it isn't in the DB already
+				String fullName = row.get(8);
+
+				// add the medicine if it isn't in the DB already
 				Medicine m = medicineService.findByName(medicineName);
-				if(m==null){
+				if (m == null) {
 					m = new Medicine();
 					m.setName(medicineName.trim().toUpperCase());
 					medicineService.put(m);
 				}
-				
+
+				ArrayList<String> terminateWords = new ArrayList<String>();
+				terminateWords.add("TAB");
+				terminateWords.add("SOL");
+				terminateWords.add("ORAL");
+				terminateWords.add("CAP");
+				terminateWords.add("INJ");
+				terminateWords.add("SUS");
+				terminateWords.add("POW");
+				terminateWords.add("PAED");
+				terminateWords.add("CSV");
+
+				String productName = "";
+				String suffix = "";
+				boolean appendToName = true;
+
+				// split full name into product name and description
+				String[] tokens = fullName.split(" ");
+				for (int i = 0; i < tokens.length; i++) {
+					if (!tokens[i].isEmpty()) {
+						if (!appendToName) {
+							suffix += tokens[i] + " ";
+						} else {
+							// inspect token to see if it terminates the product
+							// name
+							if (Character.isDigit(tokens[i].charAt(0))
+									|| terminateWords.contains(tokens[i])) {
+								appendToName = false;
+								suffix += tokens[i] + " ";
+								continue;
+							}
+							productName += tokens[i] + " ";
+						}
+					}
+				}
+
+				productName = productName.trim();
+				suffix = suffix.trim();
+
 				Product p = new Product();
-				p.setUid(generateProductCode(productName));
+				p.setUid(generateProductCode(fullName));
 				p.setMedicine(m);
 				p.setName(productName);
-				
+				p.setDescription(suffix);
+
 				put(p);
-				
-				
+
 			}
 		} catch (FileNotFoundException e) {
 			System.err.println("Could not load CSV file: " + file.getPath());
 		}
 
-		
 	}
-	
+
 	@Override
 	public String generateProductCode(String name) {
 
 		name = name.trim();
-		
+
 		int stringPartLength = 5;
 		String stringPart = "";
 
@@ -135,7 +178,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product,
 		} else {
 			stringPart = name.substring(0, stringPartLength);
 		}
-		
+
 		stringPart = stringPart.toUpperCase();
 
 		int numberPart = 1;
@@ -150,7 +193,5 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductDao, Product,
 
 		return wholeID;
 	}
-
-
 
 }

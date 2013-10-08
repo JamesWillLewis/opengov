@@ -153,7 +153,7 @@ public class FacilityServiceImpl extends
 				Facility facility = new Facility();
 
 				String name = row.get(0);
-				
+				name = name.replaceAll(facilityType.getReadable(), "");
 				
 				String location = "";
 				String[] locationString;
@@ -174,7 +174,6 @@ public class FacilityServiceImpl extends
 				facility.setUid(generateFacilityCode(name));
 				facility.setFacilityType(facilityType);
 
-				
 
 				saveFacility(facility);
 			}

@@ -44,6 +44,10 @@ public class Product {
 	 */
 	private String name;
 	/**
+	 * Descript suffix of the product name (i.e. 200ML INJ)
+	 */
+	private String description;
+	/**
 	 * Price in ZAR exclusive of tax
 	 */
 	private double priceExclVAT;
@@ -143,5 +147,15 @@ public class Product {
 	public void setShelfLifeDateTimePeriod(Date shelfLifeDateTimePeriod) {
 		this.shelfLifeDateTimePeriod = shelfLifeDateTimePeriod;
 	}
+	
+	@Column(name="DESCRIPTION")
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	
 }
