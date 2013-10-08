@@ -73,19 +73,21 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				displayText = request.getRequest();
 				// stockoutDao.checkClinic(request.getRequest());****database
 				// call
-				
-				//-----------------------------------------------------------------------------
-				//String clinicName = displayText;
-				//matches the best matching facility
-				Facility facility = facilityService.getClosestMatch(displayText);
-				//-----------------------------------------------------------------------------
+
+				// -----------------------------------------------------------------------------
+				// String clinicName = displayText;
+				// matches the best matching facility
+				Facility facility = facilityService
+						.getClosestMatch(displayText);
+				// -----------------------------------------------------------------------------
 
 				if (facility != null) {
 					// Need to set clinic name so that it can be re-used later
 					keyValueStore.put(
 							"facilityName." + request.getUssdSessionId(),
 							facility);
-					displayText = facility.getLocalName() + " " + stockoutDao.getMenu(1);
+					displayText = facility.getLocalName() + " "
+							+ stockoutDao.getMenu(1);
 					++menuRequest;
 
 				} else {
@@ -107,43 +109,48 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				if (requestSelection >= 1 && requestSelection <= 3) {
 
-					
-					
-					
-					//-----------------------------------------------------------------------------
+					// -----------------------------------------------------------------------------
 					int limit = 5;
-					//must be facility code, not facility name
-					String facilityCode = ((Facility) (keyValueStore.get("facilityName." + sessionId))).getUid();
-					//facilityCode.
-					List<Stockout> stockouts = stockoutService.getMostCommonlyReportedStockoutsForFacility(facilityCode, limit);
-					if(stockouts.size()>0){
-					displayText = stockoutDao.getMenu(21);
-					keyValueStore.put("commonStockouts." + sessionId,stockouts);
-					
-					for(int index=0;index<stockouts.size();index++){
-						
-						displayText += (index+1) + "." + stockouts.get(index).getProduct().getName() + "\n";
-					}
-					//or 
+					// must be facility code, not facility name
+					String facilityCode = ((Facility) (keyValueStore
+							.get("facilityName." + sessionId))).getUid();
+					// facilityCode.
+					List<Stockout> stockouts = stockoutService
+							.getMostCommonlyReportedStockoutsForFacility(
+									facilityCode, limit);
+					if (stockouts.size() > 0) {
+						displayText = stockoutDao.getMenu(21);
+						keyValueStore.put("commonStockouts." + sessionId,
+								stockouts);
 
-					//this returns most recent reports, though I could also just return most recent actual stockouts
-					//since multiple recent reports could be for same stockouts
-					//List<StockoutReport> recentReports = stockoutReportService.getRecentlyReportedStockouts(limit);
-					
-					//-----------------------------------------------------------------------------
-					
-					
-					displayText += stockoutDao.getMenu(22);
+						for (int index = 0; index < stockouts.size(); index++) {
+
+							displayText += (index + 1)
+									+ "."
+									+ stockouts.get(index).getProduct()
+											.getName() + " " + stockouts.get(index).getProduct()
+											.getDescription() + "\n";
+						}
+						// or
+
+						// this returns most recent reports, though I could also
+						// just return most recent actual stockouts
+						// since multiple recent reports could be for same
+						// stockouts
+						// List<StockoutReport> recentReports =
+						// stockoutReportService.getRecentlyReportedStockouts(limit);
+
+						// -----------------------------------------------------------------------------
+
+						displayText += stockoutDao.getMenu(22);
 						++menuRequest;
-					}
-					else{
+					} else {
 						displayText = stockoutDao.getMenu(3);
-						menuRequest +=2;
-						
+						menuRequest += 2;
+
 					}
 					keyValueStore.put("service." + sessionId,
 							Integer.toString(requestSelection));
-					
 
 				} else {
 
@@ -158,28 +165,29 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				displayText = stockoutDao.getMenu(91);
 
 				int requestMedicine = Integer.parseInt(request.getRequest());
-				
-				List<Stockout> commonStockouts = (List<Stockout>) keyValueStore.get("commonStockouts." + sessionId);
-				
-				if (requestMedicine >= 1 && requestMedicine <= 7 && commonStockouts.size()>=requestMedicine) { // process
-																	// medicine
-																	// selection
-																// 1-8
-					Product selectedProduct = commonStockouts.get(requestMedicine - 1).getProduct();
-					if (selectedProduct != null){
-						
+
+				List<Stockout> commonStockouts = (List<Stockout>) keyValueStore
+						.get("commonStockouts." + sessionId);
+
+				if (requestMedicine >= 1 && requestMedicine <= 8
+						&& commonStockouts.size() >= requestMedicine) { // process
+					// medicine
+					// selection
+					// 1-8
+					Product selectedProduct = commonStockouts.get(
+							requestMedicine - 1).getProduct();
+					if (selectedProduct != null) {
+
 						displayText = selectedProduct.getName();
-						keyValueStore.put("productName." + sessionId,selectedProduct);
+						keyValueStore.put("productName." + sessionId,
+								selectedProduct);
 						displayText += " " + stockoutDao.getMenu(4);
-						menuRequest += 2;	
-					} else
-					{
+						menuRequest += 3;
+					} else {
 						throw new NumberFormatException();
 					}
-					
-					
 
-				} else if (requestMedicine == 8) { // display enter medicine
+				} else if (requestMedicine == 9) { // display enter medicine
 													// name prompt
 
 					displayText = stockoutDao.getMenu(3);
@@ -194,60 +202,75 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 			case 4: // validate/find nearest match to medicine name+display
 					// appropriate menu as above
-				
-				//-----------------------------------------------------------------------------
+
+				// -----------------------------------------------------------------------------
 				displayText = request.getRequest();
-				
-				Product searchProduct = productService.getClosestMatch(displayText);
-				
-				displayText="Please select Dosage for:" + searchProduct.getName() + "\n";
-				
-				list<Product> dosages = productService.getProducts(searchProduct);
-				
-				for(int k=0; k<dosages.size();k++){
-					
-					displayText += (k+1) + "." + dosages.get(k).getProduct().getDescription() + "\n";
+
+				Product searchProduct = productService
+						.getClosestMatch(displayText);
+
+				displayText = stockoutDao.getMenu(10) + " "
+						+ searchProduct.getName() + "\n";
+
+				List<Product> productsForName = productService
+						.getAllProductsMatchingName(searchProduct);
+
+				for (int k = 0; k < productsForName.size(); k++) {
+
+					displayText += (k + 1)
+							+ "."
+							+ productsForName.get(k).getDescription() + "\n";
 
 				}
 				
-				//-----------------------------------------------------------------------------
+				displayText += stockoutDao.getMenu(11);
 
-				
+				// -----------------------------------------------------------------------------
 
 				if ((searchProduct != null)) { // medicine name found, go
-														// to next menu
-					keyValueStore.put("dosages." + sessionId, dosages);
+												// to next menu
+					keyValueStore.put("dosages." + sessionId, productsForName);
 					++menuRequest;
 
 				} else { // medicine name not found
 					displayText += " " + stockoutDao.getMenu(92);
+					
 					throw new NumberFormatException();
 				}
-				
+
 				break;
-			
+
 			case 5:
-				
+
 				displayText = stockoutDao.getMenu(91);
 
 				int requestDosage = Integer.parseInt(request.getRequest());
-				
-				List<Product> productDosages = (List<Product>) keyValueStore.get("dosages." + sessionId);
-				
-				if (requestDosage >= 1 && requestDosage <= productDosages.size()) {
-					
-					Product selectedProduct = productDosages.get(requestDosage);
-					displayText = searchProduct.getName() + " " + searchProduct.getDescription() + " " + stockoutDao.getMenu(4);
-					
-					keyValueStore.put("productName." + sessionId, selectedProduct);
+
+				List<Product> productDosages = (List<Product>) keyValueStore
+						.get("dosages." + sessionId);
+
+				if (requestDosage >= 1
+						&& requestDosage <= 8 && requestDosage <= productDosages.size()) {
+
+					Product selectedProduct = productDosages.get(requestDosage-1);
+					displayText = selectedProduct.getName() + " "
+							+ selectedProduct.getDescription() + " "
+							+ stockoutDao.getMenu(4);
+
+					keyValueStore.put("productName." + sessionId,
+							selectedProduct);
 					menuRequest++;
+				} 
+				else if (requestDosage==9){
+					menuRequest = 4;
+					displayText = stockoutDao.getMenu(3);
 				}
-				else{
+				else {
 					throw new NumberFormatException();
 				}
 
 				break;
-				
+
 			case 6: // run methods for each of the different services+display
 					// result.
 
@@ -265,44 +288,53 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					switch (service) {
 					case 1:
 						// StockoutDao.reportStockout(medicineName,facilityName);
-						
-						//-----------------------------------------------------------------------------
-						//must be the correct facility and product code
+
+						// -----------------------------------------------------------------------------
+						// must be the correct facility and product code
 						String productCode = selectedProduct.getUid();
 						String facilityCode = selectedFacility.getUid();
 						Subject subject = new Subject();
 						subject.setContactNumber(request.getMsisdn());
-						stockoutReportService.submitStockoutReport(productCode, facilityCode, subject,
-								"stockout of product", false);
-						//-----------------------------------------------------------------------------
-						
-						
-						displayText = selectedProduct.getName() + " in " + selectedFacility.getLocalName()
-								+ " " + stockoutDao.getMenu(5);
+						stockoutReportService.submitStockoutReport(productCode,
+								facilityCode, subject, "stockout of product",
+								false);
+						// -----------------------------------------------------------------------------
+
+						displayText = selectedProduct.getName() + " in "
+								+ selectedFacility.getLocalName() + " "
+								+ stockoutDao.getMenu(5);
 						break;
 					case 2:
 						// displayText =
 						// StockoutDao.getStatus(MedicineName,facilityName);
-						
-						//-----------------------------------------------------------------------------
-						//against must be proper facility code and product code (no matching is done)
+
+						// -----------------------------------------------------------------------------
+						// against must be proper facility code and product code
+						// (no matching is done)
 						String selectedFacilityCode = selectedFacility.getUid();
 						String selectedProductCode = selectedProduct.getUid();
-						Stockout stockout = stockoutService.getStockout(selectedFacilityCode, selectedProductCode);
-						//-----------------------------------------------------------------------------
-						
-						displayText = stockoutDao.getMenu(6) + " " + stockout.getIssue().getState().toString() + stockoutDao.getMenu(8);
+						Stockout stockout = stockoutService.getStockout(
+								selectedFacilityCode, selectedProductCode);
+						// -----------------------------------------------------------------------------
+
+						displayText = stockoutDao.getMenu(6) + " "
+								+ stockout.getIssue().getState().toString()
+								+ stockoutDao.getMenu(8);
 						break;
 					case 3:
 						// displayText =
 						// stockoutDao.findNearestNeighbourWithStock(medicineName,facilityName);
-						
-						//-----------------------------------------------------------------------------
-						Facility closestFacility = facilityService.getNearestFacilityWithStock(selectedProduct, selectedFacility);
-						
-						//-----------------------------------------------------------------------------
-						
-						displayText = stockoutDao.getMenu(7) + " " + closestFacility.getLocalName() + stockoutDao.getMenu(8);
+
+						// -----------------------------------------------------------------------------
+						Facility closestFacility = facilityService
+								.getNearestFacilityWithStock(selectedProduct,
+										selectedFacility);
+
+						// -----------------------------------------------------------------------------
+
+						displayText = stockoutDao.getMenu(7) + " "
+								+ closestFacility.getLocalName()
+								+ stockoutDao.getMenu(8);
 						break;
 					}
 
@@ -311,43 +343,49 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				} else if (requestOption == 2) {
 
 					displayText = stockoutDao.getMenu(21);
-					//displayText += "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
+					// displayText +=
+					// "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
 
-					//String[] recentStockouts = { "Medicine1", "Medicine2",
-						//	"Medicine3", "Medicine4" };
-					//keyValueStore.put("recentStockouts." + sessionId,
-						//	recentStockouts);
+					// String[] recentStockouts = { "Medicine1", "Medicine2",
+					// "Medicine3", "Medicine4" };
+					// keyValueStore.put("recentStockouts." + sessionId,
+					// recentStockouts);
 
 					// method that retrieves commonly reported stock out, from a
 					// clinic
 					// *****Need clinic name entered earlier
 					// StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
 					// **************************************************************
-					
-					//-----------------------------------------------------------------------------
+
+					// -----------------------------------------------------------------------------
 					int limit = 5;
-					//must be facility code, not facility name
-					String facilityCode = ((Facility) (keyValueStore.get("facilityName." + sessionId))).getUid();
-					//facilityCode.
-					List<Stockout> stockouts = stockoutService.getMostCommonlyReportedStockoutsForFacility(facilityCode, limit);
-					
-					keyValueStore.put("commonStockouts." + sessionId,stockouts);
-					
-					for(int index=0;index<stockouts.size();index++){
-						
-						displayText += (index+1) + "." + stockouts.get(index).getProduct().getName() + "\n";
+					// must be facility code, not facility name
+					String facilityCode = ((Facility) (keyValueStore
+							.get("facilityName." + sessionId))).getUid();
+					// facilityCode.
+					List<Stockout> stockouts = stockoutService
+							.getMostCommonlyReportedStockoutsForFacility(
+									facilityCode, limit);
+
+					keyValueStore
+							.put("commonStockouts." + sessionId, stockouts);
+
+					for (int index = 0; index < stockouts.size(); index++) {
+
+						displayText += (index + 1) + "."
+								+ stockouts.get(index).getProduct().getName()
+								+ "\n";
 					}
-					
-					//-----------------------------------------------------------------------------
+
+					// -----------------------------------------------------------------------------
 
 					displayText += stockoutDao.getMenu(22);
 					menuRequest = 3;
 
 				} else if (requestOption == 3) {
-					displayText = ((Facility)keyValueStore
-							.get("facilityName." + sessionId)).getLocalName()
-							+ " "
-							+ stockoutDao.getMenu(1);
+					displayText = ((Facility) keyValueStore.get("facilityName."
+							+ sessionId)).getLocalName()
+							+ " " + stockoutDao.getMenu(1);
 					menuRequest = 2;
 
 				} else {
@@ -365,8 +403,8 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				keyValueStore.remove("productName." + sessionId);
 				keyValueStore.remove("displayText." + sessionId);
 				keyValueStore.remove("requestId." + sessionId);
-				keyValueStore.remove("commonStockouts." +sessionId);
-				keyValueStore.remove("dosages." +sessionId);
+				keyValueStore.remove("commonStockouts." + sessionId);
+				keyValueStore.remove("dosages." + sessionId);
 
 			}
 		} catch (NumberFormatException e) {
