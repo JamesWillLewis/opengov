@@ -47,7 +47,7 @@
 	
 </head>
 
-<body onload="loadMap(-30.145127)">
+<body onload="loadMap(-30.145127) loadLocationDrillDown()">
 
            <div class="container">
             
@@ -69,7 +69,7 @@
       					</select>
     				</div>
     				<div class="form-group">
-						 <label for="select">District/Town</label>
+						 <label for="select">Districts</label>
       					<select id="select" class="form-control input-sm">
         				<option>All Districts</option>
         				<option>Recent Stockouts</option>
@@ -77,13 +77,23 @@
       					</select>
     				</div>
     				<div class="form-group">
-						 <label for="select">Type of Facility</label>
+						 <label for="select">Towns</label>
       					<select id="select" class="form-control input-sm">
-        				<option>All Facilities</option>
+        				<option>All Towns</option>
         				<option>Recent Stockouts</option>
         				<option>All Stockouts</option>
       					</select>
     				</div>
+    				
+    				 <div class="form-group">
+						<label for="select">Supply Depot</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>All Depots</option>
+        				<option>Recent Stockouts</option>
+        				<option>All Stockouts</option>
+      					</select>
+    				</div>
+    				
     				    <div class="form-group">
 						<label for="select">Supplier</label>
       					<select id="select" class="form-control input-sm">
@@ -92,16 +102,9 @@
         				<option>All Stockouts</option>
       					</select>
     				</div>
-    				   	<div class="form-group">
-						<label for="select">Supply Depot</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>All Depots</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
-      					</select>
-    				</div>
+
     				<div class="form-group">
-						<label for="select">Medicine Name</label>
+						<label for="select">Medicine Categories</label>
       					<select id="select" class="form-control input-sm">
         				<option>Select Category..</option>
         				<option>Recent Stockouts</option>
@@ -119,9 +122,40 @@
             		
             <div class="col-lg-9">
             <div class="panel panel-default">
-				<div id="google-map-canvas">
+            
+            <div class="panel-heading">
+
+            	<ul class="nav nav-pills nav-justified" id="pills">
+					<li class="active"><a href="#google-map-canvas" data-toggle="pill">Map View</a></li>
+  					<li class=""><a href="#locationInfo" data-toggle="pill">Location</a></li>
+  					<li class=""><a href="#supplyInfo" data-toggle="pill" onclick="loadSupplierChart()">Supplier</a></li>
+  					<li class=""><a href="#depotInfo" data-toggle="pill">Supply Depot</a></li>
+				</ul>
+            </div>
+            
+            	 <div class="panel-body" style="height:520px;">
+            	<div class="pill-content">
+            	
+            	<div id="google-map-canvas" class="pill-pane active">
 				<div id="map_container"></div>
 				</div>
+            	
+            	  	<div  id="locationInfo" class="pill-pane"><h4>Location</h4>
+  					<div id="locationContainer"></div>
+  					</div>
+  				
+  				
+  				<div id="supplyInfo" class="pill-pane" ><h4>Supplier</h4>
+  				<div id="supplyContainer"></div>
+  				</div>
+  				
+  				<div  id="depotInfo" class="pill-pane"><h4>Supply Depot</h4>
+  				</div>
+  				
+  				
+			</div>
+            </div>
+            
 				</div>
 				</div>
 				<div class="clearfix"></div>
@@ -135,21 +169,8 @@
             <div class="container">
             
             <div class="panel panel-default">
-            	
-            	<div class="panel-heading">
-
-            	<ul class="nav nav-pills" id="pills">
-					<li class="active"><a href="#stockInfo" data-toggle="pill">Stockouts</a></li>
-  					<li class=""><a href="#locationInfo" data-toggle="pill"  onclick="loadLocationDrillDown()">Location</a></li>
-  					<li class=""><a href="#supplyInfo" data-toggle="pill" onclick="loadSupplierChart()">Supplier</a></li>
-  					<li class=""><a href="#medicineInfo" data-toggle="pill">Medicine</a></li>
-				</ul>
-            </div>
-            
-            <div class="panel-body">
-            <div class="pill-content">
-            
-  				<div  id="stockInfo" class="pill-pane active"><h4>Stockout Info</h4>
+ 
+  				<div  id="stockInfo"><h4>Stockout Info</h4>
   					<table class="table table-bordered table-hover">
   			  		<tr>
         				<th>Province</th>
@@ -169,22 +190,7 @@
 			</table>		
   				</div>
   				
-  				<div  id="locationInfo" class="pill-pane"><h4>Location</h4>
-  					<div id="locationContainer"></div>
-  					</div>
-  				
-  				
-  				<div id="supplyInfo" class="pill-pane" ><h4>Supplier</h4>
-  				<div id="supplyContainer"></div>
-  				</div>
-  				
-  				<div  id="medicineInfo" class="pill-pane"><h4>Medicine</h4>
-  				
-  				</div>
-  				
-  				
-			</div>
-            </div>
+
 			 </div>
 			</div>
 

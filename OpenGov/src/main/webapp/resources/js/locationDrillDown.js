@@ -3,16 +3,26 @@ $(function loadLocationDrillDown() {
         var colors = Highcharts.getOptions().colors,
             categories = ['Western Cape', 'Eastern Cape', 'Gauteng', 'KZN', 'Limpopo'],
             name = 'Provinces',
-            data = [{
-                    y: 55.11,
-                    color: colors[0],
-                    drilldown: {
-                        name: 'Western Cape Districts',
-                        categories: ['district1', 'district2', 'district3', 'district4'],
-                        data: [10.85, 7.35, 33.06, 2.81],
-                        color: colors[0]
-                    }
-                }, {
+            data = [{ 
+                y: 55.11,
+                color: colors[0],
+                drilldown: {
+                   name: 'MSIE versions',
+                   categories: ['MSIE 8.0', 'MSIE 6.0', 'MSIE 7.0', 'MSIE 9.0'],
+                   level: 1, 
+                   data: [{
+                       y: 33.06,
+                       drilldown: {
+                           level: 2,
+                           name: 'drilldown next level',
+                           categories: ['a', 'b', 'c'],
+                           data: [23,54,47],
+                           color: colors[0]
+                       }
+                   }, 10.85, 7.35, 2.41],
+                   color: colors[0]
+                }
+             }, {
                     y: 21.63,
                     color: colors[1],
                     drilldown: {

@@ -23,13 +23,15 @@
 		
   			  		<tr>
         				<th>Province</th>
-        				<th>Town/District</th>
+        				<th>District</th>
+        				<th>Town</th>
         				<th>Facility Name</th>
         				<th>Contact Number</th>
     		</tr>
     		<!-- 	<c:forEach var="contact"  items="${contactsList}" >
     		<tr>
         	<td>${contact.province}</td>
+        	<td>${contact.district}</td>
         	<td>${contact.town}</td>
         	<td>${contact.facility}</td>
         	<td>${contact.contactNumber}</td>
