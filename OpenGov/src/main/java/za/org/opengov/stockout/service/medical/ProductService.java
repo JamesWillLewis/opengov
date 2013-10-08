@@ -25,5 +25,7 @@ public interface ProductService extends AbstractService<Product, String> {
 			String textDelimeter);
 	
 	public String generateProductCode(String name);
+	
+	public List<Product> getAllProductsMatchingName(Product product);
 
 }

@@ -1,5 +1,7 @@
 package za.org.opengov.stockout.dao.medical.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import za.org.opengov.common.dao.impl.AbstractDaoImpl;

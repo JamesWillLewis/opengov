@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,6 +113,7 @@ public class ProductServiceImpl extends
 				}
 
 				ArrayList<String> terminateWords = new ArrayList<String>();
+				
 				terminateWords.add("TAB");
 				terminateWords.add("SOL");
 				terminateWords.add("ORAL");
@@ -192,6 +194,11 @@ public class ProductServiceImpl extends
 		}
 
 		return wholeID;
+	}
+
+	@Override
+	public List<Product> getAllProductsMatchingName(Product product) {
+		return dao.findByCriteria(Restrictions.like("name", product.getName()));
 	}
 
 }
