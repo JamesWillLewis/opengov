@@ -107,21 +107,8 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				if (requestSelection >= 1 && requestSelection <= 3) {
 
-					displayText = stockoutDao.getMenu(21);
 					
-					//displayText += "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
-
-					//String[] recentStockouts = { "Medicine1", "Medicine2",
-						//	"Medicine3", "Medicine4" };
-					//keyValueStore.put("recentStockouts." + sessionId,
-							//recentStockouts);
-
-					// method that retrieves commonly reported stock out, from a
-					// clinic
-					// *****Need clinic name entered earlier
-					// StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
-					// **************************************************************
-
+					
 					
 					//-----------------------------------------------------------------------------
 					int limit = 5;
@@ -129,7 +116,8 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					String facilityCode = ((Facility) (keyValueStore.get("facilityName." + sessionId))).getUid();
 					//facilityCode.
 					List<Stockout> stockouts = stockoutService.getMostCommonlyReportedStockoutsForFacility(facilityCode, limit);
-					
+					if(stockouts.size()>0){
+					displayText = stockoutDao.getMenu(21);
 					keyValueStore.put("commonStockouts." + sessionId,stockouts);
 					
 					for(int index=0;index<stockouts.size();index++){
@@ -146,10 +134,16 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					
 					
 					displayText += stockoutDao.getMenu(22);
-
+						++menuRequest;
+					}
+					else{
+						displayText = stockoutDao.getMenu(3);
+						menuRequest +=2;
+						
+					}
 					keyValueStore.put("service." + sessionId,
 							Integer.toString(requestSelection));
-					++menuRequest;
+					
 
 				} else {
 
@@ -200,15 +194,21 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 			case 4: // validate/find nearest match to medicine name+display
 					// appropriate menu as above
-
-				// displayText =
-				// stockoutDao.CheckAndFindNearestMatch(request.getRequest());
 				
 				//-----------------------------------------------------------------------------
 				displayText = request.getRequest();
 				
-				//String productName = "foobar";
 				Product searchProduct = productService.getClosestMatch(displayText);
+				
+				displayText="Please select Dosage for:" + searchProduct.getName() + "\n";
+				
+				list<Product> dosages = productService.getProducts(searchProduct);
+				
+				for(int k=0; k<dosages.size();k++){
+					
+					displayText += (k+1) + "." + dosages.get(k).getProduct().getName() + "\n";
+
+				}
 				
 				//-----------------------------------------------------------------------------
 
@@ -216,8 +216,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				if ((searchProduct != null)) { // medicine name found, go
 														// to next menu
-					keyValueStore.put("productName." + sessionId,searchProduct);
-					displayText = searchProduct.getName() + " " + stockoutDao.getMenu(4);
+					keyValueStore.put("dosages." + sessionId, dosages);
 					++menuRequest;
 
 				} else { // medicine name not found
@@ -226,8 +225,30 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				}
 				
 				break;
+			
+			case 5:
+				
+				displayText = stockoutDao.getMenu(91);
 
-			case 5: // run methods for each of the different services+display
+				int requestDosage = Integer.parseInt(request.getRequest());
+				
+				List<Product> productDosages = (List<Product>) keyValueStore.get("dosages." + sessionId);
+				
+				if (requestDosage >= 1 && requestDosage <= productDosages.size()) {
+					
+					Product selectedProduct = productDosages.get(requestDosage);
+					displayText = searchProduct.getName() + " " + searchProduct.getDescription() + " " + stockoutDao.getMenu(4);
+					
+					keyValueStore.put("productName." + sessionId, selectedProduct);
+					menuRequest++;
+				}
+				else{
+					throw new NumberFormatException();
+				}
+
+				break;
+				
+			case 6: // run methods for each of the different services+display
 					// result.
 
 				String serviceRequest = (String) keyValueStore.get("service."
@@ -345,6 +366,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				keyValueStore.remove("displayText." + sessionId);
 				keyValueStore.remove("requestId." + sessionId);
 				keyValueStore.remove("commonStockouts." +sessionId);
+				keyValueStore.remove("dosages." +sessionId);
 
 			}
 		} catch (NumberFormatException e) {
