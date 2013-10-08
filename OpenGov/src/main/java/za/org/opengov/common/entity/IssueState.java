@@ -1,6 +1,7 @@
 package za.org.opengov.common.entity;
 
 public enum IssueState {
+	
 	OPEN("Pending..."), ASSIGNED("Assigned..."), IN_PROGRESS("In Progress..."), RESOLVED(
 			"Resolved."), CLOSED("Closed.");
 
@@ -14,4 +15,5 @@ public enum IssueState {
 	public String toString() {
 		return readableText;
 	}
+
 }

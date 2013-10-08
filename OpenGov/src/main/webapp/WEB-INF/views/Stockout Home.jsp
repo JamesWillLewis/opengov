@@ -7,10 +7,11 @@
 <html>	
 	<head>
 	
-		<title>Stock out Home Page</title>
+		<title>Stock-out Home</title>
 	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">	
  		<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+		
 		
 	<style type="text/css">
 			div#map_container{
@@ -23,16 +24,28 @@
 				margin-top:10px;
 				margin-bottom:10px;
 			}
+			
+			div#locationContainer div#supplyContainer{
+				height: 400px; 
+				margin: 0 auto;
+				min-width:800px;
+			}
 			.google-map-canvas,
 			.google-map-canvas *{ .box-sizing(content-box); }
 	</style>
 	
-<script type="text/javascript" 
-     src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
- 
-<script type="text/javascript"
-	src="resources/js/maploader.js"> </script>
-	</head>
+	<!--  script type="text/javascript" 
+    	 src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+ -->
+	<script type="text/javascript"
+		src="resources/js/maploader.js"> </script>
+		
+		<script src="resources/js/jquery-1.10.2.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+     <script src="resources/js/highcharts.js"></script>
+    <script src="resources/js/locationDrillDown.js"></script>
+	
+</head>
 
 <body onload="loadMap(-30.145127)">
 
@@ -40,46 +53,65 @@
             
             <div class="row" >
             <div class="panel panel-default">
-            <div class="panel panel-heading"><h3>Search For:</h3></div>
+            <div class="panel panel-heading"><h3>Showing Stock-outs For:</h3></div>
             <div class="panel panel-body">
             <div class="col-lg-3">
             <div class="panel panel-primary">
             <div class="panel-heading">Filter Results:</div>
   			<div class="panel-body">
 				<form class="role-horizontal" role="form">
-					<div class="form-group">
-						 <label for="select">By Category</label>
+    				<div class="form-group">
+						<label for="select">Province</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>All Provinces</option>
+        				<option>Recent Stockouts</option>
+        				<option>All Stockouts</option>
+      					</select>
+    				</div>
+    				<div class="form-group">
+						 <label for="select">District/Town</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>All Districts</option>
+        				<option>Recent Stockouts</option>
+        				<option>All Stockouts</option>
+      					</select>
+    				</div>
+    				<div class="form-group">
+						 <label for="select">Type of Facility</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>All Facilities</option>
+        				<option>Recent Stockouts</option>
+        				<option>All Stockouts</option>
+      					</select>
+    				</div>
+    				    <div class="form-group">
+						<label for="select">Supplier</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>All Suppliers</option>
+        				<option>Recent Stockouts</option>
+        				<option>All Stockouts</option>
+      					</select>
+    				</div>
+    				   	<div class="form-group">
+						<label for="select">Supply Depot</label>
+      					<select id="select" class="form-control input-sm">
+        				<option>All Depots</option>
+        				<option>Recent Stockouts</option>
+        				<option>All Stockouts</option>
+      					</select>
+    				</div>
+    				<div class="form-group">
+						<label for="select">Medicine Name</label>
       					<select id="select" class="form-control input-sm">
         				<option>Select Category..</option>
         				<option>Recent Stockouts</option>
         				<option>All Stockouts</option>
       					</select>
     				</div>
-    				<div class="form-group">
-						 <label for="select">By Province</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>Select Province..</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
-      					</select>
-    				</div>
-    				<div class="form-group">
-						 <label for="select">By Town</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>Select Town..</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
-      					</select>
-    				</div>
-    				<div class="form-group">
-						 <label for="select">By Facility</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>Select Facility..</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
-      					</select>
-    				</div>
-    				<button class="btn btn-success btn-lg">Go</button>
+
+    				<button class="btn btn-success btn-lg">Find Stockouts
+    				<span class="glyphicon glyphicon-search"></span>
+    				</button>
     				</form>
     				</div>
 					</div>	
@@ -101,34 +133,67 @@
             
             <div class="row">
             <div class="container">
+            
             <div class="panel panel-default">
-            <div class="panel panel-heading"><h2>Results of Query:</h2></div>
-            <div class="panel panel-body">
-            <table class="table table-bordered">
-  			  <tr>
-        		<th>Province</th>
-        		<th>Town</th>
-        		<th>Facility</th>
-        		<th>Medicine Name</th>
-        		<th>Brand Name</th>
-        		<th>Stock-out Status</th>
+            	
+            	<div class="panel-heading">
+
+            	<ul class="nav nav-pills" id="pills">
+					<li class="active"><a href="#stockInfo" data-toggle="pill">Stockouts</a></li>
+  					<li class=""><a href="#locationInfo" data-toggle="pill"  onclick="loadLocationDrillDown()">Location</a></li>
+  					<li class=""><a href="#supplyInfo" data-toggle="pill" onclick="loadSupplierChart()">Supplier</a></li>
+  					<li class=""><a href="#medicineInfo" data-toggle="pill">Medicine</a></li>
+				</ul>
+            </div>
+            
+            <div class="panel-body">
+            <div class="pill-content">
+            
+  				<div  id="stockInfo" class="pill-pane active"><h4>Stockout Info</h4>
+  					<table class="table table-bordered table-hover">
+  			  		<tr>
+        				<th>Province</th>
+        				<th>Town</th>
+        				<th>Facility</th>
+        				<th>Supply Depot</th>
+        				<th>Supplier</th>
+        				<th>Medicine Name</th>
+        				<th>Brand Name</th>
+        				<th>Stock-out Status</th>
     		</tr>
     			<c:forEach var="result"  items="${stockoutResult}" >
     		<tr>
         	<td>${result.province}</td>
     		</tr>
 </c:forEach>
-			</table>
+			</table>		
+  				</div>
+  				
+  				<div  id="locationInfo" class="pill-pane"><h4>Location</h4>
+  					<div id="locationContainer"></div>
+  					</div>
+  				
+  				
+  				<div id="supplyInfo" class="pill-pane" ><h4>Supplier</h4>
+  				<div id="supplyContainer"></div>
+  				</div>
+  				
+  				<div  id="medicineInfo" class="pill-pane"><h4>Medicine</h4>
+  				
+  				</div>
+  				
+  				
 			</div>
+            </div>
+			 </div>
 			</div>
-			</div>
-			</div>
+
+    
             <hr><footer><p>&copy; Company 2013</p></footer>
             </div>
-            <script src="../../assets/js/jquery.js"></script>
-             <script src="../../dist/js/bootstrap.min.js"></script> 
+
              </body>
+
+
              </html>
-             <script language="javascript">
-             <!--bmi_SafeAddOnload(bmi_load,"bmi_orig_img",0);//-->
-	</script>
+         

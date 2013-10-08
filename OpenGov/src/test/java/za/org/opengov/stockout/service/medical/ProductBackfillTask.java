@@ -1,7 +1,5 @@
 package za.org.opengov.stockout.service.medical;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 
 import org.junit.After;
@@ -14,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import za.org.opengov.stockout.entity.FacilityType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

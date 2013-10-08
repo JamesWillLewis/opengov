@@ -6,10 +6,25 @@
 <head>	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">	
  		<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+		
+		<script type="text/javascript" 
+     	src="resources/js/jquery-1.10.2.min.js"></script>
+     	    
+     	<script language="javascript">    
+			function setActive() {
+			if ($(document).find("title").text() == "Report a Stockout"){
+              document.getElementById("Report_Page").className += " active";}
+			else if ($(document).find("title").text() == "Stock-out Home"){
+	             document.getElementById("Stockout Home").className += " active";}
+			else if ($(document).find("title").text() == "Contacts"){
+	             document.getElementById("Contacts_Page").className += " active";}
+            }
+     	</script>
+
 </head>
 
 
-<body>
+<body onload=setActive()>
 <div class="navbar navbar-default navbar-fixed-top">
 <div class="container">
 <div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,20 +36,9 @@
           </div>
           <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li> 
-          <li><a href="reportStockouts">Report Stock-out</a></li>
-           <li><a href="#contact">Contacts</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li> 
-            <li><a href="#">Another action</a></li> 
-            <li><a href="#">Something else here</a></li> 
-            <li class="divider"></li>
-            <li class="dropdown-header">Nav header</li> 
-            <li><a href="#">Separated link</a></li> 
-            <li><a href="#">One more separated link</a></li>
-            </ul>
-            </li>
+          <li id="Stockout Home"><a href="stockoutHome">Home</a></li> 
+          <li id="Report_Page"><a href="reportStockouts">Report Stock-out</a></li>
+           <li id="Contacts_Page"><a href="loadContacts">Contacts</a></li>
             </ul>
             <form class="navbar-form navbar-right">
             <div class="form-group">
@@ -47,11 +51,12 @@
             </div><!--//-->
             </div>
             </div>
-            <div class="jumbotron">
+            <div class="jumbotron masthead">
             <div class="container">
-            <h1>Welcome to the Stockout Management Site</h1>
-            <p>Use this site to search for stock-outs and stock information all over South Africa, or alternatively,
-            you can choose to report a stock-out.</p>
+            <div class="page-header">
+             <h2 ><strong>Stock-out Management Site</strong></h2>
+             <p><small>Empowering the public to search for and report stock-outs all over South Africa</small></p>
+            </div>
             <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
             </div>
             </div>
