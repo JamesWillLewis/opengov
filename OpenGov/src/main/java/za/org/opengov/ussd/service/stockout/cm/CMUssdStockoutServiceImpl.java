@@ -206,7 +206,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				
 				for(int k=0; k<dosages.size();k++){
 					
-					displayText += (k+1) + "." + dosages.get(k).getProduct().getName() + "\n";
+					displayText += (k+1) + "." + dosages.get(k).getProduct().getDescription() + "\n";
 
 				}
 				
