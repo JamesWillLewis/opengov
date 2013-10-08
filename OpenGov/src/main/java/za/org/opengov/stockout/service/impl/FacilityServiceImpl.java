@@ -73,9 +73,15 @@ public class FacilityServiceImpl extends
 	public Facility getNearestFacilityWithStock(Product product,
 			Facility originFacility) {
 		List<Facility> facilitiesWithStock = getAllFacilitiesWithStock(product);
+		double originLng = 0.0;
+		double originLat = 0.0;
 
-		double originLng = originFacility.getLongitudeDecimalDegrees();
-		double originLat = originFacility.getLatitudeDecimalDegress();
+		if (originFacility.getLongitudeDecimalDegrees() != null) {
+			originLng = originFacility.getLongitudeDecimalDegrees();
+		}
+		if (originFacility.getLatitudeDecimalDegress() != null) {
+			originLat = originFacility.getLatitudeDecimalDegress();
+		}
 
 		Facility closestFacility = null;
 		double bestDistance = Double.MAX_VALUE;
@@ -84,8 +90,12 @@ public class FacilityServiceImpl extends
 		// flies)
 		// using the facility's coordinates
 		for (Facility f : facilitiesWithStock) {
-			double destLng = f.getLongitudeDecimalDegrees();
-			double destLat = f.getLatitudeDecimalDegress();
+			double destLng = 0.0;
+			double destLat = 0.0;
+			if (f.getLongitudeDecimalDegrees() != null)
+				destLng = f.getLongitudeDecimalDegrees();
+			if (f.getLatitudeDecimalDegress() != null)
+				destLat = f.getLatitudeDecimalDegress();
 
 			double distance = Math.sqrt((destLng - originLng)
 					* (destLng - originLng) + (destLat - originLat)
@@ -154,26 +164,24 @@ public class FacilityServiceImpl extends
 
 				String name = row.get(0);
 				name = name.replaceAll(facilityType.getReadable(), "");
-				
+
 				String location = "";
 				String[] locationString;
-				//some rows are missing location info
+				// some rows are missing location info
 				if (row.size() == 2) {
 					location = row.get(1);
 					locationString = location.split(",");
-					
+
 					facility.setTown(locationString[0].trim());
-					if(locationString.length == 2){
+					if (locationString.length == 2) {
 						facility.setDistrict(locationString[1].trim());
-					} 
+					}
 				}
-				 
 
 				facility.setOfficialDOHName(name);
 				facility.setLocalName(name);
 				facility.setUid(generateFacilityCode(name));
 				facility.setFacilityType(facilityType);
-
 
 				saveFacility(facility);
 			}
@@ -187,7 +195,7 @@ public class FacilityServiceImpl extends
 	public String generateFacilityCode(String name) {
 
 		name = name.trim();
-		
+
 		int stringPartLength = 3;
 		String stringPart = "";
 
@@ -197,7 +205,7 @@ public class FacilityServiceImpl extends
 		} else {
 			stringPart = name.substring(0, stringPartLength);
 		}
-		
+
 		stringPart = stringPart.toUpperCase();
 
 		int numberPart = 1;

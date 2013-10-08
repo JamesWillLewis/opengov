@@ -83,12 +83,12 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				if (facility != null) {
 					// Need to set clinic name so that it can be re-used later
-					keyValueStore.put(
-							"facilityName." + request.getUssdSessionId(),
-							facility);
-					displayText = facility.getLocalName() + " "
-							+ stockoutDao.getMenu(1);
-					++menuRequest;
+				keyValueStore.put(
+						"facilityName." + request.getUssdSessionId(),
+						facility);
+				displayText = facility.getLocalName() + " " + facility.getFacilityType().getReadable() + " "
+						+ stockoutDao.getMenu(1);
+				++menuRequest;
 
 				} else {
 					// displayed failed message and redisplay same menu
@@ -178,7 +178,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 							requestMedicine - 1).getProduct();
 					if (selectedProduct != null) {
 
-						displayText = selectedProduct.getName();
+						displayText = selectedProduct.getName() + " " + selectedProduct.getDescription();
 						keyValueStore.put("productName." + sessionId,
 								selectedProduct);
 						displayText += " " + stockoutDao.getMenu(4);
@@ -301,7 +301,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						// -----------------------------------------------------------------------------
 
 						displayText = selectedProduct.getName() + " in "
-								+ selectedFacility.getLocalName() + " "
+								+ selectedFacility.getLocalName() + " " + selectedFacility.getFacilityType().getReadable() + " "
 								+ stockoutDao.getMenu(5);
 						break;
 					case 2:
@@ -326,6 +326,8 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						// stockoutDao.findNearestNeighbourWithStock(medicineName,facilityName);
 
 						// -----------------------------------------------------------------------------
+						//System.out.println(selectedFacility.getLocalName());
+						
 						Facility closestFacility = facilityService
 								.getNearestFacilityWithStock(selectedProduct,
 										selectedFacility);
@@ -333,7 +335,7 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						// -----------------------------------------------------------------------------
 
 						displayText = stockoutDao.getMenu(7) + " "
-								+ closestFacility.getLocalName()
+								+ closestFacility.getLocalName() + " " + closestFacility.getFacilityType().getReadable() + " "
 								+ stockoutDao.getMenu(8);
 						break;
 					}
@@ -385,7 +387,8 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 				} else if (requestOption == 3) {
 					displayText = ((Facility) keyValueStore.get("facilityName."
 							+ sessionId)).getLocalName()
-							+ " " + stockoutDao.getMenu(1);
+							+ " " + ((Facility) keyValueStore.get("facilityName."
+									+ sessionId)).getFacilityType().getReadable() + " " + stockoutDao.getMenu(1);
 					menuRequest = 2;
 
 				} else {
