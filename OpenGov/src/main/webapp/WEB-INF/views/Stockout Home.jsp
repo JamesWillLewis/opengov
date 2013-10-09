@@ -25,10 +25,10 @@
 				margin-bottom:10px;
 			}
 			
-			div#locationContainer div#supplyContainer{
-				height: 400px; 
+			div#locationContainer div#supplyContainer div#depotContainer div#timeContainer{
+				height: 450px; 
 				margin: 0 auto;
-				min-width:800px;
+				min-width: fill-parent;
 			}
 			.google-map-canvas,
 			.google-map-canvas *{ .box-sizing(content-box); }
@@ -60,16 +60,18 @@
             <div class="panel-heading">Filter Results:</div>
   			<div class="panel-body">
 				<form class="role-horizontal" role="form">
-    				<div class="form-group">
-						<label for="select">Province</label>
+				
+				    <div class="form-group">
+						<label for="select">Provinces</label>
       					<select id="select" class="form-control input-sm">
         				<option>All Provinces</option>
         				<option>Recent Stockouts</option>
         				<option>All Stockouts</option>
       					</select>
     				</div>
+				
     				<div class="form-group">
-						 <label for="select">Districts</label>
+						<label for="select">Provincial District</label>
       					<select id="select" class="form-control input-sm">
         				<option>All Districts</option>
         				<option>Recent Stockouts</option>
@@ -79,7 +81,7 @@
     				<div class="form-group">
 						 <label for="select">Towns</label>
       					<select id="select" class="form-control input-sm">
-        				<option>All Towns</option>
+        				<option>All Districts</option>
         				<option>Recent Stockouts</option>
         				<option>All Stockouts</option>
       					</select>
@@ -127,13 +129,14 @@
 
             	<ul class="nav nav-pills nav-justified" id="pills">
 					<li class="active"><a href="#google-map-canvas" data-toggle="pill">Map View</a></li>
-  					<li class=""><a href="#locationInfo" data-toggle="pill">Location</a></li>
+  					<li class="" style=><a href="#locationInfo" data-toggle="pill">Location</a></li>
   					<li class=""><a href="#supplyInfo" data-toggle="pill" onclick="loadSupplierChart()">Supplier</a></li>
-  					<li class=""><a href="#depotInfo" data-toggle="pill">Supply Depot</a></li>
+  					<li class=""><a href="#depotInfo" data-toggle="pill" onclick="LoadSupplyDepotChart()">Supply Depot</a></li>
+					<li class=""><a href="#timeInfo" data-toggle="pill" onclick="loadTimeGraph()">12-Month Analysis</a></li>
 				</ul>
             </div>
             
-            	 <div class="panel-body" style="height:520px;">
+            	 <div class="panel-body" style="height:520px; width:520px">
             	<div class="pill-content">
             	
             	<div id="google-map-canvas" class="pill-pane active">
@@ -150,9 +153,13 @@
   				</div>
   				
   				<div  id="depotInfo" class="pill-pane"><h4>Supply Depot</h4>
+  				<div id="depotContainer"></div>
   				</div>
   				
-  				
+  				<div  id="timeInfo" class="pill-pane"><h4>12-Month Analysis</h4>
+  				<div id="timeContainer"></div>
+  				</div>
+  				  				
 			</div>
             </div>
             
@@ -169,17 +176,24 @@
             <div class="container">
             
             <div class="panel panel-default">
- 
-  				<div  id="stockInfo"><h4>Stockout Info</h4>
+ 			<div class="panel-heading">
+  				<div  id="stockInfo"><h4>Detailed Results:</h4>
+  				</div>
+  				</div>
+  				<div class="panel-body">
   					<table class="table table-bordered table-hover">
   			  		<tr>
         				<th>Province</th>
+        				<th>District</th>
         				<th>Town</th>
         				<th>Facility</th>
         				<th>Supply Depot</th>
         				<th>Supplier</th>
-        				<th>Medicine Name</th>
-        				<th>Brand Name</th>
+        				<th>Medicine Category</th>
+        				<th>Medicine</th>
+        				<th>Product</th>
+        				<th>First Report</th>
+        				<th>Duration</th>
         				<th>Stock-out Status</th>
     		</tr>
     			<c:forEach var="result"  items="${stockoutResult}" >
@@ -187,7 +201,8 @@
         	<td>${result.province}</td>
     		</tr>
 </c:forEach>
-			</table>		
+			</table>
+			</div>		
   				</div>
   				
 
