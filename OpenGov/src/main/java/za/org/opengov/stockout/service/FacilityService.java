@@ -35,5 +35,20 @@ public interface FacilityService extends AbstractService<Facility, String> {
 			String textDelimeter, FacilityType facilityType);
 	
 	public String generateFacilityCode(String name);
-
+	
+	
+	public List<String> listAllProvinces();
+	
+	public List<String> listAllDistrictsForProvince(String provinceName);
+	
+	public List<String> listAllTownsForDistrict(String districtName);
+	
+	public List<Facility> listAllFacilitiesForTown(String townName);
+	
+	public long totalStockoutsForProvince(String provinceName);
+	
+	public long totalStockoutsForDistrict(String districtName);
+	
+	public long totalStockoutsForTown(String townName);
+	
 }

@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "SOWS_FACILITY")
 public class Facility {
@@ -24,13 +23,14 @@ public class Facility {
 	private String localName;
 	private String town;
 	private String district;
+	private String province;
 	private FacilityType facilityType;
-	
+
 	private Double longitudeDecimalDegrees;
 	private Double latitudeDecimalDegress;
-	
+
 	private Set<Stockout> stockouts = new HashSet<Stockout>();
-	
+
 	public Facility() {
 	}
 
@@ -99,32 +99,41 @@ public class Facility {
 	public void setFacilityType(FacilityType facilityType) {
 		this.facilityType = facilityType;
 	}
-	
+
 	@Column(name = "LATITUDE")
 	public Double getLatitudeDecimalDegress() {
 		return latitudeDecimalDegress;
 	}
-	
+
 	public void setLatitudeDecimalDegress(Double latitudeDecimalDegress) {
 		this.latitudeDecimalDegress = latitudeDecimalDegress;
 	}
-	
+
 	@Column(name = "LONGITUDE")
 	public Double getLongitudeDecimalDegrees() {
 		return longitudeDecimalDegrees;
 	}
-	
+
 	public void setLongitudeDecimalDegrees(Double longitudeDecimalDegrees) {
 		this.longitudeDecimalDegrees = longitudeDecimalDegrees;
 	}
-	
-	@OneToMany(mappedBy="facility")
+
+	@OneToMany(mappedBy = "facility")
 	public Set<Stockout> getStockouts() {
 		return stockouts;
 	}
-	
+
 	public void setStockouts(Set<Stockout> stockouts) {
 		this.stockouts = stockouts;
+	}
+
+	@Column(name = "PROVINCE")
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 }

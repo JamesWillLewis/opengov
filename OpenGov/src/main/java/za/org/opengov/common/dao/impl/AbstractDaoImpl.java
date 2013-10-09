@@ -1,6 +1,7 @@
 package za.org.opengov.common.dao.impl;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -56,5 +57,15 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 	public List<E> findAll() {
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
 		return criteria.list();
+	}
+
+	@Override
+	public <T> List<T> doQuery(String query, HashMap<String, String> args) {
+		if (args == null) {
+			return getCurrentSession().createQuery(query).list();
+		} else {
+			return getCurrentSession().createQuery(query).setProperties(args)
+					.list();
+		}
 	}
 }

@@ -3,6 +3,7 @@ package za.org.opengov.stockout.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -219,6 +220,71 @@ public class FacilityServiceImpl extends
 		}
 
 		return wholeID;
+	}
+
+	@Override
+	public List<String> listAllProvinces() {
+		return dao.doQuery("select distinct s.province from Facility s", null);
+	}
+
+	@Override
+	public List<String> listAllDistrictsForProvince(String provinceName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("province", provinceName);
+		return dao
+				.doQuery(
+						"select distinct s.district from Facility s where s.province like :province",
+						args);
+	}
+
+	@Override
+	public List<String> listAllTownsForDistrict(String districtName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("district", districtName);
+		return dao
+				.doQuery(
+						"select distinct s.town from Facility s where s.district like :district",
+						args);
+	}
+
+	@Override
+	public List<Facility> listAllFacilitiesForTown(String townName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("town", townName);
+		return dao
+				.doQuery(
+						"select f from Facility f where f.town like :town",
+						args);
+	}
+
+	@Override
+	public long totalStockoutsForProvince(String provinceName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("province", provinceName);
+		return (Long) dao
+				.doQuery(
+						"select count(s) from Stockout s where s.facility.province like :province",
+						args).get(0);
+	}
+
+	@Override
+	public long totalStockoutsForDistrict(String districtName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("district", districtName);
+		return (Long) dao
+				.doQuery(
+						"select count(s) from Stockout s where s.facility.district like :district",
+						args).get(0);
+	}
+
+	@Override
+	public long totalStockoutsForTown(String townName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("town", townName);
+		return (Long) dao
+				.doQuery(
+						"select count(s) from Stockout s where s.facility.town like :town",
+						args).get(0);
 	}
 
 }
