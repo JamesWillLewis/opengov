@@ -234,7 +234,6 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				} else { // medicine name not found
 					displayText += " " + stockoutDao.getMenu(92);
-					
 					throw new NumberFormatException();
 				}
 
