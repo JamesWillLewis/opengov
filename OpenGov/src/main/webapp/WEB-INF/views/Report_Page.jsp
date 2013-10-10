@@ -16,6 +16,7 @@
  		<script src="resources/js/jquery-1.10.2.min.js"></script>
     	<script src="resources/js/bootstrap.min.js"></script>
 		<script src="resources/js/bootstrap-datepicker.js"></script>
+		<script src="resources/js/bootstrap-combobox.js"></script>
 	
 	<script language="javascript">  
 		function enableElement(theId) { 
@@ -27,7 +28,15 @@
 		$( document ).ready(function() {
 		    $('#datepicker').datepicker();
 		});
+		  $(document).ready(function(){
+			    $('#combobox').combobox();
+			  });
+		
        </script>
+       
+       
+       
+       
        
        <style type="text/css">
        	.row-padding{
@@ -88,14 +97,20 @@
     				</div>
     				
     				<div class="row row-padding form-group">
-						 <label class="col-lg-2" for="select">Name of Facility</label>
+						 <label class="col-lg-2" for="combobox">Name of Facility</label>
       					<div class="col-lg-4">
-      					<select id="select" class="form-control input-sm">
+      					<select id="combobox" class="form-control input-sm">
+      					<option></option>
         				<option>Facility 1</option>
         				<option>etc</option>
       					</select>
       					</div>
     				</div>
+    				
+    						
+    				
+    				
+    				
     				
     				<div class="row row-padding form-group">
 					<label class="col-lg-2" for="inputPhone">Cellphone Number</label>

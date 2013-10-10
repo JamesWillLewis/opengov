@@ -51,13 +51,12 @@
             </div><!--//-->
             </div>
             </div>
-            <div class="jumbotron masthead">
+            <div class="well">
             <div class="container">
             <div class="page-header">
-             <h2 ><strong>Stock-out Management Site</strong></h2>
-             <p><small>Empowering the public to search for and report stock-outs all over South Africa</small></p>
+             <h1 style="padding-top:50px"><strong>Stock-out Management Site</strong></h1>
+             <p>Empowering the public to search for and report stock-outs all over South Africa</p>
             </div>
-            <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
             </div>
             </div>
  </body>
