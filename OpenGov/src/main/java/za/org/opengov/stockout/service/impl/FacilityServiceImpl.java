@@ -183,6 +183,7 @@ public class FacilityServiceImpl extends
 				facility.setLocalName(name);
 				facility.setUid(generateFacilityCode(name));
 				facility.setFacilityType(facilityType);
+				facility.setProvince("Western Cape");
 
 				saveFacility(facility);
 			}
