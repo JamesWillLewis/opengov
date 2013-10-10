@@ -347,21 +347,6 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				} else if (requestOption == 2) {
 
-					displayText = stockoutDao.getMenu(21);
-					// displayText +=
-					// "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
-
-					// String[] recentStockouts = { "Medicine1", "Medicine2",
-					// "Medicine3", "Medicine4" };
-					// keyValueStore.put("recentStockouts." + sessionId,
-					// recentStockouts);
-
-					// method that retrieves commonly reported stock out, from a
-					// clinic
-					// *****Need clinic name entered earlier
-					// StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
-					// **************************************************************
-
 					// -----------------------------------------------------------------------------
 					int limit = 5;
 					// must be facility code, not facility name
@@ -371,21 +356,37 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					List<Stockout> stockouts = stockoutService
 							.getMostCommonlyReportedStockoutsForFacility(
 									facilityCode, limit);
+					if (stockouts.size() > 0) {
+						displayText = stockoutDao.getMenu(21);
+						keyValueStore.put("commonStockouts." + sessionId,
+								stockouts);
 
-					keyValueStore
-							.put("commonStockouts." + sessionId, stockouts);
+						for (int index = 0; index < stockouts.size(); index++) {
 
-					for (int index = 0; index < stockouts.size(); index++) {
+							displayText += (index + 1)
+									+ "."
+									+ stockouts.get(index).getProduct()
+											.getName() + " " + stockouts.get(index).getProduct()
+											.getDescription() + "\n";
+						}
+						// or
 
-						displayText += (index + 1) + "."
-								+ stockouts.get(index).getProduct().getName()
-								+ "\n";
+						// this returns most recent reports, though I could also
+						// just return most recent actual stockouts
+						// since multiple recent reports could be for same
+						// stockouts
+						// List<StockoutReport> recentReports =
+						// stockoutReportService.getRecentlyReportedStockouts(limit);
+
+						// -----------------------------------------------------------------------------
+
+						displayText += stockoutDao.getMenu(22);
+						menuRequest = 3;
+					} else {
+						displayText = stockoutDao.getMenu(3);
+						menuRequest = 4;
+
 					}
-
-					// -----------------------------------------------------------------------------
-
-					displayText += stockoutDao.getMenu(22);
-					menuRequest = 3;
 
 				} else if (requestOption == 3) {
 					displayText = ((Facility) keyValueStore.get("facilityName."
