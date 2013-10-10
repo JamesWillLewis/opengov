@@ -234,7 +234,6 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				} else { // medicine name not found
 					displayText += " " + stockoutDao.getMenu(92);
-					
 					throw new NumberFormatException();
 				}
 
@@ -316,10 +315,14 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 						Stockout stockout = stockoutService.getStockout(
 								selectedFacilityCode, selectedProductCode);
 						// -----------------------------------------------------------------------------
-
+						if (stockout != null){
 						displayText = stockoutDao.getMenu(6) + " "
 								+ stockout.getIssue().getState().toString()
 								+ stockoutDao.getMenu(8);
+						} else{
+							displayText = stockoutDao.getMenu(62) + " "
+									+ stockoutDao.getMenu(8);
+						}
 						break;
 					case 3:
 						// displayText =
