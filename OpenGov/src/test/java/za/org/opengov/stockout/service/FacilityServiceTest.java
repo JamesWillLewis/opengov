@@ -18,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.medical.Product;
+import za.org.opengov.stockout.service.domain.District;
+import za.org.opengov.stockout.service.domain.LocationHeirarchy;
+import za.org.opengov.stockout.service.domain.Province;
+import za.org.opengov.stockout.service.domain.Town;
 import za.org.opengov.stockout.service.medical.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -271,6 +275,27 @@ public class FacilityServiceTest {
 		assertEquals(2, facilityService.totalStockoutsForTown("Somerset West"));
 		assertEquals(0, facilityService.totalStockoutsForTown("Stellenbosch"));
 		
+	}
+	
+	@Test
+	public void testGetLocationHeirarchy(){
+		LocationHeirarchy heirarchy = facilityService.getLocationHeirarchy();
+		
+		for(Province province: heirarchy.getProvinces()){
+			System.out.println('\t' + province.getName());
+			
+			for(District district: province.getDistricts()){
+				System.out.println("\t\t" + district.getName());
+				
+				for(Town town: district.getTowns()){
+					System.out.println("\t\t\t" + town.getName());
+					
+					for(Facility facility: town.getFacilities()){
+						System.out.println("\t\t\t\t" + facility.getLocalName());
+					}
+				}
+			}
+		}
 	}
 	
 

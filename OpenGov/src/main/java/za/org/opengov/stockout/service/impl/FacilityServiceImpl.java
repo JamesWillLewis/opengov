@@ -19,6 +19,10 @@ import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.FacilityType;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
+import za.org.opengov.stockout.service.domain.District;
+import za.org.opengov.stockout.service.domain.LocationHeirarchy;
+import za.org.opengov.stockout.service.domain.Province;
+import za.org.opengov.stockout.service.domain.Town;
 
 @Service("facilityService")
 @Transactional
@@ -326,6 +330,43 @@ public class FacilityServiceImpl extends
 			return facility.getOfficialDOHName();
 		}
 
+	}
+
+	@Override
+	public LocationHeirarchy getLocationHeirarchy() {
+		LocationHeirarchy locationHeirarchy = new LocationHeirarchy();
+		
+		for(String provinceName: listAllProvinces()){
+			Province province = new Province(provinceName, locationHeirarchy);
+			locationHeirarchy.addProvince(province);
+			if(provinceName==null){
+				provinceName = "";
+			}
+			
+			for(String districtName: listAllDistrictsForProvince(provinceName)){
+				District district = new District(districtName, province);
+				province.addDistrict(district);
+				if(districtName == null){
+					districtName = "";
+				}
+				
+				for(String townName: listAllTownsForDistrict(districtName)){
+					Town town = new Town(townName, district);
+					district.addTown(town);
+					if(townName == null){
+						townName = "";
+					}
+					
+					for(Facility facility: listAllFacilitiesForTown(townName)){
+						town.addFacility(facility);
+					}
+					
+				}
+			}
+			
+		}
+		
+		return locationHeirarchy;
 	}
 
 }
