@@ -347,45 +347,25 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 				} else if (requestOption == 2) {
 
-					displayText = stockoutDao.getMenu(21);
-					// displayText +=
-					// "1.Medicine1 \n2.Medicine2 \n3.Medicine3 \n4.Medicine4";
+					displayText = stockoutDao.getMenu(10) + " "
+							+ selectedProduct.getName() + "\n";
 
-					// String[] recentStockouts = { "Medicine1", "Medicine2",
-					// "Medicine3", "Medicine4" };
-					// keyValueStore.put("recentStockouts." + sessionId,
-					// recentStockouts);
+					List<Product> productDosage = (List<Product>) keyValueStore
+							.get("dosages." + sessionId);
 
-					// method that retrieves commonly reported stock out, from a
-					// clinic
-					// *****Need clinic name entered earlier
-					// StockoutDao.retrieveCommonStockouts(keyValueStore.get("facilityName."+request.getUssdSessionId()));
-					// **************************************************************
+					for (int k = 0; k < productDosage.size(); k++) {
 
-					// -----------------------------------------------------------------------------
-					int limit = 5;
-					// must be facility code, not facility name
-					String facilityCode = ((Facility) (keyValueStore
-							.get("facilityName." + sessionId))).getUid();
-					// facilityCode.
-					List<Stockout> stockouts = stockoutService
-							.getMostCommonlyReportedStockoutsForFacility(
-									facilityCode, limit);
+						displayText += (k + 1)
+								+ "."
+								+ productDosage.get(k).getDescription() + "\n";
 
-					keyValueStore
-							.put("commonStockouts." + sessionId, stockouts);
-
-					for (int index = 0; index < stockouts.size(); index++) {
-
-						displayText += (index + 1) + "."
-								+ stockouts.get(index).getProduct().getName()
-								+ "\n";
 					}
+					
+					displayText += stockoutDao.getMenu(11);
 
 					// -----------------------------------------------------------------------------
-
-					displayText += stockoutDao.getMenu(22);
-					menuRequest = 3;
+						menuRequest =5;
+						
 
 				} else if (requestOption == 3) {
 					displayText = ((Facility) keyValueStore.get("facilityName."
