@@ -14,6 +14,7 @@ public interface AbstractDao<E, I extends Serializable> {
     void delete(E e);
     List<E> findByCriteria(Criterion criterion);
     List<E> findAll();
+    List<E> findPage(int page, int resultsPerPage);
     <T> List<T> doQuery(String query, HashMap<String, String> args);
 
 }

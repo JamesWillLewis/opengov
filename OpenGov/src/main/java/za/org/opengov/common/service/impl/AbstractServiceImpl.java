@@ -35,5 +35,10 @@ public abstract class AbstractServiceImpl<T_DAO extends AbstractDao<T_ENTITY, T_
 	public void remove(T_ENTITY entity) {
 		dao.delete(entity);
 	}
+	
+	@Override
+	public List<T_ENTITY> getPage(int page, int resultsPerPage) {
+		return dao.findPage(page, resultsPerPage);
+	}
 
 }

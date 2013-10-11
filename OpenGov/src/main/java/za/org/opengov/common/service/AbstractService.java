@@ -13,4 +13,6 @@ public interface AbstractService<E, I extends Serializable> {
 	
 	public void put(E entity);
 	
+	public List<E> getPage(int page, int resultsPerPage);
+	
 }

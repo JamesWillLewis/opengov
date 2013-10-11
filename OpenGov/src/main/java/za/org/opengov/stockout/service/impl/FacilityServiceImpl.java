@@ -46,6 +46,14 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public Facility getClosestMatch(String facilityIdentifier) {
+		facilityIdentifier = facilityIdentifier.toUpperCase();
+		// remove unneccesary words from the identifier (such as the facility
+		// type, eg. 'clinic')
+		for (FacilityType type : FacilityType.values()) {
+			facilityIdentifier = facilityIdentifier.replaceAll(type
+					.getReadable().toUpperCase(), "");
+		}
+		facilityIdentifier = facilityIdentifier.trim();
 
 		List<Facility> facilities = dao.findAll();
 
@@ -54,17 +62,32 @@ public class FacilityServiceImpl extends
 		for (Facility f : facilities) {
 
 			FacilityCodeWrapper codeWrapper = new FacilityCodeWrapper(f);
-			FacilityNameWrapper nameWrapper = new FacilityNameWrapper(f);
+			FacilityLocalNameWrapper nameWrapper = new FacilityLocalNameWrapper(
+					f);
+			FacilityDOHNameWrapper dohNameWrapper = new FacilityDOHNameWrapper(
+					f);
 
+			// to match against the facility code
 			matcher.addStringMatchable(codeWrapper);
-			matcher.addStringMatchable(nameWrapper);
+			// to match against the official facility name
+			matcher.addStringMatchable(dohNameWrapper);
+			// only if there is a local name specified and it is different to
+			// the official name
+			if (f.getLocalName() != null
+					&& !f.getLocalName().isEmpty()
+					&& !f.getOfficialDOHName().equalsIgnoreCase(
+							f.getLocalName())) {
+				matcher.addStringMatchable(nameWrapper);
+			}
 		}
 		StringMatchable matchable = matcher.getClosestMatch(facilityIdentifier);
 
 		if (matchable instanceof FacilityCodeWrapper) {
 			return ((FacilityCodeWrapper) matchable).getFacility();
-		} else if (matchable instanceof FacilityNameWrapper) {
-			return ((FacilityNameWrapper) matchable).getFacility();
+		} else if (matchable instanceof FacilityLocalNameWrapper) {
+			return ((FacilityLocalNameWrapper) matchable).getFacility();
+		} else if (matchable instanceof FacilityDOHNameWrapper) {
+			return ((FacilityDOHNameWrapper) matchable).getFacility();
 		} else {
 			return null;
 		}
@@ -113,44 +136,6 @@ public class FacilityServiceImpl extends
 	@Override
 	public List<Facility> getAllFacilitiesWithStock(Product product) {
 		return dao.findAllWithoutStockoutOfProduct(product.getUid());
-	}
-
-	private class FacilityCodeWrapper implements StringMatchable {
-
-		private Facility facility;
-
-		public FacilityCodeWrapper(Facility facility) {
-			this.facility = facility;
-		}
-
-		public Facility getFacility() {
-			return facility;
-		}
-
-		@Override
-		public String getStringToMatch() {
-			return facility.getUid();
-		}
-
-	}
-
-	private class FacilityNameWrapper implements StringMatchable {
-
-		private Facility facility;
-
-		public FacilityNameWrapper(Facility facility) {
-			this.facility = facility;
-		}
-
-		public Facility getFacility() {
-			return facility;
-		}
-
-		@Override
-		public String getStringToMatch() {
-			return facility.getLocalName();
-		}
-
 	}
 
 	@Override
@@ -252,10 +237,8 @@ public class FacilityServiceImpl extends
 	public List<Facility> listAllFacilitiesForTown(String townName) {
 		HashMap<String, String> args = new HashMap<String, String>();
 		args.put("town", townName);
-		return dao
-				.doQuery(
-						"select f from Facility f where f.town like :town",
-						args);
+		return dao.doQuery("select f from Facility f where f.town like :town",
+				args);
 	}
 
 	@Override
@@ -286,6 +269,63 @@ public class FacilityServiceImpl extends
 				.doQuery(
 						"select count(s) from Stockout s where s.facility.town like :town",
 						args).get(0);
+	}
+
+	private class FacilityCodeWrapper implements StringMatchable {
+
+		private Facility facility;
+
+		public FacilityCodeWrapper(Facility facility) {
+			this.facility = facility;
+		}
+
+		public Facility getFacility() {
+			return facility;
+		}
+
+		@Override
+		public String getStringToMatch() {
+			return facility.getUid();
+		}
+
+	}
+
+	private class FacilityLocalNameWrapper implements StringMatchable {
+
+		private Facility facility;
+
+		public FacilityLocalNameWrapper(Facility facility) {
+			this.facility = facility;
+		}
+
+		public Facility getFacility() {
+			return facility;
+		}
+
+		@Override
+		public String getStringToMatch() {
+			return facility.getLocalName();
+		}
+
+	}
+
+	private class FacilityDOHNameWrapper implements StringMatchable {
+
+		private Facility facility;
+
+		public FacilityDOHNameWrapper(Facility facility) {
+			this.facility = facility;
+		}
+
+		public Facility getFacility() {
+			return facility;
+		}
+
+		@Override
+		public String getStringToMatch() {
+			return facility.getOfficialDOHName();
+		}
+
 	}
 
 }

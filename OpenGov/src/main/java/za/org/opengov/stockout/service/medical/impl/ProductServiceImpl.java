@@ -55,7 +55,8 @@ public class ProductServiceImpl extends
 		StringMatcher matcher = new StringMatcher();
 
 		for (final Product p : products) {
-			matcher.addStringMatchable(new ProductWrapper(p));
+			matcher.addStringMatchable(new ProductDetailsWrapper(p));
+			matcher.addStringMatchable(new ProductNameWrapper(p));
 		}
 
 		Product matched = ((ProductWrapper) matcher
@@ -63,25 +64,48 @@ public class ProductServiceImpl extends
 
 		return matched;
 	}
-
-	private class ProductWrapper implements StringMatchable {
-
-		private Product product;
-
+	
+	public class ProductWrapper{
+		
+		protected Product product;
+		
 		public ProductWrapper(Product product) {
 			this.product = product;
 		}
-
+		
 		public Product getProduct() {
 			return product;
 		}
+		
+	}
 
+	private class ProductNameWrapper extends ProductWrapper implements StringMatchable {
+
+		public ProductNameWrapper(Product product) {
+			super(product);
+		}
+		
 		@Override
 		public String getStringToMatch() {
 			return product.getName();
 		}
 
 	}
+	
+	private class ProductDetailsWrapper extends ProductWrapper  implements StringMatchable {
+
+		public ProductDetailsWrapper(Product product) {
+			super(product);
+		}
+
+		@Override
+		public String getStringToMatch() {
+			return product.getName() + " " + product.getDescription();
+		}
+
+	}
+	
+	
 
 	@Override
 	public void saveProduct(Product product) {

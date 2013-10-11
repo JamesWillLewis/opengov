@@ -68,4 +68,12 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 					.list();
 		}
 	}
+	
+	@Override
+	public List<E> findPage(int page, int resultsPerPage) {
+		Criteria criteria = getCurrentSession().createCriteria(entityClass);
+		criteria.setFirstResult(resultsPerPage * page);
+		criteria.setMaxResults(resultsPerPage);
+		return criteria.list();
+	}
 }
