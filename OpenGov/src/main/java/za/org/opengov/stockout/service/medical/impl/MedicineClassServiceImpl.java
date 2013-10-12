@@ -9,14 +9,14 @@ import za.org.opengov.stockout.dao.medical.MedicineClassDao;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
 
-@Service("medicineService")
+@Service("medicineClassService")
 @Transactional
-public class MedicineClassDaoImpl extends
+public class MedicineClassServiceImpl extends
 		AbstractServiceImpl<MedicineClassDao, MedicineClass, String> implements
 		MedicineClassService {
 
 	@Autowired
-	public MedicineClassDaoImpl(MedicineClassDao dao) {
+	public MedicineClassServiceImpl(MedicineClassDao dao) {
 		super(dao);
 	}
 	

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.medical.MedicineDao;
 import za.org.opengov.stockout.entity.medical.Medicine;
+import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.medical.MedicineService;
 
 @Service("medicineService")
@@ -21,7 +22,6 @@ public class MedicineServiceImpl extends
 	@Autowired
 	public MedicineServiceImpl(MedicineDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -33,6 +33,11 @@ public class MedicineServiceImpl extends
 		} else {
 			return medicines.get(0);
 		}
+	}
+
+	@Override
+	public List<Medicine> getAllMedicinesForClass(MedicineClass medicineClass) {
+		return dao.findByCriteria(Restrictions.eq("medicineClass", medicineClass));
 	}
 
 }
