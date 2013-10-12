@@ -1,4 +1,4 @@
-package za.org.opengov.stockout.service.medical.impl;
+package za.org.opengov.stockout.service.medical;
 
 import static org.junit.Assert.*;
 
@@ -23,8 +23,7 @@ import za.org.opengov.stockout.service.medical.MedicineService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration("classpath:/WEB-INF/spring/appServlet/servlet-context.xml")
-@Transactional
-public class MedicineServiceImplTest {
+public class MedicineServiceTest {
 
 	@Autowired
 	private MedicineService medicineService;
@@ -55,5 +54,6 @@ public class MedicineServiceImplTest {
 			}
 			
 		}
+		
 	}
 }
