@@ -25,9 +25,12 @@ public class Facility {
 	private String district;
 	private String province;
 	private FacilityType facilityType;
-
+	// geographic
 	private Double longitudeDecimalDegrees;
 	private Double latitudeDecimalDegress;
+	//contact
+	private String contactNumber;
+	private String emailAddress;
 
 	private Set<Stockout> stockouts = new HashSet<Stockout>();
 
@@ -134,6 +137,24 @@ public class Facility {
 
 	public void setProvince(String province) {
 		this.province = province;
+	}
+
+	@Column(name = "CONTACT_NUMBER", length = 10)
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	@Column(name = "EMAIL_ADDRESS", length = 10)
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 }

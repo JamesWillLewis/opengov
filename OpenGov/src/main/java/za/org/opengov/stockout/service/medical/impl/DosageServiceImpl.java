@@ -16,7 +16,6 @@ public class DosageServiceImpl extends AbstractServiceImpl<DosageDao, Dosage, Lo
 	@Autowired
 	public DosageServiceImpl(DosageDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 }
