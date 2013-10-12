@@ -51,7 +51,9 @@ public interface FacilityService extends AbstractService<Facility, String> {
 	public long totalStockoutsForDistrict(String districtName);
 	
 	public long totalStockoutsForTown(String townName);
-	
+
 	public LocationHeirarchy getLocationHeirarchy();
+	
+	public List<Facility> listAllFacilitiesForProvince(String provinceName);
 	
 }

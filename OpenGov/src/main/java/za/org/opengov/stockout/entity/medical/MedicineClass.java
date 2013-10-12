@@ -1,6 +1,5 @@
 package za.org.opengov.stockout.entity.medical;
 
-import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +10,7 @@ import javax.persistence.Table;
 public class MedicineClass {
 
 	private String uid;
-	
+
 	public MedicineClass() {
 	}
 	
