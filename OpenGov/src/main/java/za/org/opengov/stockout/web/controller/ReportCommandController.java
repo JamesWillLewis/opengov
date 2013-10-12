@@ -22,9 +22,6 @@ import za.org.opengov.stockout.service.FacilityService;
 @Controller
 public class ReportCommandController {
 
-
-	
-	
 	private static final Logger LOG = LoggerFactory.getLogger(ReportCommandController.class);
 	
 	@Autowired
