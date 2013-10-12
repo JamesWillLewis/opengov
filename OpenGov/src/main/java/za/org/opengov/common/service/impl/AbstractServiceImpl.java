@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import za.org.opengov.common.dao.AbstractDao;
 import za.org.opengov.common.service.AbstractService;
 
+@Transactional
 public abstract class AbstractServiceImpl<T_DAO extends AbstractDao<T_ENTITY, T_KEY>, T_ENTITY, T_KEY extends Serializable>
 		implements AbstractService<T_ENTITY, T_KEY> {
 
