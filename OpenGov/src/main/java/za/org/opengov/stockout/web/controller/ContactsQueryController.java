@@ -12,7 +12,7 @@ public class ContactsQueryController {
 
 private static final Logger LOG = LoggerFactory.getLogger(ReportCommandController.class);
 	
-	@RequestMapping(value="/loadContacts",method=RequestMethod.GET)
+	@RequestMapping(value="/loadcontacts",method=RequestMethod.GET)
 	
 	public String getReportPage(Model model){
 		

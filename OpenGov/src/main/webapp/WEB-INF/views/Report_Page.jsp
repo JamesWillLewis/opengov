@@ -28,8 +28,8 @@
 		$( document ).ready(function() {
 		    $('#datepicker').datepicker();
 		});
-		  $(document).ready(function(){
-			    $('#combobox').combobox();
+		$(document).ready(function(){
+			    $('#facilityCombobox').combobox();
 			  });
 		
        </script>
@@ -79,30 +79,31 @@
       				
       				<div class="row row-padding form-group">
 						<label class="col-lg-2" for="datepicker">Date of Occurrence</label>
-						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="05-10-2013" data-date-format="dd-mm-yyyy">
+						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd-mm-yyyy">
     						<span class="input-group-addon add-on"><i class="glyhicon glyphicon-calendar"></i></span>
-    						<input class="form-control span2" type="text" value="05-10-2013" readonly>
+    						<input class="form-control span2" type="text" value="${date}" readonly>
     					</div>
     				</div>
 	
     				<div class="row row-padding form-group">
 						<label class="col-lg-2" for="select">Province</label>
       					<div class="col-lg-4">
-      					<select id="select" class="form-control input-sm">
-        				<option>Gauteng</option>
-        				<option>Western Cape</option>
-        				<option>etc</option>
+      					<select id="provinceSelect" class="form-control input-sm">
+      					<option value="Western Cape">select</option>
+        				<c:forEach var="province"  items="${provinces}" >
+        					<option value="${province}">${province}</option>
+						</c:forEach>
       					</select>
       					</div>
     				</div>
     				
     				<div class="row row-padding form-group">
 						 <label class="col-lg-2" for="combobox">Name of Facility</label>
-      					<div class="col-lg-4">
-      					<select id="combobox" class="form-control input-sm">
-      					<option></option>
-        				<option>Facility 1</option>
-        				<option>etc</option>
+      					<div id="provinceDiv" class="col-lg-4">
+      					<select id="facilityCombobox" class="form-control input-sm">
+      					<c:forEach var="province"  items="${provinces}" >
+        					<option value="${province}">${province}</option>
+						</c:forEach>
       					</select>
       					</div>
     				</div>
@@ -177,5 +178,6 @@
 			</div>
 	</div>
 	</div>
+	<script src="resources/js/reportHandler.js"></script> 
 </body>
 </html>

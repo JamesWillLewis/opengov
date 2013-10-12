@@ -44,6 +44,7 @@
     <script src="resources/js/bootstrap.min.js"></script>
      <script src="resources/js/highcharts.js"></script>
     <script src="resources/js/locationDrillDown.js"></script>
+ 	
 	
 </head>
 
@@ -62,28 +63,25 @@
 				<form class="role-horizontal" role="form">
 				
 				    <div class="form-group">
-						<label for="select">Provinces</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>All Provinces</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
+						<label for="provinceSelect">Provinces</label>
+      					<select id="provinceSelect" class="form-control input-sm">
+      					<option value="all">All Provinces</option>
+						<c:forEach var="province"  items="${provinces}" >
+        					<option value="${province}">${province}</option>
+						</c:forEach>
+      				</select>
+    				</div>
+  	
+    				<div class="form-group">
+						<label for="districtSelect">Provincial District</label>
+      					<select id="districtSelect" class="form-control input-sm">
+        				<option value='all'>All Districts</option>
       					</select>
     				</div>
-				
     				<div class="form-group">
-						<label for="select">Provincial District</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>All Districts</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
-      					</select>
-    				</div>
-    				<div class="form-group">
-						 <label for="select">Towns</label>
-      					<select id="select" class="form-control input-sm">
-        				<option>All Districts</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
+						 <label for="townSelect">Towns</label>
+      					<select id="townSelect" class="form-control input-sm">
+        				<option value='all'>All Towns</option>
       					</select>
     				</div>
     				
@@ -212,7 +210,7 @@
     
             <hr><footer><p>&copy; Company 2013</p></footer>
             </div>
-
+		<script src="resources/js/inputHandler.js"></script> 
              </body>
 
 

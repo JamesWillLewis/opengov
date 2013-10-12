@@ -53,7 +53,7 @@
             <div class="col-6 col-sm-6 col-lg-4">
             <h2>Stock-out Web Services</h2>
             <p>The stock-out website allows you to report and track stockouts occurring all over South Africa, and provides a stockout management interface with detailed statistical information for priviledged members</p>
-            <p><a class="btn btn-primary" href="stockoutHome">Continue to Stock-Out Web-Site &raquo;</a></p>
+            <p><a class="btn btn-primary" href="stockouthome">Continue to Stock-Out Web-Site &raquo;</a></p>
             </div>
             <div class="col-6 col-sm-6 col-lg-4">
             <h2>Future Service</h2>

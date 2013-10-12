@@ -36,9 +36,9 @@
           </div>
           <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          <li id="Stockout Home"><a href="stockoutHome">Home</a></li> 
-          <li id="Report_Page"><a href="reportStockouts">Report Stock-out</a></li>
-           <li id="Contacts_Page"><a href="loadContacts">Contacts</a></li>
+          <li id="Stockout Home"><a href="stockouthome">Home</a></li> 
+          <li id="Report_Page"><a href="reportstockouts">Report Stock-out</a></li>
+           <li id="Contacts_Page"><a href="loadcontacts">Contacts</a></li>
             </ul>
             <form class="navbar-form navbar-right">
             <div class="form-group">
