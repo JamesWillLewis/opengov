@@ -3,6 +3,11 @@ package za.org.opengov.stockout.service.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonTypeName;
+import org.codehaus.jackson.annotate.JsonValue;
+import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonView;
+
 public class Province {
 	
 	private String name;

@@ -146,7 +146,7 @@
    				<button type="button" class="btn btn-default btn-sm pull-left" data-toggle="collapse" data-target="#collapse${count}">
    				 	<span class="glyphicon glyphicon-plus"></span>
 				</button>
-     			<h4 class="panel-title clearfix">${category}</h4>	
+     			<h4 class="panel-title clearfix">${category.uid}</h4>	
    				</div>
    				<div id="collapse${count}" class="panel-collapse collapse">
      				<div class="panel-body">

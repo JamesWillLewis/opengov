@@ -3,6 +3,9 @@ package za.org.opengov.stockout.service.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonValue;
+import org.codehaus.jackson.map.annotate.JsonRootName;
+
 public class District {
 	
 	private String name;

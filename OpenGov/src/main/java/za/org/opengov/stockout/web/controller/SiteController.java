@@ -47,6 +47,8 @@ public class SiteController {
 		//LocationHeirarchy locationHeirarchy = facilityService.getLocationHeirarchy();
 		List<String> provinces = facilityService.listAllProvinces();
 		
+		
+		
 		stockoutResult[] result = new stockoutResult[3];
 		for (int i=0;i<3;i++){
 			result[i] = new stockoutResult();
