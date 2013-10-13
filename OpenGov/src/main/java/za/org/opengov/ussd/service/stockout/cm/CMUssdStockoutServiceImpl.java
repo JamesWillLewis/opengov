@@ -179,8 +179,16 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					if (selectedProduct != null) {
 
 						displayText = selectedProduct.getName() + " " + selectedProduct.getDescription();
+						
+						//put selected product in keyvalue store
 						keyValueStore.put("productName." + sessionId,
 								selectedProduct);
+						 //get dosages for selected product
+						List<Product> productDosages = productService
+								.getAllProductsMatchingName(selectedProduct);
+						//put dosages for selected product in key value store
+						keyValueStore.put("dosages." + sessionId, productDosages);
+						
 						displayText += " " + stockoutDao.getMenu(4);
 						menuRequest += 3;
 					} else {
