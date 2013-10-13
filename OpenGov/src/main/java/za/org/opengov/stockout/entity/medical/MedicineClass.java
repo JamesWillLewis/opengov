@@ -1,6 +1,7 @@
 package za.org.opengov.stockout.entity.medical;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,14 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import za.org.opengov.stockout.service.domain.Province;
+
 @Entity
 @Table(name="SOWS_PHARM_MEDICINE_CLASS")
 public class MedicineClass {
 
 	private String uid;
-	private Set<Medicine> medicines = new HashSet<Medicine>();
+	private Set<Medicine> medicines;
 
 	public MedicineClass() {
+		this.medicines = new HashSet<Medicine>();
+	}
+	
+	public MedicineClass(Set<Medicine> medicines) {
+		this.medicines = medicines;
 	}
 	
 	@Id

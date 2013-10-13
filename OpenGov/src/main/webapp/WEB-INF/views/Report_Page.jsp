@@ -150,11 +150,13 @@
    				</div>
    				<div id="collapse${count}" class="panel-collapse collapse">
      				<div class="panel-body">
+     				<!--  c:forEach var="medicine" items="${category.medicines}">-->
      					 <div class="checkbox">
         				<label>
-          					<input type="checkbox"> medicine1
+          					<input type="checkbox"> medicine 1<!--  ${medicine.name} -->
         				</label>
         				</div>
+        				<!--  /c:forEach> -->
    					</div>
    					
    					<textarea class="form-control pull-right" rows="2" placeholder="Special details/requirements"></textarea>
