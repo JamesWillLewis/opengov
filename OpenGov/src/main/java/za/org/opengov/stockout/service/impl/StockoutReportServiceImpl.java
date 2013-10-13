@@ -30,7 +30,6 @@ public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutRepor
 	@Autowired
 	public StockoutReportServiceImpl(StockoutReportDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Autowired
