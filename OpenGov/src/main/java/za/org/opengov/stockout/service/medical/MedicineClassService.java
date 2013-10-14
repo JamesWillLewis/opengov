@@ -10,5 +10,6 @@ import za.org.opengov.stockout.entity.medical.MedicineClass;
 
 public interface MedicineClassService extends AbstractService<MedicineClass, String> {
 
-
+	public List<MedicineClass> getMedicineClassesEagerFetch();
+	
 }

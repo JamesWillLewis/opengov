@@ -1,9 +1,11 @@
 package za.org.opengov.stockout.entity.medical;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,7 @@ public class Medicine {
 	private Disease disease;
 	private String name;
 	private MedicineClass medicineClass;
-	private Set<Product> products;
+	private Set<Product> products = new HashSet<Product>();
 
 	public Medicine() {
 	}

@@ -42,7 +42,8 @@ public class MedicineServiceTest {
 	@Test
 	public void testGetAllMedicinesForClass() {
 		
-		List<MedicineClass> medicineClasses = medicineClassService.getAll();
+		List<MedicineClass> medicineClasses = medicineClassService.getMedicineClassesEagerFetch();
+		System.out.println(medicineClasses.size());
 		
 		for(MedicineClass medicineClass: medicineClasses){
 			System.out.println(medicineClass.getUid());
@@ -54,6 +55,7 @@ public class MedicineServiceTest {
 			}
 			
 		}
+		
 		
 	}
 }

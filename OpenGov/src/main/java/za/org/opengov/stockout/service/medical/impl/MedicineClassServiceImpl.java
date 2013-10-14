@@ -1,5 +1,8 @@
 package za.org.opengov.stockout.service.medical.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,10 @@ public class MedicineClassServiceImpl extends
 	@Autowired
 	public MedicineClassServiceImpl(MedicineClassDao dao) {
 		super(dao);
+	}
+	
+	public List<MedicineClass> getMedicineClassesEagerFetch(){
+		return dao.fetchAllEager();
 	}
 	
 
