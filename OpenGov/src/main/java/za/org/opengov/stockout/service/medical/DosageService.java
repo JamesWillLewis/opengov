@@ -17,8 +17,14 @@
 package za.org.opengov.stockout.service.medical;
 
 import za.org.opengov.common.service.AbstractService;
+import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.medical.Dosage;
 
+/**
+ * Service (business object) class for {@link Dosage}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface DosageService extends AbstractService<Dosage, Long>{
 
 }

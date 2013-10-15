@@ -31,7 +31,8 @@ import org.springframework.stereotype.Repository;
 import za.org.opengov.common.dao.AbstractDao;
 
 /**
- * Abstract Data Access Object implementation. 
+ * Abstract Data Access Object concrete implementation. 
+ * @see AbstractDao
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
  */

@@ -32,7 +32,6 @@ public class SubjectServiceImpl extends AbstractServiceImpl<SubjectDao, Subject,
 	@Autowired
 	public SubjectServiceImpl(SubjectDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -16,6 +16,7 @@
  */
 package za.org.opengov.stockout.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -28,6 +29,8 @@ import za.org.opengov.common.service.IssueService;
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.StockoutDao;
 import za.org.opengov.stockout.entity.Stockout;
+import za.org.opengov.stockout.entity.medical.Medicine;
+import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.StockoutService;
 
 @Service("stockoutService")
@@ -37,7 +40,6 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 	@Autowired
 	public StockoutServiceImpl(StockoutDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Autowired
@@ -172,6 +174,52 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 
 			}
 		}
+	}
+
+	@Override
+	public List<Stockout> getStockoutsForProvince(String provinceName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("province", provinceName);
+		return dao
+				.doQuery(
+						"select s from Stockout s where s.facility.province like :province", args);
+	}
+
+	@Override
+	public List<Stockout> getStockoutsForDistrict(String districtName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("district", districtName);
+		return dao
+				.doQuery(
+						"select s from Stockout s where s.facility.district like :district", args);
+	}
+
+	@Override
+	public List<Stockout> getStockoutsForTown(String townName) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("town", townName);
+		return dao
+				.doQuery(
+						"select s from Stockout s where s.facility.town like :town", args);
+	}
+
+	@Override
+	public List<Stockout> getStockoutsForMedicine(Medicine medicine) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("medName", String.valueOf(medicine.getUid()));
+		return dao
+				.doQuery(
+						"select s from Stockout s where s.product.medicine like :medName", args);
+	}
+
+	@Override
+	public List<Stockout> getStockoutsForMedicineClass(
+			MedicineClass medicineClass) {
+		HashMap<String, String> args = new HashMap<String, String>();
+		args.put("medClassName", String.valueOf(medicineClass.getUid()));
+		return dao
+				.doQuery(
+						"select s from Stockout s where s.product.medicine.medicineClass like :medClassName", args);
 	}
 
 }

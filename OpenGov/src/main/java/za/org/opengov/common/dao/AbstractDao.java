@@ -22,15 +22,78 @@ import java.util.List;
 
 import org.hibernate.criterion.Criterion;
 
+import za.org.opengov.stockout.entity.Stockout;
 
+/**
+ * Abstract Data Access Object interface.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface AbstractDao<E, I extends Serializable> {
 
-    E findById(I id);
-    void saveOrUpdate(E e);
-    void delete(E e);
-    List<E> findByCriteria(Criterion criterion);
-    List<E> findAll();
-    List<E> findPage(int page, int resultsPerPage);
-    <T> List<T> doQuery(String query, HashMap<String, String> args);
+	/**
+	 * Return item which corresponds to the specified UID.
+	 * 
+	 * @param id
+	 *            UID
+	 * @return Item referenced by the UID
+	 */
+	E findById(I id);
+
+	/**
+	 * Save or update (persist to database) the given item.
+	 * 
+	 * @param e
+	 *            Item to persist
+	 */
+
+	void saveOrUpdate(E e);
+
+	/**
+	 * Remove (permanently) the specified item from the database.
+	 * 
+	 * @param e
+	 *            Item to delete
+	 */
+	void delete(E e);
+
+	/**
+	 * Return a set of items corresponding to the given criterion.
+	 * 
+	 * @param criterion
+	 *            Criterion to filter the items
+	 * @return List of items
+	 */
+	List<E> findByCriteria(Criterion criterion);
+
+	/**
+	 * Return list of all items.
+	 * 
+	 * @return List of all items
+	 */
+	List<E> findAll();
+
+	/**
+	 * Return a paginated selection of items from the database. Will return
+	 * resultsPerPage elements of the specified page.
+	 * 
+	 * @param page
+	 *            Page index (starts from page 0)
+	 * @param resultsPerPage
+	 *            Number of items per page
+	 * @return List of items for the specified page
+	 */
+	List<E> findPage(int page, int resultsPerPage);
+
+	/**
+	 * Perform the given query (in HQL, not SQL) on the database
+	 * and return the results. Parameters of the query are given
+	 * as a hash-map of parameter (key) to argument (value).
+	 * 
+	 * @param query
+	 * @param args
+	 * @return
+	 */
+	<T> List<T> doQuery(String query, HashMap<String, String> args);
 
 }

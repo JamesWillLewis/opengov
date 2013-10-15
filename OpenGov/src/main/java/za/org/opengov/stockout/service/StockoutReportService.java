@@ -19,9 +19,15 @@ package za.org.opengov.stockout.service;
 import java.util.List;
 
 import za.org.opengov.common.service.AbstractService;
+import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.Subject;
 
+/**
+ * Service (business object) class for {@link StockoutReport}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface StockoutReportService extends AbstractService<StockoutReport, Long>{
 
 	/**
