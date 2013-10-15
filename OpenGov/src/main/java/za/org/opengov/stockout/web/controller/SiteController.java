@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.domain.LocationHeirarchy;
+import za.org.opengov.stockout.service.medical.MedicineClassService;
 import za.org.opengov.stockout.web.domain.stockoutResult;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 
@@ -38,6 +40,9 @@ public class SiteController {
 	@Autowired
 	private FacilityService facilityService;
 	
+	@Autowired
+	private MedicineClassService medicineClassService;
+	
 	@RequestMapping(value = "/stockouthome",method = RequestMethod.GET)
 	public String getHomePage(Model model){
 		LOG.debug("Stockout web Application Front-End");
@@ -47,7 +52,7 @@ public class SiteController {
 		//LocationHeirarchy locationHeirarchy = facilityService.getLocationHeirarchy();
 		List<String> provinces = facilityService.listAllProvinces();
 		
-		
+		List<MedicineClass> medicines = medicineClassService.getAll();
 		
 		stockoutResult[] result = new stockoutResult[3];
 		for (int i=0;i<3;i++){
@@ -61,8 +66,8 @@ public class SiteController {
 		model.addAttribute("totalProvince", totalStockoutsProvince);
 		model.addAttribute("stockoutResult", result);
 		model.addAttribute("provinces", provinces);
+		model.addAttribute("medicines", medicines);
 		
-
 		
 		return("Stockout Home");
 	}

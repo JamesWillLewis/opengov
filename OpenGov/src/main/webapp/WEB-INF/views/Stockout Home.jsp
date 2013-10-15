@@ -106,9 +106,13 @@
     				<div class="form-group">
 						<label for="select">Medicine Categories</label>
       					<select id="select" class="form-control input-sm">
-        				<option>Select Category..</option>
-        				<option>Recent Stockouts</option>
-        				<option>All Stockouts</option>
+        				<option value="all">All Category</option>
+        				<c:forEach var="medicine" items="${medicines}">
+        					
+        					<option value="${medicine.uid}">${medicine.uid}</option>
+        				
+        				</c:forEach>
+      					
       					</select>
     				</div>
 
