@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("stockout/report")
+@Deprecated
 public class ReportController {
 	
 	@RequestMapping(value = "submit_report", method = RequestMethod.POST)

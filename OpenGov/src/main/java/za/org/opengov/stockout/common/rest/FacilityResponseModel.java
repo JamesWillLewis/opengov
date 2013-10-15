@@ -1,6 +1,6 @@
 package za.org.opengov.stockout.common.rest;
 
-
+@Deprecated
 public class FacilityResponseModel {
 	
 	private String facilityName;

@@ -1,3 +1,19 @@
+/*
+ *  This file is part of OpenGov.
+ *
+ *  OpenGov is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  OpenGov is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with OpenGov.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package za.org.opengov.ussd.service.stockout.cm;
 
 import java.util.List;
@@ -179,8 +195,16 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 					if (selectedProduct != null) {
 
 						displayText = selectedProduct.getName() + " " + selectedProduct.getDescription();
+						
+						//put selected product in keyvalue store
 						keyValueStore.put("productName." + sessionId,
 								selectedProduct);
+						 //get dosages for selected product
+						List<Product> productDosages = productService
+								.getAllProductsMatchingName(selectedProduct);
+						//put dosages for selected product in key value store
+						keyValueStore.put("dosages." + sessionId, productDosages);
+						
 						displayText += " " + stockoutDao.getMenu(4);
 						menuRequest += 3;
 					} else {
