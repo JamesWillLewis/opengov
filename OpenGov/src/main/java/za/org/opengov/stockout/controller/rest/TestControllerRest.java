@@ -15,6 +15,7 @@ import za.org.opengov.stockout.service.TestService;
 
 @Controller
 @RequestMapping("stockout/api/test")
+@Deprecated
 public class TestControllerRest {
 	
 	@Autowired

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("stockout/facility")
+@Deprecated
 public class FacilityController {
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="TEST")
+@Deprecated
 public class TestEntity {
 	
 	private Long id;
