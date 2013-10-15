@@ -27,10 +27,17 @@
 		}
 		$( document ).ready(function() {
 		    $('#datepicker').datepicker();
+		    $('#facilityCombobox').combobox();
+		    $('#addMedicine').click(function() {
+		    	var medicine = $('#medicineCombobox').val();
+		    	$('<option>',{ 
+            	}).text(medicine).attr('value', medicine).appendTo('#medicineList');
+		    });
+		    
+		    $('#removeMedicine').click(function() {
+		    	$('#medicineList option:selected').remove();
+		    });
 		});
-		$(document).ready(function(){
-			    $('#facilityCombobox').combobox();
-			  });
 		
        </script>
        
@@ -89,7 +96,6 @@
 						<label class="col-lg-2" for="select">Province</label>
       					<div class="col-lg-4">
       					<select id="provinceSelect" class="form-control input-sm">
-      					<option value="Western Cape">select</option>
         				<c:forEach var="province"  items="${provinces}" >
         					<option value="${province}">${province}</option>
 						</c:forEach>
@@ -136,37 +142,64 @@
     				
 			<div class="panel-group">
  			<c:set var="count" value="0" scope="page"/>
- 			
- 			<c:forEach var="category" items="${medicineCategories}">	
  				<div class="row row-padding">
- 				<div class="col-lg-8">
+ 				<div class="col-lg-9">
  				<div class="panel panel-default">
  				
    				<div class="panel-heading">
-   				<button type="button" class="btn btn-default btn-sm pull-left" data-toggle="collapse" data-target="#collapse${count}">
-   				 	<span class="glyphicon glyphicon-plus"></span>
-				</button>
-     			<h4 class="panel-title clearfix">${category.uid}</h4>	
+      			<h4 class="panel-title clearfix">Select Medicines To Report</h4>	
    				</div>
-   				<div id="collapse${count}" class="panel-collapse collapse">
      				<div class="panel-body">
-     				<!--  c:forEach var="medicine" items="${category.medicines}">-->
-     					 <div class="checkbox">
-        				<label>
-          					<input type="checkbox"> medicine 1<!--  ${medicine.name} -->
-        				</label>
-        				</div>
-        				<!--  /c:forEach> -->
+     				<div class="form-group row row-padding">
+     				<div class="col-lg-3">
+						 <label for="medicineClassSelect">Select Medicine Category</label>
+      					<select id="medicineClassSelect" class="form-control input-sm">
+      					<c:set var="count" value="0" scope="page"/>
+        				<c:forEach var="category"  items="${medicineCategories}">
+        					<option value="${count}">${category.uid}</option>
+        					<c:set var="count" value="${count + 1}" scope="page"/>
+						</c:forEach>
+      					</select>
+      					</div>
+      				<div class="col-lg-5">
+      				<label for="medicineCombobox">Select Medicine</label>
+      					<div id="medicineDiv">
+      					<select id="medicineCombobox" class="form-control input-sm">
+      					</select>
+      					</div>
+      				</div>
+      				<div class="col-lg-2 clearfix">
+      					<button id="addMedicine" style="margin-top:15px;" type="button" class="btn btn-default">
+   				 		<span class="glyphicon glyphicon-plus"></span>
+   				 			Add To List
+						</button>
+      				</div>
+    				</div>
+   					
+   					
+   					<div class="form-group row row-padding">
+   					<div class="col-lg-8">
+   						<label for="medicineList">List of Medicines</label>
+   							<select id="medicineList" multiple class="form-control">
+						</select>
+   					</div>
+   					<div class="col-lg-2">
+   						<button id="removeMedicine" style="margin-top:15px;" type="button" class="btn btn-default">
+   				 		<span class="glyphicon glyphicon-minus"></span>
+   				 			Remove From List
+						</button>
+   					</div>
    					</div>
    					
-   					<textarea class="form-control pull-right" rows="2" placeholder="Special details/requirements"></textarea>
-   					
+   					<div class="form-group row row-padding">
+   					<div class="col-lg-8">
+   						<textarea class="form-control" rows="2" placeholder="Special details/requirements"></textarea>
+   					</div>
+   					</div>
    				</div>
    				</div>
-   				<c:set var="count" value="${count + 1}" scope="page"/>
    				</div>
    				</div>
-   </c:forEach>
    			</div>			
     		
     		<div class="container row-padding">	

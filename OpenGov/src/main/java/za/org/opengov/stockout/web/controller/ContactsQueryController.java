@@ -16,21 +16,33 @@
  */
 package za.org.opengov.stockout.web.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.service.FacilityService;
 
 @Controller
 public class ContactsQueryController {
 
 private static final Logger LOG = LoggerFactory.getLogger(ReportCommandController.class);
 	
+@Autowired
+private FacilityService facilityService;
+
+
 	@RequestMapping(value="/loadcontacts",method=RequestMethod.GET)
-	
 	public String getReportPage(Model model){
+		
+		List<Facility> facilities = facilityService.getAll();
+		model.addAttribute("facilities", facilities);
 		
 		return("Contacts_Page");
 	}

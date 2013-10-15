@@ -19,24 +19,28 @@
 <body>
 	<div class="container">
 	<h3>Contact Information for Facilites</h3>
-		<table class="table table-bordered">
+		<table class="table table-bordered table-striped table-condensed col-lg-12">
 		
   			  		<tr>
         				<th>Province</th>
         				<th>District</th>
         				<th>Town</th>
         				<th>Facility Name</th>
+        				<th>Official Name</th>
         				<th>Contact Number</th>
+        				<th>Email address</th>
     		</tr>
-    		<!-- 	<c:forEach var="contact"  items="${contactsList}" >
+    		<c:forEach var="facility"  items="${facilities}" >
     		<tr>
-        	<td>${contact.province}</td>
-        	<td>${contact.district}</td>
-        	<td>${contact.town}</td>
-        	<td>${contact.facility}</td>
-        	<td>${contact.contactNumber}</td>
+        	<td>${facility.province}</td>
+        	<td>${facility.district}</td>
+        	<td>${facility.town}</td>
+        	<td>${facility.localName} ${facility.facilityType.readable}</td>
+        	<td>${facility.officialDOHName} ${facility.facilityType.readable}</td>
+        	<td>${facility.contactNumber}</td>
+        	<td>${facility.emailAddress}</td>
     		</tr>
-</c:forEach> -->
+</c:forEach>
 	</table>
 	</div>
 </body>

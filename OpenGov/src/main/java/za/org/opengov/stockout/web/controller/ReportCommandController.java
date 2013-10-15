@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
+import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
 
@@ -51,21 +54,15 @@ public class ReportCommandController {
 	
 	@RequestMapping(value="/reportstockouts",method=RequestMethod.GET)
 	public String getReportPage(Model model){
-		String[] medicineCategories = new String[4];
-		medicineCategories[0]= "arvs";
-		medicineCategories[1]= "tb";
-		medicineCategories[2]= "arvs";
-		medicineCategories[3]= "arvs";
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		   
 		Date date = new Date();
 		
 		List<String> provinces = facilityService.listAllProvinces();
-		List<MedicineClass> medicineClasses = medicineClassService.getAll();
+		List<MedicineClass> medicineClasses = medicineClassService.getMedicineClassesEagerFetch();
 		model.addAttribute("medicineCategories", medicineClasses);
 		model.addAttribute("date",dateFormat.format(date));
-		//model.addAttribute("medicineCategories", medicineCategories);
 		model.addAttribute("provinces",provinces);
 		
 		return("Report_Page");
@@ -80,6 +77,24 @@ public class ReportCommandController {
 		}
 		
 		return(facilityNames);		
+	}
+	
+	@RequestMapping(value = "/getmedicines", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<String> getMedicines(@RequestParam(value="medicineClassIndex") int medicineClassIndex){
+		
+		List<String> productDescription = new ArrayList<String>();
+		List<MedicineClass> medicineClasses = medicineClassService.getMedicineClassesEagerFetch();
+		Set<Medicine> medicineNames = medicineClasses.get(medicineClassIndex).getMedicines();
+		
+		for(Medicine med : medicineNames){
+			for (Product prod: med.getProducts()){
+				
+				productDescription.add(prod.getName() + " " + prod.getDescription());
+				
+			}
+		}
+		
+		return(productDescription);		
 	}
 	
 }
