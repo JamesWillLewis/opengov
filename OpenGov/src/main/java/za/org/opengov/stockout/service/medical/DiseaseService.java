@@ -19,8 +19,14 @@ package za.org.opengov.stockout.service.medical;
 import java.util.List;
 
 import za.org.opengov.common.service.AbstractService;
+import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.medical.Disease;
 
+/**
+ * Service (business object) class for {@link Disease}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface DiseaseService extends AbstractService<Disease, Long> {
 
 	public List<Disease> getListOfDiseases();

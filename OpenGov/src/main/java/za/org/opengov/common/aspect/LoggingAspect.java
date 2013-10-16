@@ -21,8 +21,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 /**
+ * Performs logging (log4j) using AOP techniques. 
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
+ * @since 1.0
  */
 @Aspect
 public class LoggingAspect {

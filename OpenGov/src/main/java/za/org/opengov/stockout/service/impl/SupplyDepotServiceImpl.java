@@ -32,7 +32,6 @@ public class SupplyDepotServiceImpl extends AbstractServiceImpl<SupplyDepotDao, 
 	@Autowired
 	public SupplyDepotServiceImpl(SupplyDepotDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 }

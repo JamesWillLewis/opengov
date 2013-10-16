@@ -22,9 +22,15 @@ import java.util.List;
 import za.org.opengov.common.service.AbstractService;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.FacilityType;
+import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.domain.LocationHeirarchy;
 
+/**
+ * Service (business object) class for {@link Facility}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface FacilityService extends AbstractService<Facility, String> {
 
 	/**

@@ -363,5 +363,26 @@ public class StockoutServiceTest {
 		}
 
 	}
+	
+	@Test
+	public void testGetStockoutsForProvince(){
+		List<Stockout> stockouts1 = stockoutService.getStockoutsForProvince("Western Cape");
+		System.out.println("Western Cape: " + stockouts1.size());
+		List<Stockout> stockouts2 = stockoutService.getStockoutsForProvince("Guateng");
+		System.out.println("Guateng: " + stockouts2.size());
+		
+	}
+
+	@Test
+	public void testGetStockoutsForDistrict(){
+		List<Stockout> stockouts = stockoutService.getStockoutsForDistrict("Cape Town");
+		System.out.println("Cape Town: " + stockouts.size());
+	}
+
+	@Test
+	public void testGetStockoutsForTown(){
+		List<Stockout> stockouts = stockoutService.getStockoutsForTown("Somerset West");
+		System.out.println("Somerset West: " + stockouts.size());
+	}
 
 }
