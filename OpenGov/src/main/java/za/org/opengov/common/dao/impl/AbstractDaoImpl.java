@@ -82,7 +82,7 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 	}
 
 	@Override
-	public <T> List<T> doQuery(String query, HashMap<String, String> args) {
+	public <T> List<T> doQuery(String query, HashMap<String, Object> args) {
 		if (args == null) {
 			return getCurrentSession().createQuery(query).list();
 		} else {

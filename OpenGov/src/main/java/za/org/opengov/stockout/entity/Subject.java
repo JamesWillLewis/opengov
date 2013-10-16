@@ -49,6 +49,7 @@ public class Subject {
 		this.uid = uid;
 	}
 
+	@Column(name = "CONTACT_NUMBER")
 	public String getContactNumber() {
 		return contactNumber;
 	}

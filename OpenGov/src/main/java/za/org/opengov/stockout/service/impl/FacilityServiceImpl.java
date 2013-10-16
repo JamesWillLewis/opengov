@@ -41,6 +41,11 @@ import za.org.opengov.stockout.service.domain.LocationHeirarchy;
 import za.org.opengov.stockout.service.domain.Province;
 import za.org.opengov.stockout.service.domain.Town;
 
+/**
+ * Concrete implementation of {@link FacilityService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("facilityService")
 @Transactional
 public class FacilityServiceImpl extends
@@ -236,7 +241,7 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public List<String> listAllDistrictsForProvince(String provinceName) {
-		HashMap<String, String> args = new HashMap<String, String>();
+		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("province", provinceName);
 		return dao
 				.doQuery(
@@ -246,7 +251,7 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public List<String> listAllTownsForDistrict(String districtName) {
-		HashMap<String, String> args = new HashMap<String, String>();
+		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("district", districtName);
 		return dao
 				.doQuery(
@@ -256,7 +261,7 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public List<Facility> listAllFacilitiesForTown(String townName) {
-		HashMap<String, String> args = new HashMap<String, String>();
+		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("town", townName);
 		return dao.doQuery("select f from Facility f where f.town like :town",
 				args);
@@ -264,7 +269,7 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public long totalStockoutsForProvince(String provinceName) {
-		HashMap<String, String> args = new HashMap<String, String>();
+		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("province", provinceName);
 		return (Long) dao
 				.doQuery(
@@ -274,7 +279,7 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public long totalStockoutsForDistrict(String districtName) {
-		HashMap<String, String> args = new HashMap<String, String>();
+		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("district", districtName);
 		return (Long) dao
 				.doQuery(
@@ -284,7 +289,7 @@ public class FacilityServiceImpl extends
 
 	@Override
 	public long totalStockoutsForTown(String townName) {
-		HashMap<String, String> args = new HashMap<String, String>();
+		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("town", townName);
 		return (Long) dao
 				.doQuery(

@@ -24,7 +24,8 @@ public class TestControllerRest {
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	public @ResponseBody List<TestEntity> getTestList()
 	{
-		return testService.getAllTests);
+		return null; 
+				//testService.getAllTests();
 	}
 	
 }

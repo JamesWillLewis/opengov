@@ -27,8 +27,14 @@ import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.medical.MedicineDao;
 import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.MedicineService;
 
+/**
+ * Concrete implementation of {@link MedicineService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("medicineService")
 @Transactional
 public class MedicineServiceImpl extends

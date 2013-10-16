@@ -25,8 +25,14 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.medical.DiseaseDao;
 import za.org.opengov.stockout.entity.medical.Disease;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.DiseaseService;
 
+/**
+ * Concrete implementation of {@link DiseaseService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("diseaseService")
 @Transactional
 public class DiseaseServiceImpl extends AbstractServiceImpl<DiseaseDao, Disease, Long> implements DiseaseService {

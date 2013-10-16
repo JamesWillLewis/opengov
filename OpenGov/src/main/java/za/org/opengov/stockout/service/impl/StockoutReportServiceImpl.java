@@ -36,9 +36,16 @@ import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.Subject;
 import za.org.opengov.stockout.entity.medical.Product;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutReportService;
 import za.org.opengov.stockout.service.StockoutService;
+import za.org.opengov.stockout.service.SubjectService;
 
+/**
+ * Concrete implementation of {@link StockoutReportService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("stockoutReportService")
 @Transactional
 public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutReportDao, StockoutReport, Long> implements StockoutReportService {
@@ -62,6 +69,9 @@ public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutRepor
 
 	@Autowired
 	private IssueDao issueDao;
+	
+	@Autowired
+	private SubjectService subjectService;
 
 	@Override
 	@Transactional(readOnly = false)
@@ -130,6 +140,13 @@ public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutRepor
 		// set timestamp to submitted time
 		stockoutReport.setTimestamp(Calendar.getInstance().getTime());
 		stockoutReport.setReportedToDOH(reportedToDOH);
+		
+		//check if reporter has reported before
+		Subject originalReporter = subjectService.getSubjectWithContactNumber(reporter.getContactNumber());
+		if(originalReporter != null){
+			reporter = originalReporter;
+		}
+		
 		stockoutReport.setReporter(reporter);
 
 		return submitStockoutReport(stockoutReport);

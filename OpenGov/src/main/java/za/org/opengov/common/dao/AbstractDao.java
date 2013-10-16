@@ -94,6 +94,6 @@ public interface AbstractDao<E, I extends Serializable> {
 	 * @param args
 	 * @return
 	 */
-	<T> List<T> doQuery(String query, HashMap<String, String> args);
+	<T> List<T> doQuery(String query, HashMap<String, Object> args);
 
 }
