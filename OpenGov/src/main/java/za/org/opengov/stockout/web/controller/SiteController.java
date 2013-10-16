@@ -19,24 +19,33 @@ package za.org.opengov.stockout.web.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.codehaus.jackson.map.util.JSONPObject;
+import org.codehaus.jackson.map.util.JSONWrappedObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.domain.LocationHeirarchy;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
+import za.org.opengov.stockout.web.domain.graphData;
 import za.org.opengov.stockout.web.domain.stockoutResult;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 
@@ -60,27 +69,25 @@ public class SiteController {
 	private MedicineClassService medicineClassService;
 	
 	@RequestMapping(value = "/stockouthome",method = RequestMethod.GET)
-	public String getHomePage(Model model){
+	public String getHomePage(Model model,
+			@RequestParam(value="province") String province,
+			@RequestParam(value="district") String district,
+			@RequestParam(value="town") String town,
+			@RequestParam(value="medicineCat") String medicineCat){
+		
 		LOG.debug("Stockout web Application Front-End");
-		String name = "Test Application";
-		System.out.println();
-		
-		//LocationHeirarchy locationHeirarchy = facilityService.getLocationHeirarchy();
 		List<String> provinces = facilityService.listAllProvinces();
-		
-		List<MedicineClass> medicines = medicineClassService.getAll();
-		
-		stockoutResult[] result = new stockoutResult[3];
-		for (int i=0;i<3;i++){
-			result[i] = new stockoutResult();
-			result[i].setProvince("Gauteng");
+		List<Long> provinceStockouts = new ArrayList<Long>();
+		if (province.equals("all")){
+			for (String prov : provinces){
+				
+				provinceStockouts.add(facilityService.totalStockoutsForProvince(prov));
+				
+			}
 		}
 		
-		HashMap<String,Integer> hash = new HashMap<String,Integer>();
-		
-		long totalStockoutsProvince = facilityService.totalStockoutsForProvince("Western Cape");
-		model.addAttribute("totalProvince", totalStockoutsProvince);
-		model.addAttribute("stockoutResult", result);
+		List<MedicineClass> medicines = medicineClassService.getAll();
+		model.addAttribute("locations",provinceStockouts);
 		model.addAttribute("provinces", provinces);
 		model.addAttribute("medicines", medicines);
 		
@@ -98,6 +105,63 @@ public class SiteController {
 		return(facilityService.listAllTownsForDistrict(district));		
 	}
 	
-	
+	@RequestMapping(value="/getgraphdata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody  graphData getGraphData(@RequestParam(value="province") String province,
+			@RequestParam(value="district") String district,
+			@RequestParam(value="town") String town){
+		
+		graphData graphs = new graphData();
+		List<String> locations = new ArrayList<String>();
+		List<Long> data = new ArrayList<Long>();
+		
+		if (province.equals("all")){
+			locations = facilityService.listAllProvinces();
+			
+				for (String loc : locations){
+				
+				data.add(facilityService.totalStockoutsForProvince("Western Cape"));
+				
+			}
+				
+		}
+		
+		else if (district.equals("all")){
+			locations = facilityService.listAllDistrictsForProvince(province);
+			
+			for (String loc : locations){
+				
+				data.add(facilityService.totalStockoutsForDistrict(loc));
+				
+			}
+		} 
+		
+		else if (town.equals("all")) {
+			locations = facilityService.listAllTownsForDistrict(district);
+			
+			for (String loc : locations){
+				
+				data.add(facilityService.totalStockoutsForTown(loc));
+				
+			}
+			
+		} else
+		{
+			List<Facility> facilities= facilityService.listAllFacilitiesForTown(town);
+			
+			for (Facility fac : facilities){
+				locations.add(fac.getLocalName());
+				data.add((long) fac.getStockouts().size());
+			}
+			
+		}
+		
+		
+		graphs.setLocations(locations);
+		graphs.setLocationStockouts(data);
+		
+
+		return(graphs);
+		
+	}
 	
 }

@@ -1,150 +1,78 @@
-$(function loadLocationDrillDown() {
+
+function loadLocationDrillDown() {
+	
+	
+	
+	var locations = new Array();
+	var stockouts = new Array();
+	
+	var param={province:$('#provinceSelect').val(),district:$('#districtSelect').val(),town:$('#townSelect').val()};
+	var province = "Western Cape";
     
-        var colors = Highcharts.getOptions().colors,
-            categories = ['Western Cape', 'Eastern Cape', 'Gauteng', 'KZN', 'Limpopo'],
-            name = 'Provinces',
-            data = [{ 
-                y: 55.11,
-                color: colors[0],
-                drilldown: {
-                   name: 'MSIE versions',
-                   categories: ['MSIE 8.0', 'MSIE 6.0', 'MSIE 7.0', 'MSIE 9.0'],
-                   level: 1, 
-                   data: [{
-                       y: 33.06,
-                       drilldown: {
-                           level: 2,
-                           name: 'drilldown next level',
-                           categories: ['a', 'b', 'c'],
-                           data: [23,54,47],
-                           color: colors[0]
-                       }
-                   }, 10.85, 7.35, 2.41],
-                   color: colors[0]
-                }
-             }, {
-                    y: 21.63,
-                    color: colors[1],
-                    drilldown: {
-                        name: 'Eastern Cape Towns',
-                        categories: ['district1', 'district2', 'district3', 'district4', 'district5'],
-                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
-                        color: colors[1]
-                    }
-                }, {
-                    y: 11.94,
-                    color: colors[2],
-                    drilldown: {
-                        name: 'Gauteng Towns',
-                        categories: ['district1', 'district2', 'district3', 'district4', 'district5',
-                                     'district6', 'district7', 'district8'],
-                        data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
-                        color: colors[2]
-                    }
-                }, {
-                    y: 7.15,
-                    color: colors[3],
-                    drilldown: {
-                        name: 'KZN Towns',
-                        categories: ['district1', 'district2', 'district3', 'district4', 'district5'],
-                        data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
-                        color: colors[3]
-                    }
-                }, {
-                    y: 2.14,
-                    color: colors[4],
-                    drilldown: {
-                        name: 'Limpopo Towns',
-                        categories: ['district1', 'district2', 'district3'],
-                        data: [ 0.12, 0.37, 1.65],
-                        color: colors[4]
-                    }
-                }];
-    
-        function setChart(name, categories, data, color) {
-			chart.xAxis[0].setCategories(categories, false);
-			chart.series[0].remove(false);
-			chart.addSeries({
-				name: name,
-				data: data,
-				color: color || 'white'
-			}, false);
-			chart.redraw();
-        }
-    
-        var chart = $('#locationContainer').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Stock-outs per Province'
-            },
-            subtitle: {
-                text: 'Click the columns to view towns/districts. Click again to view provinces.'
-            },
-            xAxis: {
-                categories: categories
-            },
-            yAxis: {
+	$.ajax({
+        type:'GET',
+        url:'getgraphdata',
+        data:param,
+        headers: {
+            Accept: 'application/json'
+        },datatype: 'json',
+        success:function(data){
+        	
+            $.each(data.locations, function(i, value) {
+                locations.push(value);
+            });
+            $.each(data.locationStockouts, function(i, value) {
+                stockouts.push(value);
+            });
+            
+            $('#locationContainer').highcharts({
+                chart: {
+                    type: 'column'
+                },
                 title: {
-                    text: 'Total percent of stockouts'
-                }
-            },
-            plotOptions: {
-                column: {
-                    cursor: 'pointer',
-                    point: {
-                        events: {
-                            click: function() {
-                                var drilldown = this.drilldown;
-                                if (drilldown) { // drill down
-                                    setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
-                                } else { // restore
-                                    setChart(name, categories, data);
-                                }
-                            }
-                        }
-                    },
-                    dataLabels: {
-                        enabled: true,
-                        color: colors[0],
-                        style: {
-                            fontWeight: 'bold'
-                        },
-                        formatter: function() {
-                            return this.y +'%';
-                        }
+                    text: 'Stockouts per Province'
+                },
+                xAxis: {
+                    categories: locations
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of stockouts'
                     }
-                }
-            },
-            tooltip: {
-                formatter: function() {
-                    var point = this.point,
-                        s = this.x +':<b>'+ this.y +'% of Stockouts</b><br/>';
-                    if (point.drilldown) {
-                        s += 'Click to view '+ point.category +' towns/districts';
-                    } else {
-                        s += 'Click to return to provinces';
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
                     }
-                    return s;
-                }
-            },
-            series: [{
-                name: name,
-                data: data,
-                color: 'white'
-            }],
-            exporting: {
-                enabled: false
-            }
-        })
-        .highcharts(); // return chart
+                },
+                series: [{
+                    data: stockouts
+
+                }]
+            });
+
+            
+       
+        }
+
     });
+	
+};
 
 
 
 
-$(function loadSupplierChart() {
+function loadSupplierChart() {
     $('#supplyContainer').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -182,11 +110,11 @@ $(function loadSupplierChart() {
             ]
         }]
     });
-});
+};
 
 
 
-$(function loadSupplyDepotChart() {
+function loadSupplyDepotChart() {
         $('#depotContainer').highcharts({
             chart: {
                 type: 'column'
@@ -251,9 +179,9 @@ $(function loadSupplyDepotChart() {
     
             }]
         });
-    });
+    };
 
-$(function loadTimeGraph() {
+function loadTimeGraph() {
     $('#timeContainer').highcharts({
         chart: {
             type: 'area'
@@ -320,4 +248,4 @@ $(function loadTimeGraph() {
             21000, 20000, 19000, 18000, 18000, 17000, 16000]
         }]
     });
-});
+};

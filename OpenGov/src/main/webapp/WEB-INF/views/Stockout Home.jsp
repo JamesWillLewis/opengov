@@ -38,17 +38,24 @@
     	 src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
  -->
 	<script type="text/javascript"
-		src="resources/js/maploader.js"> </script>
-		
+		src="resources/js/maploader.js"> </script>	
 		<script src="resources/js/jquery-1.10.2.min.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
      <script src="resources/js/highcharts.js"></script>
     <script src="resources/js/locationDrillDown.js"></script>
  	
-	
+ 	 <script language="javascript">
+ 	$( document ).ready(function() {	
+ 		
+ 		//var jsp = "${locations}";
+ 		loadLocationDrillDown();
+ 		
+ 	});
+ 	
+ 	</script>
 </head>
 
-<body onload="loadMap(-30.145127) loadLocationDrillDown()">
+<body id="mapBody" onload="loadMap(-30.145127)">
 
            <div class="container">
             
@@ -60,7 +67,7 @@
             <div class="panel panel-primary">
             <div class="panel-heading">Filter Results:</div>
   			<div class="panel-body">
-				<form class="role-horizontal" role="form">
+				<!--  form class="role-horizontal" role="form">-->
 				
 				    <div class="form-group">
 						<label for="provinceSelect">Provinces</label>
@@ -116,10 +123,10 @@
       					</select>
     				</div>
 
-    				<button class="btn btn-success btn-lg">Find Stockouts
+    				<button class="btn btn-success btn-lg" onclick='loadLocationDrillDown()'>Find Stockouts
     				<span class="glyphicon glyphicon-search"></span>
     				</button>
-    				</form>
+    				<!--/form-->
     				</div>
 					</div>	
             		</div>
@@ -133,7 +140,7 @@
 					<li class="active"><a href="#google-map-canvas" data-toggle="pill">Map View</a></li>
   					<li class="" style=><a href="#locationInfo" data-toggle="pill">Location</a></li>
   					<li class=""><a href="#supplyInfo" data-toggle="pill" onclick="loadSupplierChart()">Supplier</a></li>
-  					<li class=""><a href="#depotInfo" data-toggle="pill" onclick="LoadSupplyDepotChart()">Supply Depot</a></li>
+  					<li class=""><a href="#depotInfo" data-toggle="pill" onclick="loadSupplyDepotChart()">Supply Depot</a></li>
 					<li class=""><a href="#timeInfo" data-toggle="pill" onclick="loadTimeGraph()">12-Month Analysis</a></li>
 				</ul>
             </div>
