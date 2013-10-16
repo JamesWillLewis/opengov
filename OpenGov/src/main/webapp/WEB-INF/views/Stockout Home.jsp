@@ -91,7 +91,7 @@
         				<option value='all'>All Towns</option>
       					</select>
     				</div>
-    				
+    				<!--  
     				 <div class="form-group">
 						<label for="select">Supply Depot</label>
       					<select id="select" class="form-control input-sm">
@@ -109,10 +109,10 @@
         				<option>All Stockouts</option>
       					</select>
     				</div>
-
+-->
     				<div class="form-group">
-						<label for="select">Medicine Categories</label>
-      					<select id="select" class="form-control input-sm">
+						<label for="medicineSelect">Medicine Categories</label>
+      					<select id="medicineSelect" class="form-control input-sm">
         				<option value="all">All Category</option>
         				<c:forEach var="medicine" items="${medicines}">
         					
@@ -139,8 +139,8 @@
             	<ul class="nav nav-pills nav-justified" id="pills">
 					<li class="active"><a href="#google-map-canvas" data-toggle="pill">Map View</a></li>
   					<li class="" style=><a href="#locationInfo" data-toggle="pill">Location</a></li>
-  					<li class=""><a href="#supplyInfo" data-toggle="pill" onclick="loadSupplierChart()">Supplier</a></li>
-  					<li class=""><a href="#depotInfo" data-toggle="pill" onclick="loadSupplyDepotChart()">Supply Depot</a></li>
+  					<li class=""><a href="#medicineInfo" data-toggle="pill" onclick="loadSupplierChart()">Medicines</a></li>
+  					<!--  li class=""><a href="#depotInfo" data-toggle="pill" onclick="loadSupplyDepotChart()">Supply Depot</a></li-->
 					<li class=""><a href="#timeInfo" data-toggle="pill" onclick="loadTimeGraph()">12-Month Analysis</a></li>
 				</ul>
             </div>
@@ -157,13 +157,13 @@
   					</div>
   				
   				
-  				<div id="supplyInfo" class="pill-pane" ><h4>Supplier</h4>
-  				<div id="supplyContainer"></div>
+  				<div id="medicineInfo" class="pill-pane" ><h4>Medicines</h4>
+  				<div id="medicineContainer"></div>
   				</div>
   				
-  				<div  id="depotInfo" class="pill-pane"><h4>Supply Depot</h4>
+  				<!--  div  id="depotInfo" class="pill-pane"><h4>Supply Depot</h4>
   				<div id="depotContainer"></div>
-  				</div>
+  				</div>-->
   				
   				<div  id="timeInfo" class="pill-pane"><h4>12-Month Analysis</h4>
   				<div id="timeContainer"></div>

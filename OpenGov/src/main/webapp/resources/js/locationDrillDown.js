@@ -5,8 +5,12 @@ function loadLocationDrillDown() {
 	
 	var locations = new Array();
 	var stockouts = new Array();
+	var medicines = new Array();
+	var medStockouts = new Array();
 	
-	var param={province:$('#provinceSelect').val(),district:$('#districtSelect').val(),town:$('#townSelect').val()};
+	var param={province:$('#provinceSelect').val(),district:$('#districtSelect').val(),
+			town:$('#townSelect').val(),medicineCat:$('#medicineSelect').val()};
+	
 	var province = "Western Cape";
     
 	$.ajax({
@@ -43,7 +47,7 @@ function loadLocationDrillDown() {
                 },
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: Location </td>' +
                         '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
@@ -61,6 +65,42 @@ function loadLocationDrillDown() {
                 }]
             });
 
+            var chartData=$.map(data, function( obj,i){
+                return [[ obj.medicines, obj.medicineStockouts]];                            
+            });
+            
+            function loadSupplierChart() {
+                $('#medicineContainer').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'Percentage of Stockouts of Medicines'
+                    },
+                    tooltip: {
+                	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Stockouts per Medicine',
+                        data: chartData
+                    }]
+                });
+            };
             
        
         }
@@ -72,114 +112,9 @@ function loadLocationDrillDown() {
 
 
 
-function loadSupplierChart() {
-    $('#supplyContainer').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Percentage of Out of Stock Medicines Distributed by Supplier'
-        },
-        tooltip: {
-    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    color: '#000000',
-                    connectorColor: '#000000',
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Medicines per Supplier',
-            data: [
-                ['supplier1',   45.0],
-                ['supplier2',       26.8],
-                ['supplier3',   11.0],
-                ['supplier4',    8.5],
-                ['supplier5',     6.2],
-                ['supplier6',   0.7]
-            ]
-        }]
-    });
-};
 
 
 
-function loadSupplyDepotChart() {
-        $('#depotContainer').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Monthly Average Rainfall'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: {
-                categories: [
-                    'Jan',
-                    'Feb',
-                    'Mar',
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec'
-                ]
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Rainfall (mm)'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-    
-            }, {
-                name: 'New York',
-                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-    
-            }, {
-                name: 'London',
-                data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-    
-            }, {
-                name: 'Berlin',
-                data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-    
-            }]
-        });
-    };
 
 function loadTimeGraph() {
     $('#timeContainer').highcharts({

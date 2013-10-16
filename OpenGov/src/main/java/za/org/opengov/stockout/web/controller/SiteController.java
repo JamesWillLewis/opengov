@@ -31,6 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,16 +42,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.FacilityService;
+import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.domain.LocationHeirarchy;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
+import za.org.opengov.stockout.service.medical.MedicineService;
 import za.org.opengov.stockout.web.domain.graphData;
 import za.org.opengov.stockout.web.domain.stockoutResult;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 
 
-
+@Transactional
 @Controller
 public class SiteController {
 	
@@ -67,6 +71,12 @@ public class SiteController {
 	
 	@Autowired
 	private MedicineClassService medicineClassService;
+	
+	@Autowired
+	private StockoutService stockoutService;
+	
+	@Autowired
+	private MedicineService medicineService;
 	
 	@RequestMapping(value = "/stockouthome",method = RequestMethod.GET)
 	public String getHomePage(Model model,
@@ -108,11 +118,14 @@ public class SiteController {
 	@RequestMapping(value="/getgraphdata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody  graphData getGraphData(@RequestParam(value="province") String province,
 			@RequestParam(value="district") String district,
-			@RequestParam(value="town") String town){
+			@RequestParam(value="town") String town,
+			@RequestParam(value="medicineCat") String medicineCat){
 		
 		graphData graphs = new graphData();
 		List<String> locations = new ArrayList<String>();
 		List<Long> data = new ArrayList<Long>();
+		List<Long> medData = new ArrayList<Long>();
+		List<String> names = new ArrayList<String>();
 		
 		if (province.equals("all")){
 			locations = facilityService.listAllProvinces();
@@ -124,7 +137,7 @@ public class SiteController {
 			}
 				
 		}
-		
+
 		else if (district.equals("all")){
 			locations = facilityService.listAllDistrictsForProvince(province);
 			
@@ -155,10 +168,29 @@ public class SiteController {
 			
 		}
 		
+		List<MedicineClass> medicineClasses = medicineClassService.getAll();
+		
+		if (medicineCat.equals("all")){
+			
+			for (MedicineClass medClass : medicineClasses){
+				names.add(medClass.getUid());
+				medData.add((long)stockoutService.getStockoutsForMedicineClass(medClass).size());
+			}
+			
+		} 
+		else {
+			Set<Medicine> medicines = medicineClassService.get(medicineCat).getMedicines();
+			for (Medicine med : medicines){
+				names.add(med.getName());
+				medData.add((long)stockoutService.getStockoutsForMedicine(med).size());
+			}
+		}
+		
 		
 		graphs.setLocations(locations);
 		graphs.setLocationStockouts(data);
-		
+		graphs.setMedicines(names);
+		graphs.setMedicineStockouts(medData);
 
 		return(graphs);
 		
