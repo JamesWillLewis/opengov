@@ -3,13 +3,9 @@ package za.org.opengov.stockout.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +24,11 @@ import za.org.opengov.stockout.dao.StockoutReportDao;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.StockoutReport;
+import za.org.opengov.stockout.entity.medical.Medicine;
+import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.entity.medical.Product;
+import za.org.opengov.stockout.service.medical.MedicineClassService;
+import za.org.opengov.stockout.service.medical.MedicineService;
 import za.org.opengov.stockout.service.medical.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,6 +54,12 @@ public class StockoutServiceTest {
 
 	@Autowired
 	private StockoutReportDao stockoutReportDao;
+
+	@Autowired
+	private MedicineClassService medicineClassService;
+
+	@Autowired
+	private MedicineService medicineService;
 
 	private Product p1;
 	private Product p2;
@@ -344,16 +350,15 @@ public class StockoutServiceTest {
 		stockout1.setIssue(issue1);
 		stockout2.setIssue(issue2);
 
-		
 		stockout1.getStockoutReports().add(report1);
 		stockout1.getStockoutReports().add(report2);
 		stockout1.getStockoutReports().add(report3);
 		stockout2.getStockoutReports().add(report4);
 		stockout2.getStockoutReports().add(report5);
-		
+
 		stockoutService.saveStockout(stockout1);
 		stockoutService.saveStockout(stockout2);
-		
+
 		stockoutService.updateAllStockoutPriorities();
 
 		List<Issue> issues = issueService.getAll();
@@ -363,26 +368,47 @@ public class StockoutServiceTest {
 		}
 
 	}
-	
+
 	@Test
-	public void testGetStockoutsForProvince(){
-		List<Stockout> stockouts1 = stockoutService.getStockoutsForProvince("Western Cape");
+	public void testGetStockoutsForProvince() {
+		List<Stockout> stockouts1 = stockoutService
+				.getStockoutsForProvince("Western Cape");
 		System.out.println("Western Cape: " + stockouts1.size());
-		List<Stockout> stockouts2 = stockoutService.getStockoutsForProvince("Guateng");
+		List<Stockout> stockouts2 = stockoutService
+				.getStockoutsForProvince("Guateng");
 		System.out.println("Guateng: " + stockouts2.size());
-		
+
 	}
 
 	@Test
-	public void testGetStockoutsForDistrict(){
-		List<Stockout> stockouts = stockoutService.getStockoutsForDistrict("Cape Town");
+	public void testGetStockoutsForDistrict() {
+		List<Stockout> stockouts = stockoutService
+				.getStockoutsForDistrict("Cape Town");
 		System.out.println("Cape Town: " + stockouts.size());
 	}
 
 	@Test
-	public void testGetStockoutsForTown(){
-		List<Stockout> stockouts = stockoutService.getStockoutsForTown("Somerset West");
+	public void testGetStockoutsForTown() {
+		List<Stockout> stockouts = stockoutService
+				.getStockoutsForTown("Somerset West");
 		System.out.println("Somerset West: " + stockouts.size());
+	}
+
+	@Test
+	public void testGetStockoutsForMedicineClass() {
+		MedicineClass medicineClass = medicineClassService
+				.get("antiretroviral");
+		List<Stockout> stockouts = stockoutService
+				.getStockoutsForMedicineClass(medicineClass);
+		System.out.println("antiretroviral: " + stockouts.size());
+	}
+
+	@Test
+	public void testGetStockoutsForMedicine() {
+		Medicine medicineClass = medicineService.get(2l);
+		List<Stockout> stockouts = stockoutService
+				.getStockoutsForMedicine(medicineClass);
+		System.out.println("ABACAVIR: " + stockouts.size());
 	}
 
 }

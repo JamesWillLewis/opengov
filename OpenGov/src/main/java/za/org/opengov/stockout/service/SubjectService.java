@@ -27,4 +27,6 @@ import za.org.opengov.stockout.entity.Subject;
  */
 public interface SubjectService extends AbstractService<Subject, Long>{
 
+	public Subject getSubjectWithContactNumber(String contactNumber);
+
 }

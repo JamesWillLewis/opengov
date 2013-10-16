@@ -27,8 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.medical.MedicineClassDao;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
 
+/**
+ * Concrete implementation of {@link MedicineClassService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("medicineClassService")
 @Transactional
 public class MedicineClassServiceImpl extends

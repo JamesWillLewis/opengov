@@ -38,9 +38,15 @@ import za.org.opengov.stockout.dao.medical.ProductDao;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.Product;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.MedicineService;
 import za.org.opengov.stockout.service.medical.ProductService;
 
+/**
+ * Concrete implementation of {@link ProductService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("productService")
 @Transactional
 public class ProductServiceImpl extends

@@ -23,8 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.medical.SupplierDao;
 import za.org.opengov.stockout.entity.medical.Supplier;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.SupplierService;
 
+/**
+ * Concrete implementation of {@link SupplierService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("supplierService")
 @Transactional
 public class SupplierServiceImpl extends AbstractServiceImpl<SupplierDao, Supplier, Long> implements SupplierService {

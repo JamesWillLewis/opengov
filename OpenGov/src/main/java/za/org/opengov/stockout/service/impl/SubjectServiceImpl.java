@@ -16,6 +16,11 @@
  */
 package za.org.opengov.stockout.service.impl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +28,33 @@ import org.springframework.transaction.annotation.Transactional;
 import za.org.opengov.common.service.impl.AbstractServiceImpl;
 import za.org.opengov.stockout.dao.SubjectDao;
 import za.org.opengov.stockout.entity.Subject;
+import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.SubjectService;
 
+/**
+ * Concrete implementation of {@link SubjectService}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Service("subjectService")
 @Transactional
-public class SubjectServiceImpl extends AbstractServiceImpl<SubjectDao, Subject, Long> implements SubjectService {
+public class SubjectServiceImpl extends
+		AbstractServiceImpl<SubjectDao, Subject, Long> implements
+		SubjectService {
 
 	@Autowired
 	public SubjectServiceImpl(SubjectDao dao) {
 		super(dao);
 	}
 
+	@Override
+	public Subject getSubjectWithContactNumber(String contactNumber) {
+		List<Subject> sameNums = dao.findByCriteria(Restrictions.like(
+				"contactNumber", contactNumber));
+		if (sameNums.isEmpty()) {
+			return null;
+		} else {
+			return sameNums.get(0);
+		}
+	}
 }
