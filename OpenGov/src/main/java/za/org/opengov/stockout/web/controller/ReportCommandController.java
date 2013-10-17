@@ -52,6 +52,7 @@ import za.org.opengov.stockout.service.medical.MedicineClassService;
 import za.org.opengov.stockout.service.medical.ProductService;
 import za.org.opengov.stockout.web.domain.PublicStockoutReport;
 
+/** Controls all request for the report page**/
 @Controller
 public class ReportCommandController {
 
@@ -69,6 +70,8 @@ public class ReportCommandController {
 	@Autowired
 	private ProductService productService;
 	
+	/** Constructs the Reports Page with all the neccessary Model attributes to pre-load
+	 * various form elements data**/
 	@RequestMapping(value="/reportstockouts",method=RequestMethod.GET)
 	public String getReportPage(Model model){
 		
@@ -85,6 +88,7 @@ public class ReportCommandController {
 		return("Report_Page");
 	}
 	
+	/**handles client-side requests for facility data(usually from ajax javascript)**/
 	@RequestMapping(value = "/getfacility", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getFacilty(@RequestParam(value="province") String province){
 		List<Facility> allFacilities = facilityService.listAllFacilitiesForProvince(province);
@@ -96,6 +100,8 @@ public class ReportCommandController {
 		return(facilityNames);		
 	}
 	
+	/**handles client-side requests for medicine data(usually from ajax javascript)
+	 * returns a list of product names for populating autocomplete form**/
 	@RequestMapping(value = "/getmedicines", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getMedicines(@RequestParam(value="medicineClassIndex") int medicineClassIndex){
 		
@@ -119,7 +125,12 @@ public class ReportCommandController {
         return new PublicStockoutReport();
     }
 
-	
+	/**Post request that handles the processing of form object(publicStockoutReport)
+	 * repeats data for /reportStockouts request if form detects errors
+	 * valid annotation ensures fields in publicStockoutReport have met requirements before being submitted.
+	 * stockoutreport is processed and submitted from form data.
+	 * success message is stored as a redirected attribute and sent to reportStockout request
+	 * upon completion of stockout report submission*/
 	@RequestMapping(value="/processform", method = RequestMethod.POST)
     public String reportStockout(@Valid @ModelAttribute PublicStockoutReport publicStockoutReport, BindingResult result, RedirectAttributes redirectAttrs, Model model) {
         

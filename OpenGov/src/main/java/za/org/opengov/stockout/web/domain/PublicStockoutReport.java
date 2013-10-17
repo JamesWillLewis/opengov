@@ -29,7 +29,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
-
+/** Public Stockout Report used to submit form data when reporting a stock-out.
+ *Contains validation annotations to ensure that fields meet the neccessary requirements
+ * before being submitted.  **/
 public class PublicStockoutReport implements Serializable {
 
 	@Size(min=2, max=30)

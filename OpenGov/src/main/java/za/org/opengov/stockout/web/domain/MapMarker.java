@@ -16,6 +16,7 @@
  */
 package za.org.opengov.stockout.web.domain;
 
+/** Map Marker Stores data to be used for setting a marker in google maps**/
 public class MapMarker {
 
 private double latitude;

@@ -20,14 +20,15 @@ import java.util.List;
 
 import za.org.opengov.stockout.entity.Stockout;
 
-/**GraphData Entity class specifies various data for graphs to use**/
-public class graphData {
+/**GraphData Entity class specifies stores data collected from objects on the server
+ *  for use in dynamically generated graphs and maps in javascript classes**/
+public class GraphData {
 	
 	private List<Long> locationStockouts;
 	private List<String> locations;
 	private List<String> medicines;
 	private List<Long> medicineStockouts;
-	private List<stockoutResult> allStockouts;
+	private List<StockoutResult> allStockouts;
 	private List<MapMarker> markers;
 	
 	public List<MapMarker> getMarkers() {
@@ -36,10 +37,10 @@ public class graphData {
 	public void setMarkers(List<MapMarker> markers) {
 		this.markers = markers;
 	}
-	public List<stockoutResult> getAllStockouts() {
+	public List<StockoutResult> getAllStockouts() {
 		return allStockouts;
 	}
-	public void setAllStockouts(List<stockoutResult> allStockouts) {
+	public void setAllStockouts(List<StockoutResult> allStockouts) {
 		this.allStockouts = allStockouts;
 	}
 	public List<Long> getLocationStockouts() {

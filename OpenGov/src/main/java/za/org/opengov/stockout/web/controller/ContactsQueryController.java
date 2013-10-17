@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.service.FacilityService;
 
+/**controls all requests for the Contacts Page**/
 @Controller
 public class ContactsQueryController {
 
@@ -37,7 +38,7 @@ private static final Logger LOG = LoggerFactory.getLogger(ReportCommandControlle
 @Autowired
 private FacilityService facilityService;
 
-
+	/** Return a model object containing a list of all facilities and their respective contact details */
 	@RequestMapping(value="/loadcontacts",method=RequestMethod.GET)
 	public String getReportPage(Model model){
 		

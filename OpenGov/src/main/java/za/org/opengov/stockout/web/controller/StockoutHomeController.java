@@ -51,16 +51,16 @@ import za.org.opengov.stockout.service.domain.LocationHeirarchy;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
 import za.org.opengov.stockout.service.medical.MedicineService;
 import za.org.opengov.stockout.web.domain.MapMarker;
-import za.org.opengov.stockout.web.domain.graphData;
-import za.org.opengov.stockout.web.domain.stockoutResult;
+import za.org.opengov.stockout.web.domain.GraphData;
+import za.org.opengov.stockout.web.domain.StockoutResult;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 
 
 @Transactional
 @Controller
-public class SiteController {
+public class StockoutHomeController {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StockoutHomeController.class);
 	
 	/*public stockoutResult[] getList(Model model){
 		ArrayList<stockoutResult> stockoutNames = new ArrayList<stockoutResult>();
@@ -80,6 +80,7 @@ public class SiteController {
 	@Autowired
 	private MedicineService medicineService;
 	
+	/**Load up initial data to populate dropdown boxes and forms on the home page**/
 	@RequestMapping(value = "/stockouthome",method = RequestMethod.GET)
 	public String getHomePage(Model model,
 			@RequestParam(value="province") String province,
@@ -110,29 +111,38 @@ public class SiteController {
 		return("Stockout Home");
 	}
 	
+	/**loads up list of districts for dynamic selection of province
+	 * called client side(ajax) hence response body is needed**/
 	@RequestMapping(value = "/getdistricts", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getDistricts(@RequestParam(value="province") String province){			
 		return(facilityService.listAllDistrictsForProvince(province));		
 	}
 	
+	/**loads up list of towns for dynamic selection of districts
+	 * called client side(ajax) hence response body is needed**/
 	@RequestMapping(value = "/gettowns", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<String> getTowns(@RequestParam(value="district") String district){			
 		return(facilityService.listAllTownsForDistrict(district));		
 	}
 	
+	
+	/**Main request to load up all data to be used in graphs on the home page
+	 * loads data for location bar graph,medicine pie chart and google maps markers
+	 * this request is called from client-side(ajax javascript) therefore requires response body
+	 * rather than model attribute*/
 	@RequestMapping(value="/getgraphdata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody  graphData getGraphData(@RequestParam(value="province") String province,
+	public @ResponseBody  GraphData getGraphData(@RequestParam(value="province") String province,
 			@RequestParam(value="district") String district,
 			@RequestParam(value="town") String town,
 			@RequestParam(value="medicineCat") String medicineCat){
 		
-		graphData graphs = new graphData();
+		GraphData graphs = new GraphData();
 		List<String> locations = new ArrayList<String>();
 		List<Long> data = new ArrayList<Long>();
 		List<Long> medData = new ArrayList<Long>();
 		List<String> names = new ArrayList<String>();
 		List<Stockout> allStockouts = new ArrayList<Stockout>();
-		List<stockoutResult> stockResults = new ArrayList<stockoutResult>();
+		List<StockoutResult> stockResults = new ArrayList<StockoutResult>();
 		List<MapMarker> markers = new ArrayList<MapMarker>();
 		List<Facility> facilities = new ArrayList<Facility>();
 		
@@ -193,7 +203,7 @@ public class SiteController {
 
 			
 			for(Stockout stockout: allStockouts){
-				stockoutResult result = new stockoutResult();
+				StockoutResult result = new StockoutResult();
 				result.setProvince(stockout.getFacility().getProvince());
 				result.setTown(stockout.getFacility().getTown());
 				result.setFacility(stockout.getFacility().getLocalName() + " " + stockout.getFacility().getFacilityType().getReadable());
@@ -221,7 +231,7 @@ public class SiteController {
 			
 			for(Stockout stockout: allStockouts){
 				if (stockout.getProduct().getMedicine().getMedicineClass().getUid().equals(medicineCat)){
-				stockoutResult result = new stockoutResult();
+				StockoutResult result = new StockoutResult();
 				result.setProvince(stockout.getFacility().getProvince());
 				result.setTown(stockout.getFacility().getTown());
 				result.setFacility(stockout.getFacility().getLocalName() + " " + stockout.getFacility().getFacilityType().getReadable());
@@ -265,14 +275,4 @@ public class SiteController {
 		
 	}
 	
-	
-	/*@RequestMapping(value="/getMapdata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody  List<stockoutResult> getTableData(@RequestParam(value="province") String province){
-	
-		List<Stockout> stockouts = stockoutService.getStockoutsForProvince(province);
-		List<stockoutResult> stockResults = new ArrayList<stockoutResult>();
-		
-		return(stockResults);
-		
-	}	*/
 }

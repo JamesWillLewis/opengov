@@ -18,7 +18,7 @@ package za.org.opengov.stockout.web.domain;
 
 import java.util.Date;
 
-public class stockoutResult {
+public class StockoutResult {
 	
 	private String province;
 	private String town;
