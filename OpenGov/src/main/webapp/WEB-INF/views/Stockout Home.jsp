@@ -49,7 +49,7 @@
  		
  		//var jsp = "${locations}";
  		loadLocationDrillDown();
- 		
+ 		//loadTable();
  	});
  	
  	</script>
@@ -139,7 +139,7 @@
             	<ul class="nav nav-pills nav-justified" id="pills">
 					<li class="active"><a href="#google-map-canvas" data-toggle="pill">Map View</a></li>
   					<li class="" style=><a href="#locationInfo" data-toggle="pill">Location</a></li>
-  					<li class=""><a href="#medicineInfo" data-toggle="pill" onclick="loadSupplierChart()">Medicines</a></li>
+  					<li class=""><a href="#medicineInfo" data-toggle="pill">Medicines</a></li>
   					<!--  li class=""><a href="#depotInfo" data-toggle="pill" onclick="loadSupplyDepotChart()">Supply Depot</a></li-->
 					<li class=""><a href="#timeInfo" data-toggle="pill" onclick="loadTimeGraph()">12-Month Analysis</a></li>
 				</ul>
@@ -190,26 +190,18 @@
   				</div>
   				</div>
   				<div class="panel-body">
-  					<table class="table table-bordered table-hover">
+  					<table id="tableData" class="table table-bordered table-hover">
   			  		<tr>
         				<th>Province</th>
-        				<th>District</th>
         				<th>Town</th>
         				<th>Facility</th>
-        				<th>Supply Depot</th>
-        				<th>Supplier</th>
         				<th>Medicine Category</th>
         				<th>Medicine</th>
         				<th>Product</th>
         				<th>First Report</th>
-        				<th>Duration</th>
         				<th>Stock-out Status</th>
     		</tr>
-    			<c:forEach var="result"  items="${stockoutResult}" >
-    		<tr>
-        	<td>${result.province}</td>
-    		</tr>
-</c:forEach>
+    		
 			</table>
 			</div>		
   				</div>

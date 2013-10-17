@@ -2,13 +2,22 @@ package za.org.opengov.stockout.web.domain;
 
 import java.util.List;
 
+import za.org.opengov.stockout.entity.Stockout;
+
 public class graphData {
 	
 	private List<Long> locationStockouts;
 	private List<String> locations;
 	private List<String> medicines;
 	private List<Long> medicineStockouts;
+	private List<stockoutResult> allStockouts;
 	
+	public List<stockoutResult> getAllStockouts() {
+		return allStockouts;
+	}
+	public void setAllStockouts(List<stockoutResult> allStockouts) {
+		this.allStockouts = allStockouts;
+	}
 	public List<Long> getLocationStockouts() {
 		return locationStockouts;
 	}

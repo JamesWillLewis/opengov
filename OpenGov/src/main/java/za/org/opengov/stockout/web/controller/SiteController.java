@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.FacilityService;
@@ -88,6 +89,8 @@ public class SiteController {
 		LOG.debug("Stockout web Application Front-End");
 		List<String> provinces = facilityService.listAllProvinces();
 		List<Long> provinceStockouts = new ArrayList<Long>();
+		List<Stockout> allStockouts = stockoutService.getStockoutsForProvince("Western Cape");
+		
 		if (province.equals("all")){
 			for (String prov : provinces){
 				
@@ -97,6 +100,7 @@ public class SiteController {
 		}
 		
 		List<MedicineClass> medicines = medicineClassService.getAll();
+		model.addAttribute("stockouts", allStockouts);
 		model.addAttribute("locations",provinceStockouts);
 		model.addAttribute("provinces", provinces);
 		model.addAttribute("medicines", medicines);
@@ -126,13 +130,14 @@ public class SiteController {
 		List<Long> data = new ArrayList<Long>();
 		List<Long> medData = new ArrayList<Long>();
 		List<String> names = new ArrayList<String>();
+		List<Stockout> allStockouts = new ArrayList<Stockout>();
+		List<stockoutResult> stockResults = new ArrayList<stockoutResult>();
 		
 		if (province.equals("all")){
 			locations = facilityService.listAllProvinces();
-			
 				for (String loc : locations){
-				
-				data.add(facilityService.totalStockoutsForProvince("Western Cape"));
+					allStockouts.addAll(stockoutService.getStockoutsForProvince(loc));
+				data.add(facilityService.totalStockoutsForProvince(loc));
 				
 			}
 				
@@ -142,7 +147,7 @@ public class SiteController {
 			locations = facilityService.listAllDistrictsForProvince(province);
 			
 			for (String loc : locations){
-				
+				allStockouts.addAll(stockoutService.getStockoutsForDistrict(loc));
 				data.add(facilityService.totalStockoutsForDistrict(loc));
 				
 			}
@@ -152,7 +157,7 @@ public class SiteController {
 			locations = facilityService.listAllTownsForDistrict(district);
 			
 			for (String loc : locations){
-				
+				allStockouts.addAll(stockoutService.getStockoutsForTown(loc));
 				data.add(facilityService.totalStockoutsForTown(loc));
 				
 			}
@@ -160,7 +165,7 @@ public class SiteController {
 		} else
 		{
 			List<Facility> facilities= facilityService.listAllFacilitiesForTown(town);
-			
+			allStockouts.addAll(stockoutService.getStockoutsForTown(town));
 			for (Facility fac : facilities){
 				locations.add(fac.getLocalName());
 				data.add((long) fac.getStockouts().size());
@@ -174,16 +179,55 @@ public class SiteController {
 			
 			for (MedicineClass medClass : medicineClasses){
 				names.add(medClass.getUid());
-				medData.add((long)stockoutService.getStockoutsForMedicineClass(medClass).size());
+				long noStockouts = (long)stockoutService.getStockoutsForMedicineClass(medClass).size(); 
+				medData.add(noStockouts);
+				
+				System.out.println(medClass.getUid() + " " + noStockouts);
 			}
+			
+
+			
+			for(Stockout stockout: allStockouts){
+				stockoutResult result = new stockoutResult();
+				result.setProvince(stockout.getFacility().getProvince());
+				result.setTown(stockout.getFacility().getTown());
+				result.setFacility(stockout.getFacility().getLocalName() + " " + stockout.getFacility().getFacilityType().getReadable());
+				result.setMedicineClass(stockout.getProduct().getMedicine().getMedicineClass().getUid());
+				result.setMedicineName(stockout.getProduct().getMedicine().getName());
+				result.setBrandName(stockout.getProduct().getName() + " " + stockout.getProduct().getDescription());
+				result.setDateOfFirstIssue(stockout.getIssue().getStartTimestamp().toString());
+				result.setStockoutStatus(stockout.getIssue().getState().toString());
+				
+				stockResults.add(result);
+			}
+			
 			
 		} 
 		else {
 			Set<Medicine> medicines = medicineClassService.get(medicineCat).getMedicines();
 			for (Medicine med : medicines){
 				names.add(med.getName());
-				medData.add((long)stockoutService.getStockoutsForMedicine(med).size());
+				long numberOfStockouts = (long)stockoutService.getStockoutsForMedicine(med).size();
+				if (numberOfStockouts>0){
+				medData.add(numberOfStockouts);}
 			}
+			
+			for(Stockout stockout: allStockouts){
+				if (stockout.getProduct().getMedicine().getMedicineClass().getUid().equals(medicineCat)){
+				stockoutResult result = new stockoutResult();
+				result.setProvince(stockout.getFacility().getProvince());
+				result.setTown(stockout.getFacility().getTown());
+				result.setFacility(stockout.getFacility().getLocalName() + " " + stockout.getFacility().getFacilityType().getReadable());
+				result.setMedicineClass(stockout.getProduct().getMedicine().getMedicineClass().getUid());
+				result.setMedicineName(stockout.getProduct().getMedicine().getName());
+				result.setBrandName(stockout.getProduct().getName() + " " + stockout.getProduct().getDescription());
+				result.setDateOfFirstIssue(stockout.getIssue().getStartTimestamp().toString());
+				result.setStockoutStatus(stockout.getIssue().getState().toString());
+				
+				stockResults.add(result);
+				}
+			}
+			
 		}
 		
 		
@@ -191,9 +235,20 @@ public class SiteController {
 		graphs.setLocationStockouts(data);
 		graphs.setMedicines(names);
 		graphs.setMedicineStockouts(medData);
-
+		graphs.setAllStockouts(stockResults);
+		
 		return(graphs);
 		
 	}
 	
+	
+	@RequestMapping(value="/gettabledata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody  List<stockoutResult> getTableData(@RequestParam(value="province") String province){
+	
+		List<Stockout> stockouts = stockoutService.getStockoutsForProvince(province);
+		List<stockoutResult> stockResults = new ArrayList<stockoutResult>();
+		
+		return(stockResults);
+		
+	}	
 }

@@ -7,6 +7,7 @@ function loadLocationDrillDown() {
 	var stockouts = new Array();
 	var medicines = new Array();
 	var medStockouts = new Array();
+	var chartData = new Array();
 	
 	var param={province:$('#provinceSelect').val(),district:$('#districtSelect').val(),
 			town:$('#townSelect').val(),medicineCat:$('#medicineSelect').val()};
@@ -29,14 +30,19 @@ function loadLocationDrillDown() {
                 stockouts.push(value);
             });
             
+            
             $('#locationContainer').highcharts({
                 chart: {
-                    type: 'column'
+                    type: 'column',
+                    width: 800,
+                    height:450
                 },
                 title: {
                     text: 'Stockouts per Province'
                 },
                 xAxis: {
+                	title:{text:'Locations'
+                		},
                     categories: locations
                 },
                 yAxis: {
@@ -65,16 +71,28 @@ function loadLocationDrillDown() {
                 }]
             });
 
-            var chartData=$.map(data, function( obj,i){
-                return [[ obj.medicines, obj.medicineStockouts]];                            
-            });
             
-            function loadSupplierChart() {
+            $.each(data.medicines, function(i, value) {
+                medicines.push(value);
+            });
+            $.each(data.medicineStockouts, function(i, value) {
+                    medStockouts.push(value);
+                });
+            
+            for(var k=0;k<medicines.length;k++){
+            	var point = [];
+                point.push(medicines[k]);
+                point.push(medStockouts[k]);
+            	chartData.push(point);
+            }
+            
                 $('#medicineContainer').highcharts({
                     chart: {
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
-                        plotShadow: false
+                        plotShadow: false,
+                        width:700,
+                        height:450
                     },
                     title: {
                         text: 'Percentage of Stockouts of Medicines'
@@ -100,20 +118,33 @@ function loadLocationDrillDown() {
                         data: chartData
                     }]
                 });
-            };
-            
+                
+                $('#tableData').find("tr:gt(0)").remove();
+                
+                $.each(data.allStockouts, function(i, value) {
+	            	var row = "";
+	            	row = '<tr><td>' + value.province + '</td><td>'
+	            	+ value.town + '</td><td>'
+	            	+ value.facility +'</td><td>' 
+	            	+ value.medicineClass +'</td><td>' 
+	            	+ value.medicineName +'</td><td>' 
+	            	+ value.brandName +'</td><td>'
+	            	+ value.dateOfFirstIssue + '</td><td>' 
+	            	+ value.stockoutStatus +'</td></tr>';
+	            	
+	            $('#tableData').append(row);
+	            });
+
+                
        
         }
+        
+ 
 
     });
 	
+   
 };
-
-
-
-
-
-
 
 
 function loadTimeGraph() {

@@ -16,16 +16,33 @@
  */
 package za.org.opengov.stockout.web.domain;
 
+import java.util.Date;
+
 public class stockoutResult {
 	
 	private String province;
 	private String town;
 	private String facility;
+	private String medicineClass;
+	private String dateOfFirstIssue;
 	private String medicineName;
 	private String brandName;
 	private String stockoutStatus;
 
 	
+
+	public String getMedicineClass() {
+		return medicineClass;
+	}
+	public String getDateOfFirstIssue() {
+		return dateOfFirstIssue;
+	}
+	public void setMedicineClass(String medicineClass) {
+		this.medicineClass = medicineClass;
+	}
+	public void setDateOfFirstIssue(String dateOfFirstIssue) {
+		this.dateOfFirstIssue = dateOfFirstIssue;
+	}
 	public String getProvince() {
 		return province;
 	}
