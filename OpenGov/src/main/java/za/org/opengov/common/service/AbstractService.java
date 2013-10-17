@@ -31,4 +31,6 @@ public interface AbstractService<E, I extends Serializable> {
 	
 	public List<E> getPage(int page, int resultsPerPage);
 	
+	public long getCount();
+	
 }

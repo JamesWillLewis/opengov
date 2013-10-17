@@ -24,9 +24,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import za.org.opengov.common.dao.AbstractDao;
 
@@ -96,6 +95,12 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
 		criteria.setFirstResult(resultsPerPage * page);
 		criteria.setMaxResults(resultsPerPage);
+		//criteria.setFetchSize(resultsPerPage);
 		return criteria.list();
+	}
+	
+	@Override
+	public long getCount() {
+		return (Long) getCurrentSession().createCriteria(entityClass).setProjection(Projections.rowCount()).uniqueResult();
 	}
 }

@@ -32,18 +32,18 @@ import za.org.opengov.stockout.service.FacilityService;
 @Controller
 public class ContactsQueryController {
 
-private static final Logger LOG = LoggerFactory.getLogger(ReportCommandController.class);
-	
-@Autowired
-private FacilityService facilityService;
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ReportCommandController.class);
 
+	@Autowired
+	private FacilityService facilityService;
 
-	@RequestMapping(value="/loadcontacts",method=RequestMethod.GET)
-	public String getReportPage(Model model){
-		
+	@RequestMapping(value = "/loadcontacts", method = RequestMethod.GET)
+	public String getReportPage(Model model) {
+
 		List<Facility> facilities = facilityService.getAll();
 		model.addAttribute("facilities", facilities);
-		
-		return("Contacts_Page");
+
+		return ("Contacts_Page");
 	}
 }

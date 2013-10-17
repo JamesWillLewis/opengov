@@ -95,5 +95,7 @@ public interface AbstractDao<E, I extends Serializable> {
 	 * @return
 	 */
 	<T> List<T> doQuery(String query, HashMap<String, Object> args);
+	
+	long getCount();
 
 }

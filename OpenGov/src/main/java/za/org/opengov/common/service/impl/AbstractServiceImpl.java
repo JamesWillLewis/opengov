@@ -58,5 +58,10 @@ public abstract class AbstractServiceImpl<T_DAO extends AbstractDao<T_ENTITY, T_
 	public List<T_ENTITY> getPage(int page, int resultsPerPage) {
 		return dao.findPage(page, resultsPerPage);
 	}
+	
+	@Override
+	public long getCount() {
+		return dao.getCount();
+	}
 
 }
