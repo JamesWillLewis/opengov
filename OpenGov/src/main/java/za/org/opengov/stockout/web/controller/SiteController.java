@@ -50,6 +50,7 @@ import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.domain.LocationHeirarchy;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
 import za.org.opengov.stockout.service.medical.MedicineService;
+import za.org.opengov.stockout.web.domain.MapMarker;
 import za.org.opengov.stockout.web.domain.graphData;
 import za.org.opengov.stockout.web.domain.stockoutResult;
 import za.org.opengov.ussd.controller.cm.CMUssdResponse;
@@ -132,12 +133,15 @@ public class SiteController {
 		List<String> names = new ArrayList<String>();
 		List<Stockout> allStockouts = new ArrayList<Stockout>();
 		List<stockoutResult> stockResults = new ArrayList<stockoutResult>();
+		List<MapMarker> markers = new ArrayList<MapMarker>();
+		List<Facility> facilities = new ArrayList<Facility>();
 		
 		if (province.equals("all")){
 			locations = facilityService.listAllProvinces();
 				for (String loc : locations){
 					allStockouts.addAll(stockoutService.getStockoutsForProvince(loc));
 				data.add(facilityService.totalStockoutsForProvince(loc));
+				facilities.addAll(facilityService.listAllFacilitiesForProvince(loc));
 				
 			}
 				
@@ -149,7 +153,6 @@ public class SiteController {
 			for (String loc : locations){
 				allStockouts.addAll(stockoutService.getStockoutsForDistrict(loc));
 				data.add(facilityService.totalStockoutsForDistrict(loc));
-				
 			}
 		} 
 		
@@ -159,17 +162,19 @@ public class SiteController {
 			for (String loc : locations){
 				allStockouts.addAll(stockoutService.getStockoutsForTown(loc));
 				data.add(facilityService.totalStockoutsForTown(loc));
-				
+				facilities.addAll(facilityService.listAllFacilitiesForTown(loc));
 			}
 			
 		} else
 		{
-			List<Facility> facilities= facilityService.listAllFacilitiesForTown(town);
+			facilities= facilityService.listAllFacilitiesForTown(town);
 			allStockouts.addAll(stockoutService.getStockoutsForTown(town));
 			for (Facility fac : facilities){
 				locations.add(fac.getLocalName());
-				data.add((long) fac.getStockouts().size());
+				long numberOfStockouts = (long) fac.getStockouts().size();
+				data.add(numberOfStockouts);
 			}
+			
 			
 		}
 		
@@ -206,10 +211,12 @@ public class SiteController {
 		else {
 			Set<Medicine> medicines = medicineClassService.get(medicineCat).getMedicines();
 			for (Medicine med : medicines){
-				names.add(med.getName());
+				
 				long numberOfStockouts = (long)stockoutService.getStockoutsForMedicine(med).size();
 				if (numberOfStockouts>0){
-				medData.add(numberOfStockouts);}
+					names.add(med.getName());
+					medData.add(numberOfStockouts);
+				}
 			}
 			
 			for(Stockout stockout: allStockouts){
@@ -230,19 +237,36 @@ public class SiteController {
 			
 		}
 		
+		//facilities = facilityService.listAllFacilitiesForTown("Khayelitsha");
+		
+		for (Facility fac : facilities){
+						
+			int numberOfStockouts = fac.getStockouts().size();
+			
+			if(numberOfStockouts>0 && fac.getLatitudeDecimalDegress()!= null 
+					&& fac.getLongitudeDecimalDegrees() != null){
+				MapMarker marker = new MapMarker();
+				marker.setIdentifier(fac.getLocalName());
+				marker.setLatitude(fac.getLatitudeDecimalDegress()*-1);
+				marker.setLongitude(fac.getLongitudeDecimalDegrees());
+				System.out.println(fac.getLatitudeDecimalDegress() + " " + fac.getLongitudeDecimalDegrees());
+				markers.add(marker);
+			}
+		}
+		
 		
 		graphs.setLocations(locations);
 		graphs.setLocationStockouts(data);
 		graphs.setMedicines(names);
 		graphs.setMedicineStockouts(medData);
 		graphs.setAllStockouts(stockResults);
-		
+		graphs.setMarkers(markers);
 		return(graphs);
 		
 	}
 	
 	
-	@RequestMapping(value="/gettabledata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(value="/getMapdata", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody  List<stockoutResult> getTableData(@RequestParam(value="province") String province){
 	
 		List<Stockout> stockouts = stockoutService.getStockoutsForProvince(province);
@@ -250,5 +274,5 @@ public class SiteController {
 		
 		return(stockResults);
 		
-	}	
+	}	*/
 }

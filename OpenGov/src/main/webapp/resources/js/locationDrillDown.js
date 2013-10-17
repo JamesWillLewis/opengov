@@ -38,7 +38,7 @@ function loadLocationDrillDown() {
                     height:450
                 },
                 title: {
-                    text: 'Stockouts per Province'
+                    text: 'Stockouts per Location'
                 },
                 xAxis: {
                 	title:{text:'Locations'
@@ -137,6 +137,31 @@ function loadLocationDrillDown() {
 
                 
        
+              var latlng = new google.maps.LatLng(-30.145127,24.693603);
+           	
+              var myOptions = {
+                 zoom: 6,
+                 center: latlng,
+                 mapTypeId: google.maps.MapTypeId.HYBRID,
+           	  mapTypeControlOptions: {
+           		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+           		position: google.maps.ControlPosition.TOP_RIGHT
+           	  }
+               };
+               var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
+               
+               $.each(data.markers, function(i, value) {
+                   
+               	var marker = new google.maps.Marker({
+               			
+               	      position: new google.maps.LatLng(value.latitude,value.longitude),
+               	      map: map, 
+               	      title: value.identifier
+               	    }); 
+              });
+        
+                
+                
         }
         
  

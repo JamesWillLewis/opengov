@@ -11,7 +11,14 @@ public class graphData {
 	private List<String> medicines;
 	private List<Long> medicineStockouts;
 	private List<stockoutResult> allStockouts;
+	private List<MapMarker> markers;
 	
+	public List<MapMarker> getMarkers() {
+		return markers;
+	}
+	public void setMarkers(List<MapMarker> markers) {
+		this.markers = markers;
+	}
 	public List<stockoutResult> getAllStockouts() {
 		return allStockouts;
 	}

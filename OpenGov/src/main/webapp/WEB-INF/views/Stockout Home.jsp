@@ -18,7 +18,7 @@
 				margin-left:auto; 
 				margin-right:auto; 
 				text-align:center;
-				width:97%;
+				width:800px;
 				height:500px;
 				
 				margin-top:10px;
@@ -34,9 +34,9 @@
 			.google-map-canvas *{ .box-sizing(content-box); }
 	</style>
 	
-	<!--  script type="text/javascript" 
+	 <script type="text/javascript" 
     	 src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
- -->
+
 	<script type="text/javascript"
 		src="resources/js/maploader.js"> </script>	
 		<script src="resources/js/jquery-1.10.2.min.js"></script>
@@ -47,15 +47,13 @@
  	 <script language="javascript">
  	$( document ).ready(function() {	
  		
- 		//var jsp = "${locations}";
  		loadLocationDrillDown();
- 		//loadTable();
  	});
  	
  	</script>
 </head>
 
-<body id="mapBody" onload="loadMap(-30.145127)">
+<body id="mapBody">
 
            <div class="container">
             
@@ -137,19 +135,19 @@
             <div class="panel-heading">
 
             	<ul class="nav nav-pills nav-justified" id="pills">
-					<li class="active"><a href="#google-map-canvas" data-toggle="pill">Map View</a></li>
+					<li class="active"><a href="#mapInfo" data-toggle="pill">Map View</a></li>
   					<li class="" style=><a href="#locationInfo" data-toggle="pill">Location</a></li>
   					<li class=""><a href="#medicineInfo" data-toggle="pill">Medicines</a></li>
   					<!--  li class=""><a href="#depotInfo" data-toggle="pill" onclick="loadSupplyDepotChart()">Supply Depot</a></li-->
-					<li class=""><a href="#timeInfo" data-toggle="pill" onclick="loadTimeGraph()">12-Month Analysis</a></li>
-				</ul>
+					<!--  li class=""><a href="#timeInfo" data-toggle="pill" onclick="loadTimeGraph()">12-Month Analysis</a></li>
+				--></ul>
             </div>
             
             	 <div class="panel-body" style="height:520px; width:520px">
             	<div class="pill-content">
             	
-            	<div id="google-map-canvas" class="pill-pane active">
-				<div id="map_container"></div>
+            	<div id="mapInfo" class="pill-pane active">
+				<div class="google-map-canvas" id="map_container"></div>
 				</div>
             	
             	  	<div  id="locationInfo" class="pill-pane"><h4>Location</h4>
@@ -165,9 +163,9 @@
   				<div id="depotContainer"></div>
   				</div>-->
   				
-  				<div  id="timeInfo" class="pill-pane"><h4>12-Month Analysis</h4>
+  				<!--  div  id="timeInfo" class="pill-pane"><h4>12-Month Analysis</h4>
   				<div id="timeContainer"></div>
-  				</div>
+  				</div>-->
   				  				
 			</div>
             </div>
