@@ -71,13 +71,25 @@
 			<div class="panel panel-body">
 			
 				<form:form action="processform" method="POST"  modelAttribute="publicStockoutReport" class="role-horizontal" role="form">
-					
+
+				
+					<c:if test="${message != null}">
 					<div class="row form-group">
-					    <label class="control-label col-lg-2" for="inputName">* Name</label>
-    					<div class="col-lg-6">
-    						<form:input type="text" class="form-control input-sm" id="inputName" 
-    							placeholder="Enter Name" path="name"></form:input>
+						<div class="alert alert-success col-lg-9">
+						Stock-out/s of "${Medicine}" have successfully been reported by "${Name}"
 						</div>
+						</div>
+					</c:if> 
+					       
+					<div class="row form-group">
+					    <label class="control-label col-lg-2" for="inputName">* Name 
+					    </label>
+    					<div class="col-lg-6">	
+    						<form:input type="text" class="form-control input-sm" id="inputName" 
+    							placeholder="Enter Name" path="Name"></form:input>
+						</div>
+						<font color="red"><form:errors path="Name" cssclass="error"></form:errors></font>
+						</br>
 					</div>
 					
 					<div class="row row-padding form-group">
@@ -99,9 +111,10 @@
       				
       				<div class="row row-padding form-group">
 						<label class="col-lg-2" for="datepicker">Date of Occurrence</label>
-						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd-mm-yyyy">
+						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd/mm/yyyy">
     						<span class="input-group-addon add-on"><i class="glyhicon glyphicon-calendar"></i></span>
     						<form:input class="form-control span2" type="text" value="${date}" readonly="true" path="dateOfOccurence"></form:input>
+    						<font color="red"><form:errors path="dateOfOccurence" cssclass="error"></form:errors></font>
     					</div>
     				</div>
 	
@@ -109,7 +122,7 @@
 						<label class="col-lg-2" for="select">Province</label>
       					<div class="col-lg-4">
       					<select id="provinceSelect" class="form-control input-sm">
-      					<option>select</option>
+      					<option>Select Province..</option>
         				<c:forEach var="province"  items="${provinces}" >
         					<option value="${province}">${province}</option>
 						</c:forEach>
@@ -122,7 +135,8 @@
       					<div class="ui-widget col-lg-4">
 						<form:input path="facilityName" id="tags" class="form-control input-sm" />
 					</div>
-      					
+      					<font color="red"><form:errors path="facilityName" cssclass="error"></form:errors></font>
+						</br>
     				</div>	
     				
     				
@@ -133,6 +147,8 @@
       				<div class="col-lg-4">
       					<form:input path="cellNumber" type="text" class="form-control input-sm" id="inputName" placeholder=""></form:input>
     				</div>
+    				<font color="red"><form:errors path="cellNumber" cssclass="error"></form:errors></font>
+						</br>
     				</div>
     				
     				<div class="row row-padding form-group">
@@ -140,6 +156,8 @@
       					<div class="col-lg-4">
       					<form:input path="emailAddress" type="email" class="form-control input-sm" id="inputName" placeholder=""></form:input>
     					</div>
+    					<font color="red"><form:errors path="emailAddress" cssclass="error"></form:errors></font>
+						</br>
     				</div>
 				
 					<div class="row row-padding form-group">
@@ -175,6 +193,11 @@
       				<label for="medicineCombobox">Select Medicine</label>
       					<div id="medicineDiv">
       					<select id="medicineCombobox" class="form-control input-sm">
+      					<c:forEach var="medicine" items="${medicineCategories[0].medicines}">
+      						<c:forEach var="product" items="${medicine.products}">
+							<option value="${product.name} ${product.description}">${product.name} ${product.description}</option>
+							</c:forEach>
+							</c:forEach>
       					</select>
       					</div>
       				</div>
@@ -192,7 +215,10 @@
    					<div class="col-lg-8">
    						<label for="medicineList">List of Medicines</label>
    							<form:select id="medicineList" multiple="multiple" class="form-control" path="selectedMedicines">
-						</form:select>
+							
+							</form:select>
+						<font color="red"><form:errors path="selectedMedicines" cssclass="error"></form:errors></font>
+						</br>
    					</div>
    					
    					<div class="col-lg-2">
@@ -214,11 +240,13 @@
    				</div>
    			</div>			
     		
+    		
+    		
     		<div class="container row-padding">	
-    		<input onclick="enableAllItems()" type="submit" value="Submit" class="btn btn-success btn-lg">
-    		Report
+    		<button onclick="enableAllItems()" type="submit" value="Submit Report" class="btn btn-success btn-lg">
+    		Submit Report
     		<span class="glyphicon glyphicon-saved"></span>
-    		</input>
+    		</button>
     		</div>
 				</form:form>
 				

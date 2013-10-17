@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +40,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.Stockout;
+import za.org.opengov.stockout.entity.StockoutReport;
+import za.org.opengov.stockout.entity.Subject;
 import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
+import za.org.opengov.stockout.service.StockoutReportService;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
+import za.org.opengov.stockout.service.medical.ProductService;
 import za.org.opengov.stockout.web.domain.PublicStockoutReport;
 
 @Controller
@@ -55,6 +62,12 @@ public class ReportCommandController {
 	
 	@Autowired
 	private MedicineClassService medicineClassService;
+	
+	@Autowired
+	private StockoutReportService stockoutReportService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@RequestMapping(value="/reportstockouts",method=RequestMethod.GET)
 	public String getReportPage(Model model){
@@ -108,29 +121,63 @@ public class ReportCommandController {
 
 	
 	@RequestMapping(value="/processform", method = RequestMethod.POST)
-    public String reportStockout(@ModelAttribute("publicStockoutReport") PublicStockoutReport report, BindingResult result, RedirectAttributes redirectAttrs) {
-        /*if (result.hasErrors()) {
-            // errors in the form
-            // show the checkout form again
-            return "/checkout";
-        }*/
+    public String reportStockout(@Valid @ModelAttribute PublicStockoutReport publicStockoutReport, BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+        
+		if (result.hasErrors()) {
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");   
+			Date date = new Date();			
+			List<String> provinces = facilityService.listAllProvinces();
+			List<MedicineClass> medicineClasses = medicineClassService.getMedicineClassesEagerFetch();
+			model.addAttribute("medicineCategories", medicineClasses);
+			model.addAttribute("date",dateFormat.format(date));
+			model.addAttribute("provinces",provinces);
+            return "Report_Page";
+        }
 
+		System.out.println(publicStockoutReport.getName());
+		System.out.println(publicStockoutReport.getDesignation());
+		System.out.println(publicStockoutReport.getDateOfOccurence());
+		System.out.println(publicStockoutReport.getCellNumber());
+		System.out.println(publicStockoutReport.getEmailAddress());
+		System.out.println(publicStockoutReport.getReasonForOccurrence());
+		System.out.println(publicStockoutReport.getSelectedMedicines());
+		System.out.println(publicStockoutReport.getFacilityName());
+		
+		Subject reporter = new Subject();
+		reporter.setContactNumber(publicStockoutReport.getCellNumber());
+		reporter.setDesignation(publicStockoutReport.getDesignation());
+		reporter.setEmail(publicStockoutReport.getEmailAddress());
+		
+		String[] names = publicStockoutReport.getName().split(" ");
+		
+		for(int k=0;k<names.length-1;k++){
+			reporter.setName(names[k] + " ");
+		}
+		
+		if(names.length>1){
+			reporter.setSurname(names[names.length-1]);
+		}
+		
 
-		System.out.println(report.getName());
-		System.out.println(report.getDesignation());
-		System.out.println(report.getDateOfOccurence());
-		System.out.println(report.getCellNumber());
-		System.out.println(report.getEmailAddress());
-		System.out.println(report.getReasonForOccurrence());
-		System.out.println(report.getSelectedMedicines());
-		System.out.println(report.getFacilityName());
-        //UUID key = event.getNewOrderKey();
+		Facility facility = facilityService.getClosestMatch(publicStockoutReport.getFacilityName());
+		
+		String[] medicine = publicStockoutReport.getSelectedMedicines().split(","); 
+		
+		for(String med : medicine){
+			
+			Product product = productService.getClosestMatch(med);
+			stockoutReportService.submitStockoutReport(product.getUid(),facility.getUid(),
+					reporter, publicStockoutReport.getReasonForOccurrence(), true);
+		}
+		
 
-        redirectAttrs.addFlashAttribute("message",
-                "Stockout Reported");
+        redirectAttrs.addFlashAttribute("message","Stockout Reported");
+        redirectAttrs.addFlashAttribute("Name",publicStockoutReport.getName());
+        redirectAttrs.addFlashAttribute("Medicine",publicStockoutReport.getSelectedMedicines());
+        
 
-
-        return "Report_Page";
+        return "redirect:/reportstockouts";
     }
 	
 	
