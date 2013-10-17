@@ -237,7 +237,7 @@ public class SiteController {
 			
 		}
 		
-		//facilities = facilityService.listAllFacilitiesForTown("Khayelitsha");
+		facilities = facilityService.listAllFacilitiesForTown("Khayelitsha");
 		
 		for (Facility fac : facilities){
 						

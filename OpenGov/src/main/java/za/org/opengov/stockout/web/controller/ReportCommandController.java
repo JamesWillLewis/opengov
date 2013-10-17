@@ -29,10 +29,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.medical.Medicine;
@@ -40,6 +43,7 @@ import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
+import za.org.opengov.stockout.web.domain.PublicStockoutReport;
 
 @Controller
 public class ReportCommandController {
@@ -96,5 +100,39 @@ public class ReportCommandController {
 		
 		return(productDescription);		
 	}
+	
+	@ModelAttribute("publicStockoutReport")
+    private PublicStockoutReport getPublicStockoutReport() {
+        return new PublicStockoutReport();
+    }
+
+	
+	@RequestMapping(value="/processform", method = RequestMethod.POST)
+    public String reportStockout(@ModelAttribute("publicStockoutReport") PublicStockoutReport report, BindingResult result, RedirectAttributes redirectAttrs) {
+        /*if (result.hasErrors()) {
+            // errors in the form
+            // show the checkout form again
+            return "/checkout";
+        }*/
+
+
+		System.out.println(report.getName());
+		System.out.println(report.getDesignation());
+		System.out.println(report.getDateOfOccurence());
+		System.out.println(report.getCellNumber());
+		System.out.println(report.getEmailAddress());
+		System.out.println(report.getReasonForOccurrence());
+		System.out.println(report.getSelectedMedicines());
+		System.out.println(report.getFacilityName());
+        //UUID key = event.getNewOrderKey();
+
+        redirectAttrs.addFlashAttribute("message",
+                "Stockout Reported");
+
+
+        return "Report_Page";
+    }
+	
+	
 	
 }
