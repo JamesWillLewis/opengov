@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import za.org.opengov.stockout.entity.Facility;
 
 @Controller
-@RequestMapping(value="sows/admin")
+@RequestMapping("sows/admin")
 public class AdminController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = "text/html")

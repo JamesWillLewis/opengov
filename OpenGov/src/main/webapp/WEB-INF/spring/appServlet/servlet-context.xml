@@ -8,20 +8,18 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+
 	<!--  Import root context -->
 	<beans:import resource="../root-context.xml"/>
-
 	<!-- Database Configuration -->
-
-	<beans:import resource="../database/DataSource.xml"/>
-	
-	<beans:import resource="../database/Hibernate.xml"/>
 
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
+	
+	<mvc:view-controller path="/sows/login" view-name="admin/login" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -32,7 +30,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="za.org.opengov" />
+	
 	
 	
 	
