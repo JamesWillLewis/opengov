@@ -2,18 +2,27 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<context:component-scan base-package="za.org.opengov" />
+
+	<import resource="security-context.xml" />
+
+	
+
+	<import resource="database/hibernate-context.xml" />
 
 	<util:properties id="ussdStockoutEN"
 		location="classpath:/locale/ussd_stockout_EN.properties" />
 
 	<util:properties id="configurationDefaults"
 		location="classpath:/properties/configuration_defaults.properties" />
-
-
 
 	<aop:aspectj-autoproxy />
 	<task:annotation-driven />
