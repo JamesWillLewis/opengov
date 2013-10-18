@@ -14,22 +14,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with OpenGov.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.org.opengov.common.entity;
+package za.org.opengov.common.entity.security;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="OPENGOV_ACCOUNT")
-public class UserAccount {
+@Table(name="OPENGOV_USER")
+public class User {
 	
+	/**
+	 * Identifier of user
+	 */
 	private String username;
+	/**
+	 * Encrypted password.
+	 */
 	private String password;
+	/**
+	 * Comma-seperated list of roles (eg. "ROLE_ADMIN,ROLE_USER")
+	 */
+	private String roles;
 	
-	public UserAccount() {
-		// TODO Auto-generated constructor stub
+	public User() {
 	}
 	
 	@Column(name="PASSWORD")
@@ -49,6 +62,15 @@ public class UserAccount {
 	
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	@Column(name="ROLES")
+	public String getRoles() {
+		return roles;
+	}
+	
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 	
 

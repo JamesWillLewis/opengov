@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 
 <c:set var="contextPath" scope="request" value="${pageContext.request.contextPath}" />
@@ -23,6 +25,14 @@
 <%@ include file="../layout.jsp" %>
 
 <body>
+
+	<security:authorize access="isAuthenticated()">
+                        Logged in as user <b><security:authentication
+				property="principal.username" /></b>,
+                        Click to <a
+			href="<c:url value='/j_spring_security_logout' />" class="sign_ic">Logout</a>
+	</security:authorize>
+
 <div class="container">
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Home</h3></div>
