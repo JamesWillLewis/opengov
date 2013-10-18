@@ -58,6 +58,7 @@ import za.org.opengov.ussd.controller.cm.CMUssdResponse;
 
 @Transactional
 @Controller
+@RequestMapping("sows")
 public class StockoutHomeController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(StockoutHomeController.class);
@@ -82,24 +83,13 @@ public class StockoutHomeController {
 	
 	/**Load up initial data to populate dropdown boxes and forms on the home page**/
 	@RequestMapping(value = "/stockouthome",method = RequestMethod.GET)
-	public String getHomePage(Model model,
-			@RequestParam(value="province") String province,
-			@RequestParam(value="district") String district,
-			@RequestParam(value="town") String town,
-			@RequestParam(value="medicineCat") String medicineCat){
+	public String getHomePage(Model model){
 		
 		LOG.debug("Stockout web Application Front-End");
 		List<String> provinces = facilityService.listAllProvinces();
 		List<Long> provinceStockouts = new ArrayList<Long>();
 		List<Stockout> allStockouts = stockoutService.getStockoutsForProvince("Western Cape");
 		
-		if (province.equals("all")){
-			for (String prov : provinces){
-				
-				provinceStockouts.add(facilityService.totalStockoutsForProvince(prov));
-				
-			}
-		}
 		
 		List<MedicineClass> medicines = medicineClassService.getAll();
 		model.addAttribute("stockouts", allStockouts);

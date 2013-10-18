@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.medical.ProductService;
+import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 
 @Controller
 @RequestMapping(value = "sows/admin/products")
@@ -39,14 +40,14 @@ public class ProductController extends AbstractPaginationController {
 		return "admin/products/List";
 	}
 
-	/*
-	@RequestMapping(value = "{uid}", produces = "text/html")
-	public String edit(@PathVariable("uid") long uid, Model model) {
+	
+	/*@RequestMapping(value = "{uid}", produces = "text/html")
+	public String edit(@PathVariable("uid") String uid, Model model) {
 
-		Stockout stockout = stockoutService.get(uid);
-		StockoutWrapper stockoutWrapper = new StockoutWrapper(stockout);
+		Product product = productService.get(uid);
+		ProductWrapper productWrapper = new ProductWrapper(product);
 
-		model.addAttribute("stockout", stockoutWrapper);
+		model.addAttribute("product", productWrapper);
 
 		List<Product> products = productService.getAll();
 		List<Facility> facilities = facilityService.getAll();

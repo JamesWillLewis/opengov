@@ -11,7 +11,7 @@ $('#provinceSelect').change(function(){
       var param={province:$(this).val()};
         $.ajax({
             type:'GET',
-            url:'getdistricts',
+            url:'sows/getdistricts',
             data:param,
             headers: {
                 Accept: 'application/json'
@@ -35,7 +35,7 @@ $('#districtSelect').change(function(){
       var param={district:$(this).val()};
         $.ajax({
             type:'GET',
-            url:'gettowns',
+            url:'sows/gettowns',
             data:param,
             headers: {
                 Accept: 'application/json'

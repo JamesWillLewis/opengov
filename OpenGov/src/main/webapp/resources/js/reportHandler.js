@@ -5,7 +5,7 @@ $('#provinceSelect').change(function(){
       var param={province:$(this).val()};
         $.ajax({
             type:'GET',
-            url:'getfacility',
+            url:'sows/getfacility',
             data:param,
             headers: {
                 Accept: 'application/json'
@@ -30,7 +30,7 @@ $('#medicineClassSelect').change(function(){
       var param={medicineClassIndex:$(this).val()};
         $.ajax({
             type:'GET',
-            url:'getmedicines',
+            url:'sows/getmedicines',
             data:param,
             headers: {
                 Accept: 'application/json'

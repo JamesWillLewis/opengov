@@ -30,6 +30,7 @@ import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.service.FacilityService;
 
 @Controller
+@RequestMapping(value="sows")
 public class ContactsQueryController {
 
 private static final Logger LOG = LoggerFactory.getLogger(ReportCommandController.class);

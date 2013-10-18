@@ -2,17 +2,24 @@ package za.org.opengov.stockout.web.admin.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import za.org.opengov.common.entity.Issue;
+import za.org.opengov.common.entity.StaffMember;
+import za.org.opengov.common.service.IssueService;
+import za.org.opengov.common.service.StaffMemberService;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.Stockout;
+import za.org.opengov.stockout.entity.StockoutReport;
 import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutService;
@@ -26,13 +33,14 @@ public class StockoutController extends AbstractPaginationController {
 
 	@Autowired
 	private StockoutService stockoutService;
-
+	
 	@Autowired
 	private FacilityService facilityService;
 
 	@Autowired
 	private ProductService productService;
-
+	
+ 
 	@RequestMapping(method = RequestMethod.GET, produces = "text/html")
 	public String list(
 			@RequestParam(value = "page", required = false, defaultValue = "1") long page,
@@ -58,7 +66,6 @@ public class StockoutController extends AbstractPaginationController {
 
 		Stockout stockout = stockoutService.get(uid);
 		StockoutWrapper stockoutWrapper = new StockoutWrapper(stockout);
-
 		model.addAttribute("stockout", stockoutWrapper);
 
 		List<Product> products = productService.getAll();

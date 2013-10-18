@@ -5,10 +5,10 @@
 
 <head>	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">	
- 		<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+ 		<!--  link href="../resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>-->
 		
-		<script type="text/javascript" 
-     	src="resources/js/jquery-1.10.2.min.js"></script>
+		<!--  script type="text/javascript" 
+     	src="resources/js/jquery-1.10.2.min.js"></script>-->
      	    
      	<script language="javascript">    
 			function setActive() {

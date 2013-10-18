@@ -8,7 +8,8 @@
 		
 		<title>OpenGov Home</title>
 
- 	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+ 	<link type="text/css" href="resources/css/bootstrap.min.css" rel="stylesheet"/>
+ 	
 	</head>
 	
 <html>
@@ -21,7 +22,7 @@
   <span class="icon-bar"></span>
    </button> 
    <a class="navbar-brand" href="#">
-     <span class="glyphicon glyphicon-home"></span> OpenGov</a>
+     <span class="glyphicon glyphicon-home"></span> OpenGov </a>
  </div>
      <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -53,7 +54,7 @@
             <div class="col-6 col-sm-6 col-lg-4">
             <h2>Stock-out Web Services</h2>
             <p>The stock-out website allows you to report and track stockouts occurring all over South Africa, and provides a stockout management interface with detailed statistical information for priviledged members</p>
-            <p><a class="btn btn-primary" href="stockouthome?province=all&district=all&town=all&medicineCat=all">Continue to Stock-Out Web-Site &raquo;</a></p>
+            <p><a class="btn btn-primary" href="sows/stockouthome">Continue to Stock-Out Web-Site &raquo;</a></p>
             </div>
             <div class="col-6 col-sm-6 col-lg-4">
             <h2>Future Service</h2>

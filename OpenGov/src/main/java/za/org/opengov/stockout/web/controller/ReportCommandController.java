@@ -54,6 +54,7 @@ import za.org.opengov.stockout.web.domain.PublicStockoutReport;
 
 /** Controls all request for the report page**/
 @Controller
+@RequestMapping(value="sows")
 public class ReportCommandController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReportCommandController.class);

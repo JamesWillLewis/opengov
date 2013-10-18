@@ -16,7 +16,7 @@ function loadLocationDrillDown() {
     
 	$.ajax({
         type:'GET',
-        url:'getgraphdata',
+        url:'sows/getgraphdata',
         data:param,
         headers: {
             Accept: 'application/json'

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ include file="layout.jsp" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>	
@@ -10,7 +10,7 @@
 		<title>Stock-out Home</title>
 	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">	
- 		<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+ 		<link href="../resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
 		
 		
 	<style type="text/css">
@@ -38,11 +38,11 @@
     	 src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 	<script type="text/javascript"
-		src="resources/js/maploader.js"> </script>	
-		<script src="resources/js/jquery-1.10.2.min.js"></script>
-    <script src="resources/js/bootstrap.min.js"></script>
-     <script src="resources/js/highcharts.js"></script>
-    <script src="resources/js/locationDrillDown.js"></script>
+		src="../resources/js/maploader.js"> </script>	
+		<script src="../resources/js/jquery-1.10.2.min.js"></script>
+    <script src="../resources/js/bootstrap.min.js"></script>
+     <script src="../resources/js/highcharts.js"></script>
+    <script src="../resources/js/locationDrillDown.js"></script>
  	
  	 <script language="javascript">
  	$( document ).ready(function() {	
@@ -52,6 +52,7 @@
  	
  	</script>
 </head>
+<%@ include file="layout.jsp" %>
 
 <body id="mapBody">
 
