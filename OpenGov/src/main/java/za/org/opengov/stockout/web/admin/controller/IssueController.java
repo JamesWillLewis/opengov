@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import za.org.opengov.common.entity.Assignment;
 import za.org.opengov.common.entity.Issue;
+import za.org.opengov.common.entity.IssueState;
 import za.org.opengov.common.entity.StaffMember;
 import za.org.opengov.common.service.IssueService;
 import za.org.opengov.common.service.StaffMemberService;
@@ -24,6 +29,8 @@ import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.medical.ProductService;
+import za.org.opengov.stockout.web.admin.domain.AssignmentWrapper;
+import za.org.opengov.stockout.web.admin.domain.IssueWrapper;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
 
@@ -56,6 +63,7 @@ public class IssueController extends AbstractPaginationController {
 		
 		List<Issue> issues = issueService.getPage((int) page - 1,
 				RESULTS_PER_PAGE);
+		
 
 		model.addAttribute("currentPage", page);
 		model.addAttribute("noOfPages", noOfPages);
@@ -64,45 +72,35 @@ public class IssueController extends AbstractPaginationController {
 		return "admin/issues/List";
 	}
 
-	/*
+	
 	@RequestMapping(value = "{uid}", produces = "text/html")
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
-		Stockout stockout = stockoutService.get(uid);
-		StockoutWrapper stockoutWrapper = new StockoutWrapper(stockout);
-		model.addAttribute("stockout", stockoutWrapper);
-
-		List<Product> products = productService.getAll();
-		List<Facility> facilities = facilityService.getAll();
+		IssueState[] is = IssueState.values(); 
+		model.addAttribute("states",is);
+		model.addAttribute("uid",uid);
 		
-		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
-		for(Product p: products){
-			ProductWrapper productWrapper = new ProductWrapper(p);
-			productWrappers.add(productWrapper);
-		}
-
-		model.addAttribute("facilities", facilities);
-		model.addAttribute("products", productWrappers);
-
-		return "admin/stockouts/Edit";
+		return "admin/issues/Edit";
 	}
 
-	@RequestMapping(value = "{uid}/delete", produces = "text/html")
-	public String delete(@PathVariable("uid") String uid, Model model) {
+	@ModelAttribute("issue")
+    private IssueWrapper getState() {
+        return new IssueWrapper();
+    }
 
-		return "";
-	}
-
-	@RequestMapping(value = "update", method = RequestMethod.POST, produces = "text/html")
-	public String update(StockoutWrapper stockout, Model uiModel) {
-		Stockout updateStockout = stockout.getStockout();
+	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
+	public String update(@Valid @ModelAttribute IssueWrapper issue,BindingResult result, 
+			@PathVariable("uid") long uid,Model model) {
 		
-		updateStockout.setProduct(productService.get(stockout.getProductUID()));
-		updateStockout.setFacility(facilityService.get(stockout.getFacilityUID()));
-		stockoutService.put(updateStockout);
+		Issue newIssue = issueService.get(uid);
+		IssueState iss = (issue.getIssueState());
+		//issue.setState(new State(state));
+		newIssue.setState(iss);
 
-		return "redirect:/sows/admin/stockouts";
-	}*/
+		issueService.put(newIssue);
+
+		return "redirect:/sows/admin/issues";
+	}
 
 }
 

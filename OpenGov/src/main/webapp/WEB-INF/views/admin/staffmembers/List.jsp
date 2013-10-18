@@ -29,9 +29,10 @@
 	<div class="col-lg-8">
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><div class="row"><h3 class="col-lg-5">List of Staff Members</h3>
-    		<button class="col-lg-3 btn btn-primary pull-right">
+    		<form action="<c:url value="/sows/admin/staffmembers/new"/>" >
+    		<button type="submit" class="col-lg-3 btn btn-primary pull-right">
     		<span class="glyphicon glyphicon-plus"></span>
-    		Add New Staff Member</button>
+    		Add New Staff Member</button></form>
     		</div></div>
         <div class="panel panel-body">
 	
@@ -44,7 +45,7 @@
 			<th>Surname</th>
 		</tr>
 
-		<c:forEach items="${staffMembers}" var="res">
+		<c:forEach items="${staffmembers}" var="res">
 			<tr>
 				<td>${res.uid}</td>
 				<td>${res.staffCode}</td>

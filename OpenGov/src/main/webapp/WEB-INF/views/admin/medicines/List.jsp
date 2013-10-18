@@ -27,7 +27,14 @@
 	</div>
 	<div class="col-lg-8">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>List of Medicines</h3></div>
+    	<div class="panel panel-heading">
+		<div class="row"><h3 class="col-lg-5">List of Medicines</h3>
+    		<form action="<c:url value="/sows/admin/medicines/new"/>" >
+    		<button type="submit" class="col-lg-3 btn btn-primary pull-right">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		Add New Medicine</button></form>
+    		</div>
+	</div>
         <div class="panel panel-body">
 	
 	<table class="table table-bordered">
@@ -45,9 +52,9 @@
 				<td>${res.name}</td>
 				<td>N/A</td>
 				<td>${res.medicineClass.uid}</td>
-				<td><a href="<c:url value="/sows/admin/medicines/${so.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
+				<td><a href="<c:url value="/sows/admin/medicines/${res.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
 				<td><a
-					href="<c:url value="/sows/admin/medicines/${so.uid}/delete"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
+					href="<c:url value="/sows/admin/medicines/${res.uid}/delete"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
 			</tr>
 		</c:forEach>
 		

@@ -1,17 +1,56 @@
 package za.org.opengov.stockout.web.admin.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import za.org.opengov.common.entity.StaffMember;
 
 
 public class StaffMemberWrapper {
 	
-	private StaffMember staffMember;
+	@NotEmpty
+	private String staffCode;
 	
-	private String facilityUID;
+	@NotEmpty
+	private String name;
 	
-	private String productUID;
+	@NotEmpty
+	private String surname;
 	
-	public StaffMemberWrapper(StaffMember staffMember) {
+	private long uid;
+	
+	public long getUid() {
+		return uid;
 	}
+
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+
+	public String getStaffCode() {
+		return staffCode;
+	}
+
+	public void setStaffCode(String staffCode) {
+		this.staffCode = staffCode;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	
 
 }

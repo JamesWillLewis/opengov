@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +29,7 @@ import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.medical.ProductService;
+import za.org.opengov.stockout.web.admin.domain.AssignmentWrapper;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StaffMemberWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
@@ -45,6 +49,12 @@ public class AssignmentController extends AbstractPaginationController {
 	
 	@Autowired
 	private AssignmentService assignmentService;
+	
+	@Autowired
+	private IssueService issueService;
+	
+	@Autowired
+	private StaffMemberService staffMemberService;
 	
 	 
 	@RequestMapping(method = RequestMethod.GET, produces = "text/html")
@@ -66,48 +76,83 @@ public class AssignmentController extends AbstractPaginationController {
 
 		return "admin/assignments/List";
 	}
+	
+	@RequestMapping(value="new",method = RequestMethod.GET, produces = "text/html")
+	public String NewPage(Model model){
+		
+		List<Issue> issues = issueService.getAll();
+		List<StaffMember> members = staffMemberService.getAll();
+		
+		
+		model.addAttribute("issues", issues);
+		model.addAttribute("staffmembers", members);
+		
+		
+		return("admin/assignments/New");
+	}
+	
+	
+	@ModelAttribute("assignment")
+    private AssignmentWrapper getAssignmentWrapper() {
+        return new AssignmentWrapper();
+    }
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html")
+	public String add(@Valid @ModelAttribute AssignmentWrapper assignment,BindingResult result,Model model) {
+		
+		if (result.hasErrors()) {
+			
+			return"admin/assignments/New";
+		}
+		
+		Assignment assign = new Assignment();
+		assign.setIssue(issueService.get(assignment.getIssueUID()));
+		assign.setStaffMember(staffMemberService.get(assignment.getStaffMemberUID()));
+		
+		System.out.println(assign.getIssue().getUid());
+		System.out.println(assign.getStaffMember().getStaffCode());
+		System.out.println(assign.getStaffMember().getName());
+		
+		assignmentService.put(assign);
+		
+		return ("redirect:/sows/admin/assignments");
+	
+	}
 
-	/*
+	
 	@RequestMapping(value = "{uid}", produces = "text/html")
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
-		StaffMember staffMember = staffMemberService.get(uid);
-		
-		StaffMemberWrapper staffMemberWrapper = new StaffMemberWrapper(staffMember);
+		List<Issue> issues = issueService.getAll();
+		List<StaffMember> members = staffMemberService.getAll();
 
-		model.addAttribute("stockout", staffMemberWrapper);
+		model.addAttribute("uid",uid);
+		model.addAttribute("issues", issues);
+		model.addAttribute("staffmembers", members);
 
-		List<Product> products = productService.getAll();
-		List<Facility> facilities = facilityService.getAll();
-		
-		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
-		for(Product p: products){
-			ProductWrapper productWrapper = new ProductWrapper(p);
-			productWrappers.add(productWrapper);
-		}
-
-		model.addAttribute("facilities", facilities);
-		model.addAttribute("products", productWrappers);
-
-		return "admin/staffMembers/Edit";
+		return "admin/assignments/Edit";
 	}
 
 	@RequestMapping(value = "{uid}/delete", produces = "text/html")
-	public String delete(@PathVariable("uid") String uid, Model model) {
-
-		return "";
+	public String delete(@PathVariable("uid") long uid, Model model) {
+		
+		assignmentService.remove(assignmentService.get(uid));
+		
+		return ("redirect:/sows/admin/assignments");
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST, produces = "text/html")
-	public String update(StockoutWrapper stockout, Model uiModel) {
-		Stockout updateStockout = stockout.getStockout();
+	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
+	public String update(@Valid @ModelAttribute AssignmentWrapper assignment,BindingResult result, 
+			@PathVariable("uid") long uid,Model model) {
 		
-		updateStockout.setProduct(productService.get(stockout.getProductUID()));
-		updateStockout.setFacility(facilityService.get(stockout.getFacilityUID()));
-		stockoutService.put(updateStockout);
+		Assignment assign = new Assignment();
+		assign.setIssue(issueService.get(assignment.getIssueUID()));
+		assign.setStaffMember(staffMemberService.get(assignment.getStaffMemberUID()));
+		assign.setUid(uid);
+		assignmentService.put(assign);
 
-		return "redirect:/sows/admin/stockouts";
-	}*/
+		return "redirect:/sows/admin/assignments";
+	}
 
 }
 

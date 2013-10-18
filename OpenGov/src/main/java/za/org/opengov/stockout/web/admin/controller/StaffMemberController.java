@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +30,7 @@ import za.org.opengov.stockout.service.medical.ProductService;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StaffMemberWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
+import za.org.opengov.stockout.web.domain.PublicStockoutReport;
 
 @Controller
 @RequestMapping(value = "sows/admin/staffmembers")
@@ -65,55 +69,75 @@ public class StaffMemberController extends AbstractPaginationController {
 		return "admin/staffmembers/List";
 	}
 	
-	@RequestMapping(value = "add", produces = "text/html")
-	public String add(Model model) {
+	
+	@RequestMapping(value="new",method = RequestMethod.GET, produces = "text/html")
+	public String NewPage(Model model){
 		
+		return("admin/staffmembers/New");
+	}
+	
+	
+	@ModelAttribute("staffMember")
+    private StaffMemberWrapper getStaffMember() {
+        return new StaffMemberWrapper();
+    }
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html")
+	public String add(@Valid @ModelAttribute StaffMemberWrapper staffMember,BindingResult result,Model model) {
 		
-		return null;
+		if (result.hasErrors()) {
+			
+			return"admin/staffmembers/New";
+		}
+		
+		System.out.println(staffMember.getName());
+		System.out.println(staffMember.getSurname());
+		System.out.println(staffMember.getStaffCode());
+		
+		StaffMember staff = new StaffMember();
+		staff.setName(staffMember.getName());
+		staff.setSurname(staffMember.getSurname());
+		staff.setStaffCode(staffMember.getStaffCode());
+		staffMemberService.put(staff);
+		
+		return ("redirect:/sows/admin/staffmembers");
 	
 	}
 	
-	/*
+	
 	@RequestMapping(value = "{uid}", produces = "text/html")
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
 		StaffMember staffMember = staffMemberService.get(uid);
-		
-		StaffMemberWrapper staffMemberWrapper = new StaffMemberWrapper(staffMember);
 
-		model.addAttribute("stockout", staffMemberWrapper);
+		model.addAttribute("staffmember", staffMember);
 
-		List<Product> products = productService.getAll();
-		List<Facility> facilities = facilityService.getAll();
-		
-		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
-		for(Product p: products){
-			ProductWrapper productWrapper = new ProductWrapper(p);
-			productWrappers.add(productWrapper);
-		}
-
-		model.addAttribute("facilities", facilities);
-		model.addAttribute("products", productWrappers);
-
-		return "admin/staffMembers/Edit";
+		return "admin/staffmembers/Edit";
 	}
 
 	@RequestMapping(value = "{uid}/delete", produces = "text/html")
-	public String delete(@PathVariable("uid") String uid, Model model) {
-
-		return "";
-	}
-
-	@RequestMapping(value = "update", method = RequestMethod.POST, produces = "text/html")
-	public String update(StockoutWrapper stockout, Model uiModel) {
-		Stockout updateStockout = stockout.getStockout();
+	public String delete(@PathVariable("uid") long uid, Model model) {
 		
-		updateStockout.setProduct(productService.get(stockout.getProductUID()));
-		updateStockout.setFacility(facilityService.get(stockout.getFacilityUID()));
-		stockoutService.put(updateStockout);
+		StaffMember staffMember = staffMemberService.get(uid);
+		staffMemberService.remove(staffMember);
+		
+		return "redirect:/sows/admin/staffmembers";
+	}
+	
+	
+	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
+	public String update(@Valid @ModelAttribute StaffMemberWrapper staffMember,BindingResult result, 
+			@PathVariable("uid") long uid,Model model) {
+		
+		StaffMember staff = new StaffMember();
+		staff.setName(staffMember.getName());
+		staff.setSurname(staffMember.getSurname());
+		staff.setStaffCode(staffMember.getStaffCode());
+		staff.setUid(uid);
+		staffMemberService.put(staff);
 
-		return "redirect:/sows/admin/stockouts";
-	}*/
+		return "redirect:/sows/admin/staffmembers";
+	}
 
 }
 

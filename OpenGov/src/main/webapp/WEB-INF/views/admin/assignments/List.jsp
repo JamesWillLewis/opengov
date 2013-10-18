@@ -19,7 +19,9 @@
 <body>
 	<div class="container">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>Administrator Assignments View</h3></div>
+    	<div class="panel panel-heading">
+    	<h3>Assignment Administrators View</h3>
+    	</div>
         <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">
@@ -27,7 +29,14 @@
 	</div>
 	<div class="col-lg-8">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>List of Assignments</h3></div>
+    	<div class="panel panel-heading">
+		<div class="row"><h3 class="col-lg-5">List of Assignments</h3>
+    		<form action="<c:url value="/sows/admin/assignments/new"/>" >
+    		<button type="submit" class="col-lg-3 btn btn-primary pull-right">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		New Assignment</button></form>
+    		</div>
+	</div>
         <div class="panel panel-body">
 	
 	<table class="table table-bordered">

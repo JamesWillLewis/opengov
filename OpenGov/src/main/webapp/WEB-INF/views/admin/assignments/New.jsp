@@ -19,7 +19,7 @@
 <body>
 	<div class="container">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>Administrator new Assignments View</h3></div>
+    	<div class="panel panel-heading"><h3>Administrator Assignments View</h3></div>
         <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">
@@ -27,27 +27,31 @@
 	</div>
 	<div class="col-lg-8">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>add </h3></div>
+    	<div class="panel panel-heading"><h3>Assign An Issue</h3></div>
         <div class="panel panel-body">
 	
-			<form:form action="update" method="POST" modelAttribute="stockout">
+			<form:form action="add" method="POST" modelAttribute="assignment">
 				
 				<div class="row form form-group">
-				<label class="control-label col-lg-2" for="facility"> Facility: </label>
+				<label class="control-label col-lg-2" for="selectIssue"> Select Issue: </label>
 				<div class=col-lg-6>
-				<form:select class="form-control input-sm" path="facilityUID" items="${facilities}" itemLabel="officialDOHName" itemValue="uid"/>
+				<form:select class="form-control input-sm" path="issueUID" items="${issues}" itemLabel="uid" itemValue="uid"/>
 		 		</div>
 		 		</div>
 				
 				<div class="row form form-group row-padding">
-				<label class="control-label col-lg-2" for="product"> Product: </label>
+				<label class="control-label col-lg-2" for="product"> Select Staff Member: </label>
 				<div class="col-lg-6">
-				<form:select class="form-control input-sm" path="productUID" items="${products}" itemLabel="displayName" itemValue="product.uid"/>
-				</div>
+			<form:select class="form-control input-sm" path="staffMemberUID">
+			<c:forEach var="staffmember" items="${staffmembers}">
+        		<form:option value="${staffmember.uid}"><c:out value="${staffmember.name} ${staffmember.surname}"/></form:option>
+    		</c:forEach>
+			</form:select>		
+			</div>
 				</div>
 				
 		<div class="row form container row-padding">	
-		<button class="btn btn-success btn-lg text-center" type="submit" value="Save">Save<span class="glyphicon glyphicon-saved"></span></button>
+		<button class="btn btn-success btn-lg text-center" type="submit" value="Save">Assign<span class="glyphicon glyphicon-saved"></span></button>
 		</div>
 	</form:form>
 	

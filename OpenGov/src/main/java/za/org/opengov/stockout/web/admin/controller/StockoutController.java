@@ -73,8 +73,8 @@ public class StockoutController extends AbstractPaginationController {
 		
 		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
 		for(Product p: products){
-			ProductWrapper productWrapper = new ProductWrapper(p);
-			productWrappers.add(productWrapper);
+			//ProductWrapper productWrapper = new ProductWrapper(p);
+			//productWrappers.add(productWrapper);
 		}
 
 		model.addAttribute("facilities", facilities);

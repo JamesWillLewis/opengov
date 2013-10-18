@@ -19,7 +19,14 @@
 <body>
 
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>Administrator Products View</h3></div>
+    	<div class="panel panel-heading">
+				<div class="row"><h3 class="col-lg-5">Administrator Products View</h3>
+    		<form action="<c:url value="/sows/admin/products/new"/>" >
+    		<button type="submit" class="col-lg-3 btn btn-primary pull-right">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		New Product</button></form>
+    		</div>
+</div>
         <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">

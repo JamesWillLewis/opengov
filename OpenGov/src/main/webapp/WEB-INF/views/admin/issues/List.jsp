@@ -54,8 +54,6 @@
 				<td>${issue.state}</td>
 				<td>${issue.requireFollowUp}</td>
 				<td><a href="<c:url value="/sows/admin/issues/${issue.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
-				<td><a
-					href="<c:url value="/sows/admin/issues/${issue.uid}/delete"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
 			</tr>
 		</c:forEach>
 		

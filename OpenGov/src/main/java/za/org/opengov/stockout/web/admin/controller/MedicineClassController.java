@@ -3,14 +3,21 @@ package za.org.opengov.stockout.web.admin.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import za.org.opengov.common.entity.Assignment;
+import za.org.opengov.common.entity.Issue;
+import za.org.opengov.common.entity.StaffMember;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
@@ -19,6 +26,8 @@ import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.medical.MedicineClassService;
 import za.org.opengov.stockout.service.medical.ProductService;
+import za.org.opengov.stockout.web.admin.domain.AssignmentWrapper;
+import za.org.opengov.stockout.web.admin.domain.MedicineClassWrapper;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
 
@@ -48,45 +57,46 @@ public class MedicineClassController extends AbstractPaginationController {
 
 		return "admin/medicineclasses/List";
 	}
-
-	/*
-	@RequestMapping(value = "{uid}", produces = "text/html")
-	public String edit(@PathVariable("uid") long uid, Model model) {
-
-		Stockout stockout = stockoutService.get(uid);
-		StockoutWrapper stockoutWrapper = new StockoutWrapper(stockout);
-
-		model.addAttribute("stockout", stockoutWrapper);
-
-		List<Product> products = productService.getAll();
-		List<Facility> facilities = facilityService.getAll();
+	
+	@RequestMapping(value="new",method = RequestMethod.GET, produces = "text/html")
+	public String NewPage(Model model){
 		
-		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
-		for(Product p: products){
-			ProductWrapper productWrapper = new ProductWrapper(p);
-			productWrappers.add(productWrapper);
-		}
 
-		model.addAttribute("facilities", facilities);
-		model.addAttribute("products", productWrappers);
-
-		return "admin/stockouts/Edit";
+		return("admin/medicineclasses/New");
 	}
+	
+	
+	@ModelAttribute("medicineclasswrapper")
+    private MedicineClassWrapper getMedicineClassWrapper() {
+        return new MedicineClassWrapper();
+    }
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html")
+	public String add(@Valid @ModelAttribute MedicineClassWrapper medicineClassWrapper,BindingResult result,Model model) {
+		
+		if (result.hasErrors()) {
+			
+			return"admin/medicineclass/New";
+		}
+		
+		MedicineClass medicineClass = new MedicineClass();
+		medicineClass.setUid(medicineClassWrapper.getUid());
+		medicineClassService.put(medicineClass);
+		
+		return ("redirect:/sows/admin/medicineclasses");
+	
+	}
+
+
 
 	@RequestMapping(value = "{uid}/delete", produces = "text/html")
 	public String delete(@PathVariable("uid") String uid, Model model) {
-
-		return "";
+		
+		medicineClassService.remove(medicineClassService.get(uid));
+		
+		return "redirect:/sows/admin/medicineclasses";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST, produces = "text/html")
-	public String update(StockoutWrapper stockout, Model uiModel) {
-		System.out.println("Product:" + stockout.getProductUID());
-		System.out.println("Facility:"
-				+ stockout.getFacilityUID());
-
-		return "redirect:/sows/admin/stockouts";
-	}
-	*/
+	
 
 }

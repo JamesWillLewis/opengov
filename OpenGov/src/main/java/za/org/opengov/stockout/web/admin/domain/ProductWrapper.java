@@ -1,36 +1,85 @@
 package za.org.opengov.stockout.web.admin.domain;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 import za.org.opengov.stockout.entity.medical.Product;
 
 
 public class ProductWrapper {
 	
-	private Product product;
-	private String displayName;
+	@NotEmpty
+	private String name;
+	
+	@NotEmpty
+	private String description;
+	
+	private long medicineUid;
+	
+	@NotNull @Min(0) @Max(1000)
+	private int volume;
+	
+	@NotNull
+	private double price;
 	
 	
 	public ProductWrapper() {
 	}
-	
-	public ProductWrapper(Product product) {
-		this.product = product;
-		this.displayName = product.getName() + " - " + product.getDescription();
+
+
+	public String getName() {
+		return name;
 	}
-	
-	public Product getProduct() {
-		return product;
+
+
+	public String getDescription() {
+		return description;
 	}
-	
-	public void setProduct(Product product) {
-		this.product = product;
+
+
+	public int getVolume() {
+		return volume;
 	}
-	
-	public String getDisplayName() {
-		return displayName;
+
+
+	public double getPrice() {
+		return price;
 	}
-	
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+	public long getMedicineUid() {
+		return medicineUid;
+	}
+
+
+	public void setMedicineUid(long medicineUid) {
+		this.medicineUid = medicineUid;
+	}
+
+
+	public void setVolume(int volume) {
+		this.volume = volume;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
 
 }
