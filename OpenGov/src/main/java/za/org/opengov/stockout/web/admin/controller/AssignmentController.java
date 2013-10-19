@@ -125,11 +125,13 @@ public class AssignmentController extends AbstractPaginationController {
 
 		List<Issue> issues = issueService.getAll();
 		List<StaffMember> members = staffMemberService.getAll();
-
+		AssignmentWrapper assignment = new AssignmentWrapper(assignmentService.get(uid));
+		
 		model.addAttribute("uid",uid);
 		model.addAttribute("issues", issues);
 		model.addAttribute("staffmembers", members);
-
+		model.addAttribute("assign", assignment);
+		
 		return "admin/assignments/Edit";
 	}
 
@@ -145,10 +147,9 @@ public class AssignmentController extends AbstractPaginationController {
 	public String update(@Valid @ModelAttribute AssignmentWrapper assignment,BindingResult result, 
 			@PathVariable("uid") long uid,Model model) {
 		
-		Assignment assign = new Assignment();
+		Assignment assign = assignmentService.get(uid);
 		assign.setIssue(issueService.get(assignment.getIssueUID()));
 		assign.setStaffMember(staffMemberService.get(assignment.getStaffMemberUID()));
-		assign.setUid(uid);
 		assignmentService.put(assign);
 
 		return "redirect:/sows/admin/assignments";

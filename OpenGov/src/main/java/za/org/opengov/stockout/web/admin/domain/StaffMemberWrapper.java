@@ -18,6 +18,17 @@ public class StaffMemberWrapper {
 	
 	private long uid;
 	
+	public StaffMemberWrapper(){
+		
+	}
+	
+	public StaffMemberWrapper(StaffMember staff){
+		this.staffCode = staff.getStaffCode();
+		this.name = staff.getName();
+		this.surname = staff.getSurname();
+		this.uid = staff.getUid();
+	}
+	
 	public long getUid() {
 		return uid;
 	}

@@ -69,6 +69,7 @@ public class MedicineController extends AbstractPaginationController {
 		
 		List<MedicineClass> medicineClasses = medicineClassService.getAll();
 		
+	
 		model.addAttribute("medicineClasses", medicineClasses);
 
 		return("admin/medicines/New");
@@ -104,6 +105,9 @@ public class MedicineController extends AbstractPaginationController {
 
 		List<MedicineClass> medicineClasses = medicineClassService.getAll();
 		
+		MedicineWrapper medicineWrapper = new MedicineWrapper(medicineService.get(uid));
+		
+		model.addAttribute("medicine", medicineWrapper);
 		model.addAttribute("medicineClasses", medicineClasses);
 
 		return "admin/medicines/Edit";

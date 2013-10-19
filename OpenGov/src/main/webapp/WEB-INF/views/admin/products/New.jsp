@@ -4,7 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +20,7 @@
 <%@ include file="../../layout.jsp" %>
 <body>
 	<div class="container">
+	<%@ include file="../../Security.jsp" %>
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Add Products View</h3></div>
         <div class="panel panel-body">
@@ -30,7 +33,8 @@
     	<div class="panel panel-heading"><h3>Add Product</h3></div>
         <div class="panel panel-body">
 	
-			<form:form action="add" method="POST" modelAttribute="productwrapper">
+			<form:form action="add" method="POST" modelAttribute="productwrapper"
+			onsubmit="return confirm('Are you sure you want to add a new product?')">
 				
 				<div class="row form form-group">
 				<label class="control-label col-lg-2" for="facility"> Name of Product: </label>
@@ -59,7 +63,7 @@
 				<div class="row form form-group">
 				<label class="control-label col-lg-2" for="facility">Enter Price incl/VAT: </label>
 				<div class=col-lg-6>
-				<form:input type="number" class="form-control input-sm" id="inputName" 
+				<form:input type="text" class="form-control input-sm" id="inputName" 
     							placeholder="Enter Price" path="price"></form:input>
 		 		</div>
 		 		</div>

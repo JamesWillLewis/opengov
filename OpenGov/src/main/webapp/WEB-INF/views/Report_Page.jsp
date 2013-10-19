@@ -14,13 +14,13 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
  		
- 		<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
- 		<link href="resources/css/datepicker.css" rel="stylesheet"  type="text/css"/>
- 		<link href="resources/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet"  type="text/css"/>
- 		<script src="resources/js/jquery-1.10.2.min.js"></script>
-    	<script src="resources/js/bootstrap.min.js"></script>
-		<script src="resources/js/bootstrap-datepicker.js"></script>
-		<script src="resources/js/jquery-ui-1.10.3.custom.min.js"></script>
+ 		<link href="../resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+ 		<link href="../resources/css/datepicker.css" rel="stylesheet"  type="text/css"/>
+ 		<link href="../resources/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet"  type="text/css"/>
+ 		<script src="../resources/js/jquery-1.10.2.min.js"></script>
+    	<script src="../resources/js/bootstrap.min.js"></script>
+		<script src="../resources/js/bootstrap-datepicker.js"></script>
+		<script src="../resources/js/jquery-ui-1.10.3.custom.min.js"></script>
 		
 	
 	<script language="javascript">  
@@ -66,6 +66,7 @@
 </head>
 <body>
 	<div class="container">
+	<%@ include file="Security.jsp" %>
 	<div class="panel panel-primary">
 		<div class="panel panel-heading"><h4>Report a Stock-out<h4></div>
 			<div class="panel panel-body">
@@ -253,6 +254,6 @@
 			</div>
 	</div>
 	</div>
-	<script src="resources/js/reportHandler.js"></script> 
+	<script src="../resources/js/reportHandler.js"></script> 
 </body>
 </html>

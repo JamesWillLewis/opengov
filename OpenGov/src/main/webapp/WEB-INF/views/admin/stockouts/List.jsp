@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,6 +20,8 @@
 <%@ include file="../../layout.jsp" %>
 <body>
 	<div class="container">
+<%@ include file="../../Security.jsp" %>
+	
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Stock-outs View</h3></div>
         <div class="panel panel-body">
@@ -48,8 +52,6 @@
 				<td>${so.facility.uid}</td>
 				<td>${so.resolved}</td>
 				<td><a href="<c:url value="/sows/admin/stockouts/${so.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
-				<td><a
-					href="<c:url value="/sows/admin/stockouts/${so.uid}/delete"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
 			</tr>
 		</c:forEach>
 		

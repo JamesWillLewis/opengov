@@ -4,7 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,15 +19,11 @@
 </head>
 <%@ include file="../../layout.jsp" %>
 <body>
+<%@ include file="../../Security.jsp" %>
 	<!--  div class="container">-->
 	<div class="panel panel-default">
     	<div class="panel panel-heading">
-		<div class="row"><h3 class="col-lg-5">Administrator Facilities View</h3>
-    		<form action="<c:url value="/sows/admin/facilities/new"/>" >
-    		<button type="submit" class="col-lg-3 btn btn-primary pull-right">
-    		<span class="glyphicon glyphicon-plus"></span>
-    		Add New Facility</button></form>
-    		</div>
+		<div class="row"><h3>Administrator Facilities View</h3>
 		</div>
         <div class="panel panel-body">
      <div class="row">
@@ -33,15 +31,15 @@
     	 <%@ include file="../Admin Menu.jsp" %>  
 	</div>
 	<div class="col-lg-9">
-	<!--  div class="panel panel-default">
-    	<!--  div class="panel panel-heading"><h3>List of Facilties</h3></div>
-        <!--  div class="panel panel-body">-->
+	<form action="<c:url value="/sows/admin/facilities/new"/>" >
+    		<button type="submit" class="btn btn-primary">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		Add New Facility</button></form>
 	
 	<table class="table table-bordered table-condensed">
 	 
 		<tr>
 			<th>UID</th>
-			<th>Supply Depot</th>
 			<th>Official Name</th>
 			<th>Local Name (Alias)</th>
 			<th>Town</th>
@@ -55,7 +53,6 @@
 		<c:forEach items="${results}" var="res">
 			<tr>
 				<td>${res.uid}</td>
-				<td>Unspecified</td>
 				<td>${res.officialDOHName}</td>
 				<td>${res.localName}</td>
 				<td>${res.town}</td>
@@ -65,7 +62,7 @@
 				<td>${res.contactNumber}</td>
 				<td>${res.emailAddress}</td>
 				<td><a href="<c:url value="/sows/admin/facilities/${res.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
-				<td><a
+				<td><a onclick="return confirm('Are you sure you wish to delete this facility?')"
 					href="<c:url value="/sows/admin/facilities/${res.uid}/delete"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
 			</tr>
 		</c:forEach>

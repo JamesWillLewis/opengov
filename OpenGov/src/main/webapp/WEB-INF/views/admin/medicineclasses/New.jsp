@@ -4,7 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +20,7 @@
 <%@ include file="../../layout.jsp" %>
 <body>
 	<div class="container">
+	<%@ include file="../../Security.jsp" %>
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Add Medicine Class View</h3></div>
         <div class="panel panel-body">
@@ -30,7 +33,8 @@
     	<div class="panel panel-heading"><h3>Add Medicine Class</h3></div>
         <div class="panel panel-body">
 	
-			<form:form action="add" method="POST" modelAttribute="medicineclasswrapper">
+			<form:form action="add" method="POST" modelAttribute="medicineclasswrapper"
+			onsubmit="return confirm('Are you sure you want to add a new medicine class?')">
 				
 				<div class="row form form-group">
 				<label class="control-label col-lg-2" for="facility"> Name of Medicine Class: </label>

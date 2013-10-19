@@ -4,7 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,9 +20,10 @@
 <%@ include file="../../layout.jsp" %>
 <body>
 	<div class="container">
+	<%@ include file="../../Security.jsp" %>
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Medicines View</h3></div>
-        <div class="panel panel-body">
+       <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">
     	 <%@ include file="../Admin Menu.jsp" %>  
@@ -28,14 +31,15 @@
 	<div class="col-lg-8">
 	<div class="panel panel-default">
     	<div class="panel panel-heading">
-		<div class="row"><h3 class="col-lg-5">List of Medicines</h3>
-    		<form action="<c:url value="/sows/admin/medicines/new"/>" >
-    		<button type="submit" class="col-lg-3 btn btn-primary pull-right">
-    		<span class="glyphicon glyphicon-plus"></span>
-    		Add New Medicine</button></form>
-    		</div>
+		<h3>List of Medicines</h3>
+    	
 	</div>
         <div class="panel panel-body">
+	
+	<form action="<c:url value="/sows/admin/medicines/new"/>" >
+    		<button type="submit" class="btn btn-primary">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		Add New Medicine</button></form>
 	
 	<table class="table table-bordered">
 	 
@@ -53,7 +57,7 @@
 				<td>N/A</td>
 				<td>${res.medicineClass.uid}</td>
 				<td><a href="<c:url value="/sows/admin/medicines/${res.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
-				<td><a
+				<td><a onclick="return confirm('Are you sure you wish to delete this medicine?')"
 					href="<c:url value="/sows/admin/medicines/${res.uid}/delete"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
 			</tr>
 		</c:forEach>

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +27,7 @@ import za.org.opengov.stockout.entity.medical.Product;
 import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.medical.ProductService;
+import za.org.opengov.stockout.web.admin.domain.FacilityWrapper;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
 
@@ -64,39 +68,37 @@ public class StockoutController extends AbstractPaginationController {
 	@RequestMapping(value = "{uid}", produces = "text/html")
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
-		Stockout stockout = stockoutService.get(uid);
-		StockoutWrapper stockoutWrapper = new StockoutWrapper(stockout);
-		model.addAttribute("stockout", stockoutWrapper);
+		Stockout stockouts = stockoutService.get(uid);
+		StockoutWrapper stockout = new StockoutWrapper(stockouts);
+		model.addAttribute("stockout", stockout);
 
 		List<Product> products = productService.getAll();
 		List<Facility> facilities = facilityService.getAll();
 		
-		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
-		for(Product p: products){
-			//ProductWrapper productWrapper = new ProductWrapper(p);
-			//productWrappers.add(productWrapper);
-		}
-
+		model.addAttribute("uid", uid);
 		model.addAttribute("facilities", facilities);
-		model.addAttribute("products", productWrappers);
+		model.addAttribute("products", products);
 
 		return "admin/stockouts/Edit";
 	}
 
 	@RequestMapping(value = "{uid}/delete", produces = "text/html")
-	public String delete(@PathVariable("uid") String uid, Model model) {
+	public String delete(@PathVariable("uid") long uid, Model model) {
 
-		return "";
+		stockoutService.remove(stockoutService.get(uid));
+		return "redirect:/sows/admin/facilities";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST, produces = "text/html")
-	public String update(StockoutWrapper stockout, Model uiModel) {
-		Stockout updateStockout = stockout.getStockout();
+	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
+	public String update(@Valid @ModelAttribute StockoutWrapper stockout,BindingResult result, 
+			@PathVariable("uid") long uid,Model model) {
+			
+		Stockout updateStockout = stockoutService.get(uid);
 		
 		updateStockout.setProduct(productService.get(stockout.getProductUID()));
 		updateStockout.setFacility(facilityService.get(stockout.getFacilityUID()));
 		stockoutService.put(updateStockout);
-
+		
 		return "redirect:/sows/admin/stockouts";
 	}
 

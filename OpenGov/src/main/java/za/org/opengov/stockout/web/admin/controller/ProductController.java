@@ -101,7 +101,9 @@ public class ProductController extends AbstractPaginationController {
 
 		List<Medicine> medicines = medicineService.getAll();
 		Product product = productService.get(uid);
+		ProductWrapper productWrapper = new ProductWrapper(product);
 		
+		model.addAttribute("productWrapper", productWrapper);
 		model.addAttribute("medicines", medicines);
 		model.addAttribute("product", product);
 		
@@ -127,7 +129,6 @@ public class ProductController extends AbstractPaginationController {
 			Product product = productService.get(uid);
 			
 			model.addAttribute("medicines", medicines);
-			model.addAttribute("product", product);
 			
 			return"admin/products/Edit";
 		}

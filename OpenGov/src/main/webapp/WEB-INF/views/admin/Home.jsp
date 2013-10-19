@@ -26,21 +26,80 @@
 
 <body>
 
-	<security:authorize access="isAuthenticated()">
-                        Logged in as user <b><security:authentication
-				property="principal.username" /></b>,
-                        Click to <a
-			href="<c:url value='/j_spring_security_logout' />" class="sign_ic">Logout</a>
-	</security:authorize>
-
 <div class="container">
+<%@ include file="../Security.jsp" %>
+
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Home</h3></div>
         <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">
      <%@ include file="Admin Menu.jsp" %>  
-</div>
+	</div>
+		<div class="col-lg-9">
+		<Table class="table">
+			<tr>
+			<td>
+            <h2>Stock-out Service</h2>
+            <p>Check and edit stockouts</p>
+            <br><br>
+            <p><a class="btn btn-primary btn-sm" href="admin/stockouts">Go to Stock-out Service &raquo;</a></p>
+            </td>
+            
+            
+			<td>
+            <h2>Facility Service</h2>
+            	<p>Check add, edit and delete medical facilities</p>
+            	<p><a class="btn btn-primary btn-sm" href="admin/facilities"> Go To Facility Service &raquo;</a></p>
+            </td>
+           
+           
+			<td>
+            <h2>Product Service</h2>
+            <p>Check add, edit and delete listed products</p>
+            <br>
+            <p>
+            <a class="btn btn-primary btn-sm" href="admin/products">Go To Product Service &raquo;</a>
+            </p>
+            </td>
+            
+     
+			<td>
+            <h2>Medicine Service</h2>
+            <p>Check add, edit and delete medicines that define many products</p>
+            <p>
+            <a class="btn btn-primary btn-sm" href="admin/medicines">Go To Medicine Service &raquo;</a>
+            </p>
+            </td>
+		</tr>
+			<tr>
+			<td>
+            <h2>Medicine-Class Service</h2>
+            <p>Check, add and Remove Medicine Classes that define a medicine</p>
+            <p><a class="btn btn-primary btn-sm" href="admin/medicineclasses">Go to Medicine Class Service &raquo;</a></p>
+            </td>
+            <td>
+            <h2>Issue Service</h2>
+            	<p>Check and edit issues assosciated with stock-outs</p>
+            	<p><a class="btn btn-primary btn-sm" href="admin/issues"> Go To Issue Service &raquo;</a></p>
+            </td>
+            <td>
+            <h2>Assignment Service</h2>
+            <p>Check assignments of staff members to issues. Add and edit assignments</p>
+            <p>
+            <a class="btn btn-primary btn-sm" href="admin/assignments">Go To Assignment Service &raquo;</a>
+            </p>
+            </td>
+            <td>
+            <h2>Staff Member Service</h2>
+            <p>Check staff member roster, add new staff members and edit details</p>
+            <p>
+            <a class="btn btn-primary btn-sm" href="admin/staffmembers">Go To Staff Member Service &raquo;</a>
+            </p>
+           </td>
+           </tr>
+           </Table>
+		</div>
 </div>
 </div>
 </div>

@@ -73,6 +73,7 @@ public class StaffMemberController extends AbstractPaginationController {
 	@RequestMapping(value="new",method = RequestMethod.GET, produces = "text/html")
 	public String NewPage(Model model){
 		
+		
 		return("admin/staffmembers/New");
 	}
 	
@@ -108,9 +109,10 @@ public class StaffMemberController extends AbstractPaginationController {
 	@RequestMapping(value = "{uid}", produces = "text/html")
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
-		StaffMember staffMember = staffMemberService.get(uid);
-
-		model.addAttribute("staffmember", staffMember);
+		StaffMemberWrapper staff = new StaffMemberWrapper(staffMemberService.get(uid));
+		
+		model.addAttribute("uid", uid);
+		model.addAttribute("staffmember", staff);
 
 		return "admin/staffmembers/Edit";
 	}
@@ -126,15 +128,15 @@ public class StaffMemberController extends AbstractPaginationController {
 	
 	
 	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
-	public String update(@Valid @ModelAttribute StaffMemberWrapper staffMember,BindingResult result, 
+	public String update(@Valid @ModelAttribute StaffMemberWrapper staff,BindingResult result, 
 			@PathVariable("uid") long uid,Model model) {
 		
-		StaffMember staff = new StaffMember();
-		staff.setName(staffMember.getName());
-		staff.setSurname(staffMember.getSurname());
-		staff.setStaffCode(staffMember.getStaffCode());
-		staff.setUid(uid);
-		staffMemberService.put(staff);
+		StaffMember staffmem = new StaffMember();
+		staffmem.setName(staff.getName());
+		staffmem.setSurname(staff.getSurname());
+		staffmem.setStaffCode(staff.getStaffCode());
+		staffmem.setUid(uid);
+		staffMemberService.put(staffmem);
 
 		return "redirect:/sows/admin/staffmembers";
 	}

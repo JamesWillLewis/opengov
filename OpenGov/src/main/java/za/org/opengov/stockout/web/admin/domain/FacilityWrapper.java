@@ -13,35 +13,87 @@ import za.org.opengov.stockout.entity.FacilityType;
 
 public class FacilityWrapper {
 	
-	@NotEmpty
+	
 	private String localName;
 	
-	@NotEmpty
+	
 	private String officialName;
 	
-	@NotEmpty
+	
 	private String province;
 	
-	@NotEmpty
+
 	private String district;
 	
-	@NotEmpty
+	
 	private String town;
 	
-	@NotEmpty
+	
 	private FacilityType type;
 	
-	@NotNull @Min(10) @Max(12)
+
 	private String contactNumber;
 	
-	@Email @NotEmpty
+
 	private String emailAddress;
 	
+	private double latitude;
 	
+	private double longitude;
+	
+	private String uid;
+	
+
+
 	public FacilityWrapper() {
+	}
+	
+	public FacilityWrapper(Facility facility){
+		
+		this.localName = facility.getLocalName();
+		this.officialName = facility.getOfficialDOHName();
+		this.contactNumber = facility.getContactNumber();
+		this.emailAddress = facility.getEmailAddress();
+		this.type = facility.getFacilityType();
+		this.province = facility.getProvince();
+		this.town = facility.getTown();
+		this.district = facility.getDistrict();
+		if(facility.getLatitudeDecimalDegress() != null && facility.getLongitudeDecimalDegrees()!=null){
+		this.latitude = facility.getLatitudeDecimalDegress();
+		this.longitude = facility.getLongitudeDecimalDegrees();}
+		else{
+			this.latitude =0;
+			this.longitude=0;
+		}
+		this.uid = facility.getUid();
 	}
 
 
+	
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLatitude(double latititude) {
+		this.latitude = latititude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	
 	public String getLocalName() {
 		return localName;
 	}

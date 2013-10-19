@@ -2,16 +2,15 @@
 $('#provinceSelect').change(function(){
 	
 	$('#districtSelect').empty();
-	$('#districtSelect').append($('<option>').text('All Districts').attr('value', 'all'));
 	if ($(this).val() == 'all'){
 		$('#townSelect').empty();
-		$('#townSelect').append($('<option>').text('All Towns').attr('value', 'all'));	
 	}
+	
 	else{
       var param={province:$(this).val()};
         $.ajax({
             type:'GET',
-            url:'getdistricts',
+            url:'../../getdistricts',
             data:param,
             headers: {
                 Accept: 'application/json'
@@ -30,12 +29,11 @@ $('#provinceSelect').change(function(){
 $('#districtSelect').change(function(){
 	
 	$('#townSelect').empty();
-	$('#townSelect').append($('<option>').text('All Towns').attr('value', 'all'));
 	if ($(this).val() != 'all'){
       var param={district:$(this).val()};
         $.ajax({
             type:'GET',
-            url:'gettowns',
+            url:'../../gettowns',
             data:param,
             headers: {
                 Accept: 'application/json'

@@ -18,7 +18,9 @@
 	             document.getElementById("Stockout Home").className += " active";}
 			else if ($(document).find("title").text() == "Contacts"){
 	             document.getElementById("Contacts_Page").className += " active";}
-            }
+			else if ($(document).find("title").text() == "Admin Home Page"){
+	             document.getElementById("Admin_Page").className += " active";}
+           }
      	</script>
 
 </head>
@@ -32,22 +34,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button> 
-          <a class="navbar-brand" href="#">Stockout</a>
+          <a class="navbar-brand"><span class="glyphicon glyphicon-globe"></span>
+          Stockout</a>
           </div>
           <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <li id="Stockout Home"><a href="stockouthome">Home</a></li> 
           <li id="Report_Page"><a href="reportstockouts">Report Stock-out</a></li>
            <li id="Contacts_Page"><a href="loadcontacts">Contacts</a></li>
+            <li id="Admin_Page"><a href="admin">Administrator</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
+           <!--  <form class="navbar-form navbar-right">
             <div class="form-group">
             <input type="text" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
             <input type="password" placeholder="Password" class="form-control"></div>
             <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
+            </form> -->
             </div><!--//-->
             </div>
             </div>

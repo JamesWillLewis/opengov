@@ -10,14 +10,15 @@
 	
 	<title>Contacts</title>
 	 	
-	 	<link href="resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
- 		<script src="resources/js/jquery-1.10.2.min.js"></script>
-    	<script src="resources/js/bootstrap.min.js"></script>
+	 	<link href="../resources/css/bootstrap-stock.min.css" rel="stylesheet" media="screen"/>
+ 		<script src="../resources/js/jquery-1.10.2.min.js"></script>
+    	<script src="../resources/js/bootstrap.min.js"></script>
     	
 </head>
 
 <body>
 	<div class="container">
+	<%@ include file="Security.jsp" %>
 	<h3>Contact Information for Facilites</h3>
 		<table class="table table-bordered table-striped table-condensed col-lg-12">
 		

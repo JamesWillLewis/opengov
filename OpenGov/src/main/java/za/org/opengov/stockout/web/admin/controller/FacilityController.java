@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import za.org.opengov.common.entity.IssueState;
+import za.org.opengov.common.entity.StaffMember;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.FacilityType;
 import za.org.opengov.stockout.entity.Stockout;
@@ -26,6 +27,7 @@ import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.medical.ProductService;
 import za.org.opengov.stockout.web.admin.domain.FacilityWrapper;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
+import za.org.opengov.stockout.web.admin.domain.StaffMemberWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
 
 @Controller
@@ -59,26 +61,19 @@ public class FacilityController extends AbstractPaginationController {
 	public String NewPage(Model model){
 		
 		List<String> provinces = facilityService.listAllProvinces();
-		List<String> districts = new ArrayList<String>();
-		List<String> towns = new ArrayList<String>();
-		for(String prov : provinces){
-			
-			districts.addAll(facilityService.listAllDistrictsForProvince(prov));
-			
-		}
-		
-		for(String Dist : districts){
-			towns.addAll(facilityService.listAllTownsForDistrict(Dist));
-		}
-		
+		List<String> districts = facilityService.listAllDistrictsForProvince(provinces.get(0));
+		List<String> towns = facilityService.listAllTownsForDistrict(districts.get(0));
+
 		FacilityType[] fTypes = FacilityType.values();
 		
 		model.addAttribute("types",fTypes);
+		model.addAttribute("provinces", provinces);
+		model.addAttribute("districts", districts);
 		model.addAttribute("towns", towns);
-		
+
 		
 
-		return("admin/products/New");
+		return("admin/facilities/New");
 	}
 	
 
@@ -92,35 +87,36 @@ public class FacilityController extends AbstractPaginationController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html")
 	public String add(@Valid @ModelAttribute FacilityWrapper facilityWrapper,BindingResult result,Model model) {
 		
-		if (result.hasErrors()) {
+		if (result.hasErrors()) {		
 			
+			System.out.println(result.getAllErrors().get(0).getDefaultMessage());
+			System.out.println("ERROR");
 			List<String> provinces = facilityService.listAllProvinces();
-			List<String> districts = new ArrayList<String>();
-			List<String> towns = new ArrayList<String>();
-			for(String prov : provinces){
-				
-				districts.addAll(facilityService.listAllDistrictsForProvince(prov));
-				
-			}
+
+			List<String> districts = facilityService.listAllDistrictsForProvince(provinces.get(0));
 			
-			for(String Dist : districts){
-				towns.addAll(facilityService.listAllTownsForDistrict(Dist));
-			}
+			List<String> towns = facilityService.listAllTownsForDistrict(districts.get(0));
 			
 			FacilityType[] fTypes = FacilityType.values();
 			
 			model.addAttribute("types",fTypes);
+			model.addAttribute("provinces", provinces);
 			model.addAttribute("towns", towns);
+			model.addAttribute("districts", districts);
 			
 			return"admin/facilities/New";
 		}
 		
 		Facility facility = new Facility();
+		facility.setDistrict(facilityWrapper.getDistrict());
+		facility.setProvince(facilityWrapper.getProvince());
 		facility.setTown(facilityWrapper.getTown());
-		facility.setEmailAddress(facility.getEmailAddress());
+		facility.setEmailAddress(facilityWrapper.getEmailAddress());
 		facility.setLocalName(facilityWrapper.getLocalName());
 		facility.setOfficialDOHName(facilityWrapper.getOfficialName());
-		facility.setUid("uid");
+		facility.setLatitudeDecimalDegress(facilityWrapper.getLatitude());
+		facility.setLongitudeDecimalDegrees(facilityWrapper.getLongitude());
+		facility.setUid(facilityWrapper.getLocalName().substring(0, 4).toUpperCase());
 		facility.setFacilityType(facilityWrapper.getType());
 		facility.setContactNumber(facilityWrapper.getContactNumber());
 		
@@ -130,44 +126,58 @@ public class FacilityController extends AbstractPaginationController {
 	
 	}
 
-	/*
+	
 	@RequestMapping(value = "{uid}", produces = "text/html")
-	public String edit(@PathVariable("uid") long uid, Model model) {
-
-		Stockout stockout = stockoutService.get(uid);
-		StockoutWrapper stockoutWrapper = new StockoutWrapper(stockout);
-
-		model.addAttribute("stockout", stockoutWrapper);
-
-		List<Product> products = productService.getAll();
-		List<Facility> facilities = facilityService.getAll();
+	public String edit(@PathVariable("uid") String uid, Model model) {
 		
-		List<ProductWrapper> productWrappers = new ArrayList<ProductWrapper>();
-		for(Product p: products){
-			ProductWrapper productWrapper = new ProductWrapper(p);
-			productWrappers.add(productWrapper);
-		}
-
-		model.addAttribute("facilities", facilities);
-		model.addAttribute("products", productWrappers);
-
-		return "admin/stockouts/Edit";
+		FacilityWrapper facilityWrapper = new FacilityWrapper(facilityService.get(uid));
+		
+		List<String> provinces = facilityService.listAllProvinces();
+		List<String> districts = facilityService.listAllDistrictsForProvince(facilityWrapper.getProvince());
+		List<String> towns = facilityService.listAllTownsForDistrict(facilityWrapper.getDistrict());
+		
+		
+		
+		FacilityType[] fTypes = FacilityType.values();
+		
+		model.addAttribute("facilitywrapper",facilityWrapper );
+		model.addAttribute("types",fTypes);
+		model.addAttribute("provinces", provinces);
+		model.addAttribute("districts", districts);
+		model.addAttribute("towns", towns);
+		model.addAttribute("uid", uid);
+		
+		return "admin/facilities/Edit";
 	}
 
 	@RequestMapping(value = "{uid}/delete", produces = "text/html")
 	public String delete(@PathVariable("uid") String uid, Model model) {
-
-		return "";
+			
+			facilityService.remove(facilityService.get(uid));
+		return "redirect:/sows/admin/facilities";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST, produces = "text/html")
-	public String update(StockoutWrapper stockout, Model uiModel) {
-		System.out.println("Product:" + stockout.getProductUID());
-		System.out.println("Facility:"
-				+ stockout.getFacilityUID());
+	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
+	public String update(@Valid @ModelAttribute FacilityWrapper facilityWrapper,BindingResult result, 
+			@PathVariable("uid") String uid,Model model) {
+		
+		Facility facility = new Facility();
+		facility.setDistrict(facilityWrapper.getDistrict());
+		facility.setProvince(facilityWrapper.getProvince());
+		facility.setTown(facilityWrapper.getTown());
+		facility.setEmailAddress(facilityWrapper.getEmailAddress());
+		facility.setLocalName(facilityWrapper.getLocalName());
+		facility.setLatitudeDecimalDegress(facilityWrapper.getLatitude());
+		facility.setLongitudeDecimalDegrees(facilityWrapper.getLongitude());
+		facility.setOfficialDOHName(facilityWrapper.getOfficialName());
+		facility.setUid(facilityWrapper.getLocalName().substring(0, 4).toUpperCase());
+		facility.setFacilityType(facilityWrapper.getType());
+		facility.setContactNumber(facilityWrapper.getContactNumber());
 
-		return "redirect:/sows/admin/stockouts";
+		facilityService.put(facility);
+		
+		return "redirect:/sows/admin/facilities";
 	}
-	*/
+	
 
 }

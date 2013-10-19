@@ -29,6 +29,18 @@ public class ProductWrapper {
 	public ProductWrapper() {
 	}
 
+	public ProductWrapper(Product product) {
+		
+		this.name = product.getName();
+		this.description = product.getDescription();
+		if(product.getMedicine()!=null){
+			this.medicineUid = product.getMedicine().getUid();
+		} else {
+			this.medicineUid = 0;
+		}
+		this.volume = product.getVolume();
+		this.price = product.getPriceInclVAT();
+	}
 
 	public String getName() {
 		return name;

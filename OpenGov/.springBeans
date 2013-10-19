@@ -8,8 +8,8 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/main/webapp/WEB-INF/spring/security-context.xml</config>
-		<config>src/main/webapp/WEB-INF/spring/database/datasource.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/database/hibernate-context.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/database/datasource.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

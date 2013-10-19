@@ -77,6 +77,10 @@ public class IssueController extends AbstractPaginationController {
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
 		IssueState[] is = IssueState.values(); 
+		
+		IssueWrapper issue = new IssueWrapper(issueService.get(uid));
+		
+		model.addAttribute("iss", issue);
 		model.addAttribute("states",is);
 		model.addAttribute("uid",uid);
 		
@@ -94,7 +98,6 @@ public class IssueController extends AbstractPaginationController {
 		
 		Issue newIssue = issueService.get(uid);
 		IssueState iss = (issue.getIssueState());
-		//issue.setState(new State(state));
 		newIssue.setState(iss);
 
 		issueService.put(newIssue);

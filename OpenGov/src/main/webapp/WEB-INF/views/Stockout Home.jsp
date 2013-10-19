@@ -57,7 +57,7 @@
 <body id="mapBody">
 
            <div class="container">
-            
+            <%@ include file="Security.jsp" %>
             <div class="row" >
             <div class="panel panel-default">
             <div class="panel panel-heading"><h3>Showing Stock-outs For:</h3></div>
@@ -212,7 +212,7 @@
     
             <hr><footer><p>&copy; Company 2013</p></footer>
             </div>
-		<script src="resources/js/inputHandler.js"></script> 
+		<script type="text/javascript" src="../resources/js/inputHandler.js"></script> 
              </body>
 
 
