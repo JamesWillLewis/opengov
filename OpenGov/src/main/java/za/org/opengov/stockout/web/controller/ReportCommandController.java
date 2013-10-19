@@ -137,7 +137,7 @@ public class ReportCommandController {
         
 		if (result.hasErrors()) {
 			
-			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");   
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");   
 			Date date = new Date();			
 			List<String> provinces = facilityService.listAllProvinces();
 			List<MedicineClass> medicineClasses = medicineClassService.getMedicineClassesEagerFetch();
@@ -189,7 +189,7 @@ public class ReportCommandController {
         redirectAttrs.addFlashAttribute("Medicine",publicStockoutReport.getSelectedMedicines());
         
 
-        return "redirect:/reportstockouts";
+        return "redirect:/sows/reportstockouts";
     }
 	
 	

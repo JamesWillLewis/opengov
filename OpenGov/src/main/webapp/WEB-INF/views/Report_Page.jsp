@@ -112,7 +112,7 @@
       				
       				<div class="row row-padding form-group">
 						<label class="col-lg-2" for="datepicker">Date of Occurrence</label>
-						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd/mm/yyyy">
+						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd/MM/yyyy">
     						<span class="input-group-addon add-on"><i class="glyhicon glyphicon-calendar"></i></span>
     						<form:input class="form-control span2" type="text" value="${date}" readonly="true" path="dateOfOccurence"></form:input>
     						<font color="red"><form:errors path="dateOfOccurence" cssclass="error"></form:errors></font>

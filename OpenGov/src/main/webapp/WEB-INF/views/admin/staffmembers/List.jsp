@@ -33,7 +33,7 @@
 	</div>
 	<div class="col-lg-8">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><<h3>List of Staff Members</h3></div>
+    	<div class="panel panel-heading"><h3>List of Staff Members</h3></div>
         <div class="panel panel-body">
         <form action="<c:url value="/sows/admin/staffmembers/new"/>" >
     		<button type="submit" class="btn btn-primary">

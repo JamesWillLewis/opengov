@@ -40,7 +40,7 @@ public class PublicStockoutReport implements Serializable {
 	@Size(max=30)
 	private String Designation;
 	
-	@DateTimeFormat(pattern="dd/mm/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
     @NotNull @Past
 	private Date dateOfOccurence;
 	
