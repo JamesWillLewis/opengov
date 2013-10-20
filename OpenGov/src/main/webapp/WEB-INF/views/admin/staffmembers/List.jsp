@@ -15,7 +15,7 @@
 		<script src="../../resources/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../../resources/js/jquery-1.10.2.min.js"></script>
 		
-<title>Staff members</title>
+<title>Staff Members</title>
 </head>
 <%@ include file="../../layout.jsp" %>
 <body>

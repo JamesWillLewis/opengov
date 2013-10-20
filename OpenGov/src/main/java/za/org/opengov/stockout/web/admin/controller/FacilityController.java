@@ -140,7 +140,7 @@ public class FacilityController extends AbstractPaginationController {
 		
 		FacilityType[] fTypes = FacilityType.values();
 		
-		model.addAttribute("facilitywrapper",facilityWrapper );
+		model.addAttribute("facilityWrapper",facilityWrapper );
 		model.addAttribute("types",fTypes);
 		model.addAttribute("provinces", provinces);
 		model.addAttribute("districts", districts);
@@ -161,7 +161,7 @@ public class FacilityController extends AbstractPaginationController {
 	public String update(@Valid @ModelAttribute FacilityWrapper facilityWrapper,BindingResult result, 
 			@PathVariable("uid") String uid,Model model) {
 		
-		Facility facility = new Facility();
+		Facility facility = facilityService.get(uid);
 		facility.setDistrict(facilityWrapper.getDistrict());
 		facility.setProvince(facilityWrapper.getProvince());
 		facility.setTown(facilityWrapper.getTown());
@@ -170,7 +170,6 @@ public class FacilityController extends AbstractPaginationController {
 		facility.setLatitudeDecimalDegress(facilityWrapper.getLatitude());
 		facility.setLongitudeDecimalDegrees(facilityWrapper.getLongitude());
 		facility.setOfficialDOHName(facilityWrapper.getOfficialName());
-		facility.setUid(facilityWrapper.getLocalName().substring(0, 4).toUpperCase());
 		facility.setFacilityType(facilityWrapper.getType());
 		facility.setContactNumber(facilityWrapper.getContactNumber());
 

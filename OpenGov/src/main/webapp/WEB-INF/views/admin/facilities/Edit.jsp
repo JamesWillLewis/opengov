@@ -33,7 +33,7 @@
     	<div class="panel panel-heading"><h3>Edit Facility</h3></div>
         <div class="panel panel-body">
 	
-			<form:form action="${uid}/update" method="POST" modelAttribute="facilitywrapper"
+			<form:form action="${uid}/update" method="POST" modelAttribute="facilityWrapper"
 			onsubmit="return confirm('Are you sure you want to Save Changes?')">
 				
 				<div class="row form form-group">

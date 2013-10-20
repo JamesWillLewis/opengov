@@ -39,10 +39,10 @@
           </div>
           <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          <li id="Stockout Home"><a href="stockouthome">Home</a></li> 
-          <li id="Report_Page"><a href="reportstockouts">Report Stock-out</a></li>
-           <li id="Contacts_Page"><a href="loadcontacts">Contacts</a></li>
-            <li id="Admin_Page"><a href="admin">Administrator</a></li>
+          <li id="Stockout Home"><a href="/opengov/sows/stockouthome">Home</a></li> 
+          <li id="Report_Page"><a href="/opengov/sows/reportstockouts">Report Stock-out</a></li>
+           <li id="Contacts_Page"><a href="/opengov/sows/loadcontacts">Contacts</a></li>
+            <li id="Admin_Page"><a href="/opengov/sows/admin">Administrator</a></li>
             </ul>
            <!--  <form class="navbar-form navbar-right">
             <div class="form-group">

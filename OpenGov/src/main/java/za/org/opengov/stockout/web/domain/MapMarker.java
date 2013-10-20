@@ -16,12 +16,24 @@
  */
 package za.org.opengov.stockout.web.domain;
 
+import za.org.opengov.stockout.entity.Facility;
+
 /** Map Marker Stores data to be used for setting a marker in google maps**/
 public class MapMarker {
 
 private double latitude;
 private double longitude;
 private String identifier;
+
+public MapMarker(){
+	
+}
+
+public MapMarker(Facility facility){
+	this.latitude = facility.getLatitudeDecimalDegress();
+	this.longitude = facility.getLongitudeDecimalDegrees();
+	this.identifier = facility.getLocalName() + " " + facility.getFacilityType().getReadable();
+}
 
 public double getLatitude() {
 	return latitude;

@@ -22,14 +22,15 @@ function loadLocationDrillDown() {
             Accept: 'application/json'
         },datatype: 'json',
         success:function(data){
+        	var noOfData = 0;
         	
             $.each(data.locations, function(i, value) {
                 locations.push(value);
+                noOfData += 1;
             });
             $.each(data.locationStockouts, function(i, value) {
                 stockouts.push(value);
             });
-            
             
             $('#locationContainer').highcharts({
                 chart: {
@@ -43,7 +44,7 @@ function loadLocationDrillDown() {
                 xAxis: {
                 	title:{text:'Locations'
                 		},
-                    categories: locations
+                    categories: locations,
                 },
                 yAxis: {
                     min: 0,
@@ -51,6 +52,9 @@ function loadLocationDrillDown() {
                         text: 'Number of stockouts'
                     }
                 },
+                scrollbar: {
+                	enabled: true
+                	},
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}:Location</td>' +
@@ -65,10 +69,7 @@ function loadLocationDrillDown() {
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    data: stockouts,
-                    name:locations
-                }]
+                series: [{data: stockouts}]
             });
 
             

@@ -135,34 +135,40 @@ public class StockoutHomeController {
 		List<StockoutResult> stockResults = new ArrayList<StockoutResult>();
 		List<MapMarker> markers = new ArrayList<MapMarker>();
 		List<Facility> facilities = new ArrayList<Facility>();
+		List<String> allLocations = new ArrayList<String>();
 		
 		if (province.equals("all")){
 			locations = facilityService.listAllProvinces();
 				for (String loc : locations){
+					data.add(facilityService.totalStockoutsForProvince(loc));
 					allStockouts.addAll(stockoutService.getStockoutsForProvince(loc));
-				data.add(facilityService.totalStockoutsForProvince(loc));
-				facilities.addAll(facilityService.listAllFacilitiesForProvince(loc));
+				
 				
 			}
 				
 		}
 
 		else if (district.equals("all")){
-			locations = facilityService.listAllDistrictsForProvince(province);
+			allLocations = facilityService.listAllDistrictsForProvince(province);
 			
-			for (String loc : locations){
-				allStockouts.addAll(stockoutService.getStockoutsForDistrict(loc));
-				data.add(facilityService.totalStockoutsForDistrict(loc));
+			for (String loc : allLocations){
+				if(facilityService.totalStockoutsForDistrict(loc)>0){
+					data.add(facilityService.totalStockoutsForDistrict(loc));
+					allStockouts.addAll(stockoutService.getStockoutsForDistrict(loc));
+					locations.add(loc);
+				}
 			}
 		} 
 		
 		else if (town.equals("all")) {
-			locations = facilityService.listAllTownsForDistrict(district);
+			allLocations = facilityService.listAllTownsForDistrict(district);
 			
-			for (String loc : locations){
-				allStockouts.addAll(stockoutService.getStockoutsForTown(loc));
-				data.add(facilityService.totalStockoutsForTown(loc));
-				facilities.addAll(facilityService.listAllFacilitiesForTown(loc));
+			for (String loc : allLocations){
+				if(facilityService.totalStockoutsForTown(loc)>0){
+					allStockouts.addAll(stockoutService.getStockoutsForTown(loc));
+					data.add(facilityService.totalStockoutsForTown(loc));
+					locations.add(loc);
+				}
 			}
 			
 		} else
@@ -193,16 +199,13 @@ public class StockoutHomeController {
 
 			
 			for(Stockout stockout: allStockouts){
-				StockoutResult result = new StockoutResult();
-				result.setProvince(stockout.getFacility().getProvince());
-				result.setTown(stockout.getFacility().getTown());
-				result.setFacility(stockout.getFacility().getLocalName() + " " + stockout.getFacility().getFacilityType().getReadable());
-				result.setMedicineClass(stockout.getProduct().getMedicine().getMedicineClass().getUid());
-				result.setMedicineName(stockout.getProduct().getMedicine().getName());
-				result.setBrandName(stockout.getProduct().getName() + " " + stockout.getProduct().getDescription());
-				result.setDateOfFirstIssue(stockout.getIssue().getStartTimestamp().toString());
-				result.setStockoutStatus(stockout.getIssue().getState().toString());
 				
+				StockoutResult result = new StockoutResult(stockout);
+				
+				if(stockout.getFacility().getLatitudeDecimalDegress()!= null 
+						&& stockout.getFacility().getLongitudeDecimalDegrees() != null){
+					markers.add(new MapMarker(stockout.getFacility()));
+				}
 				stockResults.add(result);
 			}
 			
@@ -221,37 +224,17 @@ public class StockoutHomeController {
 			
 			for(Stockout stockout: allStockouts){
 				if (stockout.getProduct().getMedicine().getMedicineClass().getUid().equals(medicineCat)){
-				StockoutResult result = new StockoutResult();
-				result.setProvince(stockout.getFacility().getProvince());
-				result.setTown(stockout.getFacility().getTown());
-				result.setFacility(stockout.getFacility().getLocalName() + " " + stockout.getFacility().getFacilityType().getReadable());
-				result.setMedicineClass(stockout.getProduct().getMedicine().getMedicineClass().getUid());
-				result.setMedicineName(stockout.getProduct().getMedicine().getName());
-				result.setBrandName(stockout.getProduct().getName() + " " + stockout.getProduct().getDescription());
-				result.setDateOfFirstIssue(stockout.getIssue().getStartTimestamp().toString());
-				result.setStockoutStatus(stockout.getIssue().getState().toString());
-				
-				stockResults.add(result);
+					
+					StockoutResult result = new StockoutResult(stockout);
+					
+					if(stockout.getFacility().getLatitudeDecimalDegress()!= null 
+							&& stockout.getFacility().getLongitudeDecimalDegrees() != null){
+						markers.add(new MapMarker(stockout.getFacility()));
+					}
+					stockResults.add(result);
 				}
 			}
 			
-		}
-		
-		facilities = facilityService.listAllFacilitiesForTown("Khayelitsha");
-		
-		for (Facility fac : facilities){
-						
-			int numberOfStockouts = fac.getStockouts().size();
-			
-			if(numberOfStockouts>0 && fac.getLatitudeDecimalDegress()!= null 
-					&& fac.getLongitudeDecimalDegrees() != null){
-				MapMarker marker = new MapMarker();
-				marker.setIdentifier(fac.getLocalName());
-				marker.setLatitude(fac.getLatitudeDecimalDegress()*-1);
-				marker.setLongitude(fac.getLongitudeDecimalDegrees());
-				System.out.println(fac.getLatitudeDecimalDegress() + " " + fac.getLongitudeDecimalDegrees());
-				markers.add(marker);
-			}
 		}
 		
 		
@@ -261,6 +244,7 @@ public class StockoutHomeController {
 		graphs.setMedicineStockouts(medData);
 		graphs.setAllStockouts(stockResults);
 		graphs.setMarkers(markers);
+		
 		return(graphs);
 		
 	}

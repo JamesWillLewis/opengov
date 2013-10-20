@@ -189,7 +189,8 @@
   				</div>
   				</div>
   				<div class="panel-body">
-  					<table id="tableData" class="table table-bordered table-hover">
+  					<table id="tableData" class="table table-bordered table-hover"
+  						style="height:500px;overflow:auto;">
   			  		<tr>
         				<th>Province</th>
         				<th>Town</th>

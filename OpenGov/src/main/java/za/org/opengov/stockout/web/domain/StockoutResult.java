@@ -18,8 +18,10 @@ package za.org.opengov.stockout.web.domain;
 
 import java.util.Date;
 
+import za.org.opengov.stockout.entity.Stockout;
+
 public class StockoutResult {
-	
+
 	private String province;
 	private String town;
 	private String facility;
@@ -29,53 +31,84 @@ public class StockoutResult {
 	private String brandName;
 	private String stockoutStatus;
 
-	
+	public StockoutResult() {
+
+	}
+
+	public StockoutResult(Stockout stockout) {
+
+		this.province = stockout.getFacility().getProvince();
+		this.town = stockout.getFacility().getTown();
+		this.facility = stockout.getFacility().getLocalName() + " "
+				+ stockout.getFacility().getFacilityType().getReadable();
+		this.medicineClass = stockout.getProduct().getMedicine().getMedicineClass().getUid();
+		this.medicineName = stockout.getProduct().getMedicine().getName();
+		this.brandName = stockout.getProduct().getName() + " " + stockout.getProduct().getDescription();
+		this.dateOfFirstIssue = stockout.getIssue().getStartTimestamp().toString();
+		this.stockoutStatus = stockout.getIssue().getState().toString();
+
+	}
 
 	public String getMedicineClass() {
 		return medicineClass;
 	}
+
 	public String getDateOfFirstIssue() {
 		return dateOfFirstIssue;
 	}
+
 	public void setMedicineClass(String medicineClass) {
 		this.medicineClass = medicineClass;
 	}
+
 	public void setDateOfFirstIssue(String dateOfFirstIssue) {
 		this.dateOfFirstIssue = dateOfFirstIssue;
 	}
+
 	public String getProvince() {
 		return province;
 	}
+
 	public String getTown() {
 		return town;
 	}
+
 	public String getFacility() {
 		return facility;
 	}
+
 	public String getMedicineName() {
 		return medicineName;
 	}
+
 	public String getBrandName() {
 		return brandName;
 	}
+
 	public String getStockoutStatus() {
 		return stockoutStatus;
 	}
+
 	public void setProvince(String province) {
 		this.province = province;
 	}
+
 	public void setTown(String town) {
 		this.town = town;
 	}
+
 	public void setFacility(String facility) {
 		this.facility = facility;
 	}
+
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
+
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
 	}
+
 	public void setStockoutStatus(String stockoutStatus) {
 		this.stockoutStatus = stockoutStatus;
 	}

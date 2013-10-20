@@ -15,7 +15,7 @@
 		<script src="../../resources/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../../resources/js/jquery-1.10.2.min.js"></script>
 		
-<title>Facilties</title>
+<title>Facilities</title>
 </head>
 <%@ include file="../../layout.jsp" %>
 <body>
@@ -24,7 +24,7 @@
 	<div class="panel panel-default">
     	<div class="panel panel-heading">
 		<div class="row"><h3>Administrator Facilities View</h3>
-		</div>
+		</div></div>
         <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">
@@ -73,7 +73,7 @@
 
 	<%--For displaying Page numbers.
     The when condition does not display a link for the current page--%>
-    <div class="col-lg-9">
+    <!--  div class="col-lg-9">-->
 	<ul class="pagination">
 	<%--For displaying Previous link except for the 1st page --%>
 	<c:if test="${currentPage != 1}">
@@ -99,11 +99,11 @@
 			href="<c:url value="/sows/admin/faciltiies?page=${currentPage + 1}"/>">&raquo;</a></li>
 		</c:if>
 	</ul>
-	</div>
-	</div>
-	
+	<!--  /div>-->
 	</div>
 	
+	</div>
+	
 </div>
 
 
@@ -112,6 +112,5 @@
 </div>
 </div>
 
-</div>
 </body>
 </html>
