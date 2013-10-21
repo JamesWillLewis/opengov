@@ -149,6 +149,9 @@ function loadLocationDrillDown() {
            		position: google.maps.ControlPosition.TOP_RIGHT
            	  }
                };
+              	
+              $('#map_container').empty();
+              
                var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
                
                $.each(data.markers, function(i, value) {

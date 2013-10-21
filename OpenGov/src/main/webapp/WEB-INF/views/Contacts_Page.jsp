@@ -20,6 +20,7 @@
 	<div class="container">
 	<%@ include file="Security.jsp" %>
 	<h3>Contact Information for Facilites</h3>
+	<div style="height:1000px; overflow:auto;">
 		<table class="table table-bordered table-striped table-condensed col-lg-12">
 		
   			  		<tr>
@@ -43,6 +44,7 @@
     		</tr>
 </c:forEach>
 	</table>
+	</div>
 	</div>
 </body>
 

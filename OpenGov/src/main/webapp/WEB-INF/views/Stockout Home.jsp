@@ -112,7 +112,7 @@
     				<div class="form-group">
 						<label for="medicineSelect">Medicine Categories</label>
       					<select id="medicineSelect" class="form-control input-sm">
-        				<option value="all">All Category</option>
+        				<option value="all">All Categories</option>
         				<c:forEach var="medicine" items="${medicines}">
         					
         					<option value="${medicine.uid}">${medicine.uid}</option>
@@ -185,10 +185,11 @@
             
             <div class="panel panel-default">
  			<div class="panel-heading">
-  				<div  id="stockInfo"><h4>Detailed Results:</h4>
+  				<div  id="stockInfo" ><h4>Detailed Results:</h4>
   				</div>
   				</div>
   				<div class="panel-body">
+  				<div style="height:500px;overflow:auto;">
   					<table id="tableData" class="table table-bordered table-hover"
   						style="height:500px;overflow:auto;">
   			  		<tr>
@@ -203,6 +204,7 @@
     		</tr>
     		
 			</table>
+			</div>
 			</div>		
   				</div>
   				

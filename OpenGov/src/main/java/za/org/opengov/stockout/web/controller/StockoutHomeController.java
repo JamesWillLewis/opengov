@@ -150,13 +150,16 @@ public class StockoutHomeController {
 
 		else if (district.equals("all")){
 			allLocations = facilityService.listAllDistrictsForProvince(province);
-			
+			 
 			for (String loc : allLocations){
-				if(facilityService.totalStockoutsForDistrict(loc)>0){
-					data.add(facilityService.totalStockoutsForDistrict(loc));
+				System.out.println(loc);
+				if (loc != null){
+				long total = facilityService.totalStockoutsForDistrict(loc);
+				if(total>0){
+					data.add(total);
 					allStockouts.addAll(stockoutService.getStockoutsForDistrict(loc));
 					locations.add(loc);
-				}
+				}}
 			}
 		} 
 		
