@@ -36,6 +36,29 @@ import za.org.opengov.stockout.service.StockoutService;
 @Component
 public class StockoutNotificationService {
 
+	public enum Period {
+
+		MONTHLY("Monthly", 0), WEEKLY("Weekly", 1), DAILY("Daily", 2), HOURLY(
+				"Hourly", 3), NONE("Disabled", 4);
+
+		private String userReadable;
+		private int id;
+
+		private Period(String userReadable, int id) {
+			this.userReadable = userReadable;
+			this.id = id;
+		}
+
+		public String getUserReadable() {
+			return userReadable;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+	}
+
 	@Autowired
 	private StockoutService stockoutService;
 
@@ -56,10 +79,34 @@ public class StockoutNotificationService {
 	 * Send email notifications to email list, every Monday, at 11:00 AM.
 	 * 
 	 */
-	@Scheduled(cron = "${cron.stockout.notification}")
-	public void sendNotifications() {
-		if (systemParameterService.getParam("stockout.notifications.enabled")
-				.equals("1")) {
+	@Scheduled(cron = "${cron.stockout.notification.monthly}")
+	public void sendNotificationsMonthly() {
+		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
+		if(period == Period.MONTHLY.id){
+			sendStockoutNotifications();
+		}
+	}
+	
+	@Scheduled(cron = "${cron.stockout.notification.weekly}")
+	public void sendNotificationsWeekly() {
+		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
+		if(period == Period.WEEKLY.id) {
+			sendStockoutNotifications();
+		}
+	}
+	
+	@Scheduled(cron = "${cron.stockout.notification.daily}")
+	public void sendNotificationsDaily() {
+		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
+		if(period == Period.DAILY.id) {
+			sendStockoutNotifications();
+		}
+	}
+	
+	@Scheduled(cron = "${cron.stockout.notification.hourly}")
+	public void sendNotificationsHourly() {
+		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
+		if(period == Period.HOURLY.id) {
 			sendStockoutNotifications();
 		}
 	}
@@ -75,7 +122,8 @@ public class StockoutNotificationService {
 				+ " stockouts with priority "
 				+ stockouts.get(0).getIssue().getPriority();
 		// TODO
-		 mailUtil.sendMail(sender, "james.will.lewis@gmail.com", "StockOut report", mail);
+		mailUtil.sendMail(sender, "james.will.lewis@gmail.com",
+				"StockOut report", mail);
 
 	}
 

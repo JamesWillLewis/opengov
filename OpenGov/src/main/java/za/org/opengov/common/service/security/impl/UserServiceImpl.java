@@ -1,5 +1,8 @@
 package za.org.opengov.common.service.security.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,21 @@ public class UserServiceImpl extends AbstractServiceImpl<UserDao, User, String>
 		String encryptedPass = encoder.encode(user.getPassword());
 		user.setPassword(encryptedPass);
 		put(user);
+	}
+
+	@Override
+	public List<User> getUsersWithRole(String role) {
+		List<User> allUsers = dao.findAll();
+		List<User> usersWithRole = new ArrayList<User>();
+		for (User user : allUsers) {
+			for (String token : user.getRoles().split(",")) {
+				if (token.trim().equalsIgnoreCase(role.trim())) {
+					usersWithRole.add(user);
+					break;
+				}
+			}
+		}
+		return usersWithRole;
 	}
 
 }

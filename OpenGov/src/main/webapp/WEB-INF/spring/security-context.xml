@@ -11,7 +11,7 @@
 
 	<security:http use-expressions='true'>
 		<security:intercept-url pattern="/sows/admin/**"
-			access="hasRole('ADMIN')" />
+			access="hasRole('SOWS-ADMIN')" />
 		<security:intercept-url pattern="/**" access="permitAll" />
 		<security:form-login login-page="/sows/login"
 			authentication-failure-url="/sows/login?login_error=1" />
