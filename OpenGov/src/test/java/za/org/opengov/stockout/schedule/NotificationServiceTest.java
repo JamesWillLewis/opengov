@@ -71,7 +71,7 @@ public class NotificationServiceTest {
 		Assert.assertEquals(1, stockouts.size());
 		Assert.assertEquals(3, stockouts.get(0).getStockoutReports().size());
 		
-		notificationService.sendNotifications();
+		notificationService.sendNotificationsWeekly();
 		
 		//must manually check email to ensure email was sent
 	}

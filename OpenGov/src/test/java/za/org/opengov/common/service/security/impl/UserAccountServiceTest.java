@@ -53,7 +53,7 @@ public class UserAccountServiceTest {
 	@Rollback(false)
 	public void addTestingUser() {
 		String username = "opengov";
-		String password = "jamesven";
+		String password = "jamessven";
 		String[] roles = {"ADMIN","DEV","STAFF"};
 		
 		accountService.addUser(username, password, roles);

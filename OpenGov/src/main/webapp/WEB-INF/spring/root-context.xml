@@ -64,7 +64,7 @@
 	<bean id="stockoutNotificationService"
 		class="za.org.opengov.stockout.schedule.StockoutNotificationService">
 		<property name="sender" value="${mail.username}" />
-		<property name="stockoutReportRoleTag" value="#STOCKOUT_MAIL_LIST"></property>
+		<property name="stockoutReportRoleTag" value="STOCKOUT_NOTIFICATIONS"></property>
 	</bean>
 
 </beans>
