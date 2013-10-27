@@ -21,6 +21,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import za.org.opengov.common.service.config.SystemParameterService;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.entity.StockoutReport;
@@ -59,6 +60,9 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 
 	@Autowired
 	private StockoutService stockoutService;
+	
+	@Autowired
+	private SystemParameterService parameterService;
 
 	@Override
 	public CMUssdResponse createUssdResponse(CMUssdRequest request) {
@@ -67,6 +71,15 @@ public class CMUssdStockoutServiceImpl implements CMUssdStockoutService {
 		String displayText = "";
 		String sessionId = "";
 		int menuRequest = 0;
+		
+		boolean ussdEnabled = parameterService.getParam("stockout.ussd.enabled")
+				.equals("1");
+		if (!ussdEnabled) {
+			response.setDisplayText("This service has been disabled.");
+			response.setRequestID("99");
+			return response;
+		}
+	
 
 		try {
 			// get the stage at which the user is in,in the ussd session

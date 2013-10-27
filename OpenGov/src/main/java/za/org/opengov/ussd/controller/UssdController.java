@@ -22,12 +22,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import za.org.opengov.common.service.config.SystemParameterService;
 import za.org.opengov.ussd.service.UssdService;
 
-public abstract class UssdController <REQ extends UssdRequest, RES extends UssdResponse> {
-	
+public abstract class UssdController<REQ extends UssdRequest, RES extends UssdResponse> {
+
 	private final String USSD_PROTOCOL_PREFIX;
-	
+
 	public UssdController(final String USSD_PROTOCOL_PREFIX) {
 		this.USSD_PROTOCOL_PREFIX = USSD_PROTOCOL_PREFIX;
 	}
@@ -40,9 +41,9 @@ public abstract class UssdController <REQ extends UssdRequest, RES extends UssdR
 	@Autowired
 	private Map<String, UssdService<REQ, RES>> ussdServices;
 
-	protected RES delegateToServices(String serviceTag,
-			REQ ussdRequest) {
-		return ussdServices.get(USSD_PROTOCOL_PREFIX + '.' + serviceTag).createUssdResponse(ussdRequest);
+	protected RES delegateToServices(String serviceTag, REQ ussdRequest) {
+			return ussdServices.get(USSD_PROTOCOL_PREFIX + '.' + serviceTag)
+					.createUssdResponse(ussdRequest);
 	}
 
 }

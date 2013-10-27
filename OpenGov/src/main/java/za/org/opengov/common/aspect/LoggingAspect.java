@@ -19,6 +19,9 @@ package za.org.opengov.common.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Performs logging (log4j) using AOP techniques. 
@@ -28,11 +31,16 @@ import org.aspectj.lang.annotation.Before;
  */
 @Aspect
 public class LoggingAspect {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+	
 
-	@Before("execution(* za.org.opengov.stockout.service.StockoutReportService.submitStockoutReport(..))")
+
+	@Before("execution(@za.org.opengov.common.aspect.Logged * *(..))")
 	public void logBefore(JoinPoint joinPoint) {
-
-		System.out.println("--- Called submitStockoutReport service method");
+		logger.info(joinPoint.getSignature().toShortString() + " called.");
 	}
+	
+
 
 }

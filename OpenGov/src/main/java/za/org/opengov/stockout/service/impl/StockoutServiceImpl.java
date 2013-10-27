@@ -49,40 +49,37 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 	}
 
 	@Autowired
-	private StockoutDao stockoutDao;
-
-	@Autowired
 	private IssueService issueService;
 
 	@Override
 	public List<Stockout> getAllStockouts() {
-		return stockoutDao.findAll();
+		return dao.findAll();
 	}
 
 	@Override
 	public List<Stockout> getAllStockoutsForFacility(String facilityCode) {
-		return stockoutDao.findByFacility(facilityCode);
+		return dao.findByFacility(facilityCode);
 	}
 
 	@Override
 	public List<Stockout> getAllStockoutsForProduct(String productCode) {
-		return stockoutDao.findByProduct(productCode);
+		return dao.findByProduct(productCode);
 	}
 
 	@Override
 	public Stockout getStockout(String facilityCode, String productCode) {
-		return stockoutDao.findByProductAndFacility(productCode, facilityCode);
+		return dao.findByProductAndFacility(productCode, facilityCode);
 	}
 
 	@Override
 	public void saveStockout(Stockout stockout) {
-		stockoutDao.saveOrUpdate(stockout);
+		dao.saveOrUpdate(stockout);
 	}
 
 	@Override
 	public Stockout getMostCommonlyReportedStockoutForFacility(
 			String facilityCode) {
-		List<Stockout> stockouts = stockoutDao
+		List<Stockout> stockouts = dao
 				.getMostCommonlyReportedStockoutsForFacility(facilityCode, 1);
 		if (stockouts.isEmpty()) {
 			return null;
@@ -94,26 +91,26 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 	@Override
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
 			String facilityCode, int limit) {
-		return stockoutDao.getMostCommonlyReportedStockoutsForFacility(
+		return dao.getMostCommonlyReportedStockoutsForFacility(
 				facilityCode, limit);
 	}
 
 	@Override
 	public List<Stockout> getAllUnresolvedStockouts() {
-		return stockoutDao.findAllOrderedUnresolvedStockouts();
+		return dao.findAllOrderedUnresolvedStockouts();
 	}
 
 	@Override
 	public List<Stockout> getMostRecentStockoutsForFacility(
 			String facilityCode, int limit) {
-		return stockoutDao.getStockoutsForFacilityOrderedByTimestamp(
+		return dao.getStockoutsForFacilityOrderedByTimestamp(
 				facilityCode, limit);
 	}
 
 	@Override
 	public void updateAllStockoutPriorities() {
 
-		List<Stockout> stockouts = stockoutDao.findAll();
+		List<Stockout> stockouts = dao.findAll();
 
 		int minSev, maxSev, minOcc, maxOcc, minDur, maxDur;
 		minSev = Integer.MAX_VALUE;

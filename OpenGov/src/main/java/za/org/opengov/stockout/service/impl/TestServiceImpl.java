@@ -22,12 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import za.org.opengov.common.aspect.Logged;
 import za.org.opengov.stockout.entity.TestEntity;
 import za.org.opengov.stockout.service.TestService;
 
 @Service("testService")
 @Transactional
-@Deprecated
 public class TestServiceImpl implements TestService {
 
 	//@Autowired
@@ -36,6 +36,11 @@ public class TestServiceImpl implements TestService {
 	@Transactional
 	public List<TestEntity> getAllTests(){
 		return null;
+	}
+	
+	@Logged
+	public void testLoggedMethod(){
+		System.out.println("Logged method was called");
 	}
 	
 }

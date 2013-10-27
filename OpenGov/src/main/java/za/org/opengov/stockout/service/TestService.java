@@ -24,6 +24,9 @@ import za.org.opengov.stockout.entity.TestEntity;
 public interface TestService{
 	
 	public List<TestEntity> getAllTests();
+	
+	public void testLoggedMethod();
+	
 }
 
 
