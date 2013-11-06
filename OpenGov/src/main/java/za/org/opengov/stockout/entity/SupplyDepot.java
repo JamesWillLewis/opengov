@@ -27,6 +27,9 @@ import javax.persistence.Table;
 @Table(name="SOWS_SUPPLY_DEPOT")
 public class SupplyDepot {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
 	private String name;
 	private String location;

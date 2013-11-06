@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Performs parsing of a CSV (Comma Separated Value) file.
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
  * 
@@ -33,11 +34,27 @@ import java.util.List;
 public class CSVParser {
 
 	private InputStream inputSteam;
+	/**
+	 * Token used to separate elements in a line (usually a comma)
+	 */
 	private String separatorToken;
+	/**
+	 * Delimiter used to escape the separator token. (usually a quotation mark)
+	 */
 	private String textDelimiter;
 
+	/**
+	 * Represents lines and elements of the parsed CSV file. 
+	 */
 	private List<List<String>> csvMatrix;
 
+	/**
+	 * 
+	 * @param inputStream
+	 * @param separatorToken
+	 * @param textDelimiter
+	 * @throws FileNotFoundException
+	 */
 	public CSVParser(InputStream inputStream, String separatorToken,
 			String textDelimiter) throws FileNotFoundException {
 		this.csvMatrix = new ArrayList<List<String>>();
@@ -47,6 +64,10 @@ public class CSVParser {
 		parseInput();
 	}
 
+	/**
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	private void parseInput() throws FileNotFoundException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				inputSteam));
@@ -91,6 +112,10 @@ public class CSVParser {
 		return csvMatrix.size();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getColumnsCount() {
 		if (csvMatrix.size() > 0) {
 			return csvMatrix.get(0).size();
@@ -99,22 +124,46 @@ public class CSVParser {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public String getElement(int row, int column){
 		return csvMatrix.get(row).get(column);
 	}
 	
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public List<String> getRow(int index){
 		return csvMatrix.get(index);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<List<String>> getRows() {
 		return csvMatrix;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSeparatorToken() {
 		return separatorToken;
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTextDelimiter() {
 		return textDelimiter;
 	}

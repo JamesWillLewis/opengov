@@ -27,6 +27,9 @@ import javax.persistence.Table;
 @Table(name="OPENGOV_STAFF_MEMBER")
 public class StaffMember {
 	
+	/**
+	 * Primary key
+	 */
 	private Long uid;
 	private String staffCode;
 	private String name;

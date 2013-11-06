@@ -16,6 +16,11 @@
  */
 package za.org.opengov.stockout.entity;
 
+/**
+ * Enumerated class which defines the type of {@link Facility}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public enum FacilityType {
 	CLINIC("Clinic"), HOSPITAL("Hospital"), PHARMACY("Pharmacy"), OTHER("Other");
 	

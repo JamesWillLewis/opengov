@@ -34,6 +34,9 @@ import org.hibernate.annotations.Cascade;
 @Table(name = "SOWS_STOCKOUT_REPORT")
 public class StockoutReport {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
 	private Stockout stockout;
 	private Subject reporter;

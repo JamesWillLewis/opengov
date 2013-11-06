@@ -35,7 +35,11 @@ public class LoggingAspect {
 	private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 	
 
-
+	/**
+	 * Any method annotated with @Logged will be intercepted, and
+	 * this method will be called prior to the intercepted method's execution. 
+	 * 
+	 */
 	@Before("execution(@za.org.opengov.common.aspect.Logged * *(..))")
 	public void logBefore(JoinPoint joinPoint) {
 		logger.info(joinPoint.getSignature().toShortString() + " called.");

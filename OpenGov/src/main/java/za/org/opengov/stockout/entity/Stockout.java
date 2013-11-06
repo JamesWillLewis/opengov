@@ -34,10 +34,21 @@ import javax.persistence.Table;
 import za.org.opengov.common.entity.Issue;
 import za.org.opengov.stockout.entity.medical.Product;
 
+/**
+ * Domain entity for Facility concept.
+ * Annotated to allow object-relational mapping using JPA/Hibernate.
+ * 
+ * Represents a Facility, which could be a pharmacy, hospital, clinic, etc. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "SOWS_STOCKOUT")
 public class Stockout {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
 	private Issue issue;
 	private Product product;

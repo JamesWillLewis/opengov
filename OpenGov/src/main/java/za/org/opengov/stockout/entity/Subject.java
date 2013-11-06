@@ -27,6 +27,9 @@ import javax.persistence.Table;
 @Table(name = "SOWS_SUBJECT")
 public class Subject {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
 	private String contactNumber;
 	private String name;

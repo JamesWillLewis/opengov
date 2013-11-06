@@ -30,10 +30,23 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+/**
+ * Domain entity for Issue concept.
+ * Annotated to allow object-relational mapping using JPA/Hibernate.
+ * 
+ * An Issue is a fundamental concept of OpenGov, which represents any possible issue within a community.
+ * A sub-system within OpenGov will typically have another entity referencing an Issue,
+ * for example, the StockOut system has a StockOut entity which has a 1:1 association to an Issue.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "OPENGOV_ISSUE")
 public class Issue {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
 	private Date startTimestamp;
 	private Date endTimestamp;

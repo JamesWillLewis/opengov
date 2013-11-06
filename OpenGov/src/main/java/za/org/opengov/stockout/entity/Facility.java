@@ -29,10 +29,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Facility concept.
+ * Annotated to allow object-relational mapping using JPA/Hibernate.
+ * 
+ * Represents a Facility, which could be a pharmacy, hospital, clinic, etc. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "SOWS_FACILITY")
 public class Facility {
 
+	/**
+	 * Primary key
+	 */
 	private String uid;
 	private SupplyDepot supplyDepot;
 	private String officialDOHName;

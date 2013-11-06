@@ -25,18 +25,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ * <i>Junction-table</i> to resolve many-to-many relationship between staff and issue,
+ * allowing multiple staff members to be assigned to a single issue, and multiple
+ * issues to be assigned to a single staff member. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "OPENGOV_ASSIGNMENT")
 public class Assignment {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
+	/**
+	 * The issue which for which the staff member is assigned to.
+	 */
 	private Issue issue;
+	/**
+	 * The staff member which is assigned to the issue.
+	 */
 	private StaffMember staffMember;
-	
+
 	public Assignment() {
 	}
 
+	/**
+	 * 
+	 * @return The UID.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
@@ -44,26 +63,49 @@ public class Assignment {
 		return uid;
 	}
 
+	/**
+	 * 
+	 * @param uid
+	 *            The UID to set.
+	 */
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
+	/**
+	 * 
+	 * @return The issue.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "FK_ISSUE")
 	public Issue getIssue() {
 		return issue;
 	}
 
+	/**
+	 * 
+	 * @param issue
+	 *            The issue to set.
+	 */
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
 
+	/**
+	 * 
+	 * @return The staffMember.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "FK_STAFF_MEMBER")
 	public StaffMember getStaffMember() {
 		return staffMember;
 	}
 
+	/**
+	 * 
+	 * @param staffMember
+	 *            The staffMember to set.
+	 */
 	public void setStaffMember(StaffMember staffMember) {
 		this.staffMember = staffMember;
 	}
