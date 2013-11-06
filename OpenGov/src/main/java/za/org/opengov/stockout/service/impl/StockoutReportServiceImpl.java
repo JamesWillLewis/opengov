@@ -161,9 +161,5 @@ public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutRepor
 		return recentReports;
 	}
 
-	@Override
-	public List<StockoutReport> getRecentlyReportedStockoutsForDisease() {
-		throw new NotYetImplementedException();
-	}
 
 }

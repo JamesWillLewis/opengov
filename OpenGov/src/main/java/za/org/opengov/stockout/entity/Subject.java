@@ -23,6 +23,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Facility concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * Represents a Facility, which could be a pharmacy, hospital, clinic, etc.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "SOWS_SUBJECT")
 public class Subject {
@@ -31,11 +39,29 @@ public class Subject {
 	 * Primary key
 	 */
 	private Long uid;
+	/**
+	 * The subject's telephone or cell-phone number.
+	 */
 	private String contactNumber;
+	/**
+	 * First name.
+	 */
 	private String name;
+	/**
+	 * Second name.
+	 */
 	private String surname;
+	/**
+	 * Physical address.
+	 */
 	private String address;
+	/**
+	 * Email address.
+	 */
 	private String email;
+	/**
+	 * Designation (staff, patient, doctor, etc.)
+	 */
 	private String designation;
 
 	public Subject() {

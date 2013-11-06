@@ -27,6 +27,12 @@ import za.org.opengov.stockout.entity.Subject;
  */
 public interface SubjectService extends AbstractService<Subject, Long>{
 
+	/**
+	 * Find contact with matching contact number.
+	 * 
+	 * @param contactNumber The subject's contact number.
+	 * @return The subject who has matching contact number.
+	 */
 	public Subject getSubjectWithContactNumber(String contactNumber);
 
 }

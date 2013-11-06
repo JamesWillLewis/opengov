@@ -47,32 +47,42 @@ public interface StockoutService extends AbstractService<Stockout, Long> {
 	public List<Stockout> getAllStockouts();
 
 	/**
-	 * All stockouts which occured at the specified facility UID. 
+	 * All stock-outs which occurred at the specified facility UID.
 	 * 
-	 * @param facilityCode Facility UID/Code
+	 * @param facilityCode
+	 *            Facility UID/Code
 	 * @return List of stockouts
 	 */
 	public List<Stockout> getAllStockoutsForFacility(String facilityCode);
 
 	/**
+	 * Find all stock-outs of the given product, for all facilities.
 	 * 
 	 * @param productCode
-	 * @return
+	 *            Product code.
+	 * @return List of stock-outs.
 	 */
 	public List<Stockout> getAllStockoutsForProduct(String productCode);
 
 	/**
+	 * Find a stock-out of a particular product at a facility. If there are no
+	 * stock-outs of the product at the facility, null is returned.
 	 * 
 	 * @param facilityCode
+	 *            Facility code.
 	 * @param productCode
-	 * @return
+	 *            Product code.
+	 * @return The Stockout instance, or <b>null</b> if there is no stock-out.
 	 */
 	public Stockout getStockout(String facilityCode, String productCode);
 
 	/**
+	 * Get most commonly reported stock-out at a particular facility.
 	 * 
 	 * @param facilityCode
-	 * @return
+	 *            Facility UID.
+	 * @return The most common stock-out, as determined by number of stock-out
+	 *         reports.
 	 */
 	public Stockout getMostCommonlyReportedStockoutForFacility(
 			String facilityCode);
@@ -121,7 +131,7 @@ public interface StockoutService extends AbstractService<Stockout, Long> {
 	 * @return
 	 */
 	public List<Stockout> getStockoutsForTown(String townName);
-	
+
 	/**
 	 * 
 	 * @param medicine
@@ -134,7 +144,8 @@ public interface StockoutService extends AbstractService<Stockout, Long> {
 	 * @param medicineClass
 	 * @return
 	 */
-	public List<Stockout> getStockoutsForMedicineClass(MedicineClass medicineClass);
+	public List<Stockout> getStockoutsForMedicineClass(
+			MedicineClass medicineClass);
 
 	/**
 	 * 

@@ -30,10 +30,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Domain entity for Facility concept.
- * Annotated to allow object-relational mapping using JPA/Hibernate.
+ * Domain entity for Facility concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
  * 
- * Represents a Facility, which could be a pharmacy, hospital, clinic, etc. 
+ * Represents a Facility, which could be a pharmacy, hospital, clinic, etc.
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
  */
@@ -45,20 +45,65 @@ public class Facility {
 	 * Primary key
 	 */
 	private String uid;
+	/**
+	 * Supply depot which provides facility with medical stock.
+	 */
 	private SupplyDepot supplyDepot;
+
+	/**
+	 * Official name as defined by the Department of Health. eg. 'Khayelitsha
+	 * Site B'
+	 */
 	private String officialDOHName;
+
+	/**
+	 * Historical or local name, typically known to the general public instead
+	 * of the official name. Used as an alias when searching is performed.
+	 */
 	private String localName;
+
+	/**
+	 * The town where the facility resides. eg. Khayelitsha.
+	 */
 	private String town;
+	/**
+	 * The district where the facility resides. eg. Cape Town.
+	 */
 	private String district;
+
+	/**
+	 * The province where the facility resides. eg. Western Cape.
+	 */
 	private String province;
+	
+	/**
+	 * Type of facility (Clinic, Pharmacy, Hospital, etc)
+	 */
 	private FacilityType facilityType;
-	// geographic
+	
+	/**
+	 * Geographical longitudinal coordinates.
+	 */
 	private Double longitudeDecimalDegrees;
+	
+	/**
+	 * Geographical latitudinal coordinates.
+	 */
 	private Double latitudeDecimalDegress;
-	//contact
+	
+	/**
+	 * Contact number, such as telephone or cellphone.
+	 */
 	private String contactNumber;
+	
+	/**
+	 * Email address for the facility.
+	 */
 	private String emailAddress;
 
+	/**
+	 * Stock-outs for this facility (both resolved and open)
+	 */
 	private Set<Stockout> stockouts = new HashSet<Stockout>();
 
 	public Facility() {

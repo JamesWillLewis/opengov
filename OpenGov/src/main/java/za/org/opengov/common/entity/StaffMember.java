@@ -31,8 +31,17 @@ public class StaffMember {
 	 * Primary key
 	 */
 	private Long uid;
+	/**
+	 * Staff identification code (i.e. generated from name and surname)
+	 */
 	private String staffCode;
+	/**
+	 * First name
+	 */
 	private String name;
+	/**
+	 * Last name
+	 */
 	private String surname;
 	
 	public StaffMember() {

@@ -23,13 +23,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Disease concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * Represents a disease which a particular {@link Medicine} would treat. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name="SOWS_PHARM_DISEASE")
 public class Disease {
 
+	/**
+	 * Primary key.
+	 */
 	private Long uid;
-	private String name;
 	
+	/**
+	 * Name of the disease (eg. tuberculosis)
+	 */
+	private String name;
 	
 	public Disease() {
 	}

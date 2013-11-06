@@ -16,6 +16,12 @@
  */
 package za.org.opengov.stockout.entity.medical;
 
+/**
+ * Enumerated class for particular types of dosage form that a medicine is
+ * available in.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public enum DosageType {
 	TABLET, SYRUP, CAPSULE, INJECTION
 }

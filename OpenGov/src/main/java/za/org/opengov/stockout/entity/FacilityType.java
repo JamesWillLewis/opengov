@@ -24,6 +24,9 @@ package za.org.opengov.stockout.entity;
 public enum FacilityType {
 	CLINIC("Clinic"), HOSPITAL("Hospital"), PHARMACY("Pharmacy"), OTHER("Other");
 	
+	/**
+	 * Human readable form of the facility type
+	 */
 	private String readable;
 
 	private FacilityType(String readable) {

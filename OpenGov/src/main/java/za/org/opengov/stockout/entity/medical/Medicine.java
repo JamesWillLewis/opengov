@@ -30,20 +30,47 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+/**
+ * Domain entity for Medicine concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * Represents a Medicine, which represents a particular formulation, and
+ * available as particular brands and dosages in the form of a {@link Product}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
-@Table(name="SOWS_PHARM_MEDICINE")
+@Table(name = "SOWS_PHARM_MEDICINE")
 public class Medicine {
-	
+
+	/**
+	 * Primary key.
+	 */
 	private Long uid;
+	
+	/**
+	 * Disease which the medicine treats.
+	 */
 	private Disease disease;
+	
+	/**
+	 * Scientific medical name of the disease. 
+	 */
 	private String name;
+	
+	/**
+	 * Class of this medicine, such as antiretroviral, antibiotic, etc.
+	 */
 	private MedicineClass medicineClass;
+	
+	/**
+	 * Particular branded products which are of this formulation. 
+	 */
 	private Set<Product> products = new HashSet<Product>();
 
 	public Medicine() {
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
@@ -56,7 +83,7 @@ public class Medicine {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="FK_DISEASE")
+	@JoinColumn(name = "FK_DISEASE")
 	public Disease getDisease() {
 		return disease;
 	}
@@ -65,7 +92,7 @@ public class Medicine {
 		this.disease = disease;
 	}
 
-	@Column(name="NAME")
+	@Column(name = "NAME")
 	public String getName() {
 		return name;
 	}
@@ -75,23 +102,22 @@ public class Medicine {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="FK_MEDICINE_CLASS")
+	@JoinColumn(name = "FK_MEDICINE_CLASS")
 	public MedicineClass getMedicineClass() {
 		return medicineClass;
 	}
-	
+
 	public void setMedicineClass(MedicineClass medicineClass) {
 		this.medicineClass = medicineClass;
 	}
-	
-	@OneToMany(mappedBy="medicine")
+
+	@OneToMany(mappedBy = "medicine")
 	public Set<Product> getProducts() {
 		return products;
 	}
-	
+
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
-	
-	
+
 }

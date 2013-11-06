@@ -38,11 +38,40 @@ public class StockoutReport {
 	 * Primary key
 	 */
 	private Long uid;
+	
+	/**
+	 * Actual stock-out which aggregates the report. There can be many-to-one
+	 * stockout-reports to a single stockout.
+	 */
 	private Stockout stockout;
+	
+	/**
+	 * Person who reported the stock-out.
+	 */
 	private Subject reporter;
+	
+	/**
+	 * Person who received the stock-out. Typically unused unless the stock-out
+	 * report was reported directly to a DOH member and not directly into the
+	 * system.
+	 */
 	private Subject reportee;
+	
+	/**
+	 * Cause/reason for the stock-out (according to the person reporting the
+	 * stockout).
+	 */
 	private String cause;
+	/**
+	 * If the stock-out was reported directly to a member of the department, and
+	 * not directly into the system. If true, the reportee field should be
+	 * assigned.
+	 */
 	private boolean reportedToDOH;
+
+	/**
+	 * Date/Time of when the report was received by the server.
+	 */
 	private Date timestamp;
 
 	public StockoutReport() {
@@ -59,7 +88,7 @@ public class StockoutReport {
 		this.uid = uid;
 	}
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_STOCKOUT")
 	public Stockout getStockout() {
 		return stockout;
@@ -69,7 +98,7 @@ public class StockoutReport {
 		this.stockout = stockout;
 	}
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_REPORTER")
 	public Subject getReporter() {
 		return reporter;
@@ -79,7 +108,7 @@ public class StockoutReport {
 		this.reporter = reporter;
 	}
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_REPORTEE")
 	public Subject getReportee() {
 		return reportee;

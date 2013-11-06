@@ -23,6 +23,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for SupplyDepot concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * Represents a SupplyDepot, which provides medical stock to facilities. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name="SOWS_SUPPLY_DEPOT")
 public class SupplyDepot {
@@ -31,7 +39,15 @@ public class SupplyDepot {
 	 * Primary key
 	 */
 	private Long uid;
+	/**
+	 * Name of the supply depot
+	 */
 	private String name;
+	/**
+	 * Location of the supply depot.
+	 * Not standardized in any way, meaning that it could be in the form
+	 * "Cape Town, Western Cape, ZA" or as geographical coordinates.  
+	 */
 	private String location;
 	
 	public SupplyDepot() {
