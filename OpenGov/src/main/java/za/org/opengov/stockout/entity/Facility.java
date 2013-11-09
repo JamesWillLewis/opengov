@@ -42,7 +42,7 @@ import javax.persistence.Table;
 public class Facility {
 
 	/**
-	 * Primary key
+	 * Primary key.
 	 */
 	private String uid;
 	/**

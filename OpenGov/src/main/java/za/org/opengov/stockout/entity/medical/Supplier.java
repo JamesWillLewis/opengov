@@ -23,11 +23,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Supplier concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * A supplier provides medicines/products to various medical facilities. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name="SOWS_PHARM_SUPPLIER")
 public class Supplier {
 	
+	/**
+	 * Primary key
+	 */
 	private Long uid;
+	/**
+	 * Name of the company or organisation. 
+	 */
 	private String companyName;
 	
 	public Supplier() {

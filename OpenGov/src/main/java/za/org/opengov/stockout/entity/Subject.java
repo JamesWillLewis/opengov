@@ -24,10 +24,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Domain entity for Facility concept. Annotated to allow object-relational
+ * Domain entity for Subject concept. Annotated to allow object-relational
  * mapping using JPA/Hibernate.
  * 
- * Represents a Facility, which could be a pharmacy, hospital, clinic, etc.
+ * Represents a Subject, which is a person who submits a stockout report or receives one.
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
  */

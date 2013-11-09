@@ -38,6 +38,9 @@ public class MailingEntryDaoImpl extends AbstractDaoImpl<MailingEntry, String>
 		super(MailingEntry.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<MailingEntry> findAllForRole(String roleTag) {
 

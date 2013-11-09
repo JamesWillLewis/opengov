@@ -25,6 +25,9 @@ public interface TestService{
 	
 	public List<TestEntity> getAllTests();
 	
+	/**
+	 * For testing the logging aspect.
+	 */
 	public void testLoggedMethod();
 	
 }

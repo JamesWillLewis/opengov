@@ -23,10 +23,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Staff Member concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * A staff-member represents any member of the department of health, or any
+ * other organization, who is responsible for attending and resolving an issue.
+ * A staff-member is assigned to a particular issue by an administrator.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
-@Table(name="OPENGOV_STAFF_MEMBER")
+@Table(name = "OPENGOV_STAFF_MEMBER")
 public class StaffMember {
-	
+
 	/**
 	 * Primary key
 	 */
@@ -43,22 +53,22 @@ public class StaffMember {
 	 * Last name
 	 */
 	private String surname;
-	
+
 	public StaffMember() {
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UID", unique = true, nullable = false)
 	public Long getUid() {
 		return uid;
 	}
-	
+
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
-	@Column(name="STAFF_CODE")
+	@Column(name = "STAFF_CODE")
 	public String getStaffCode() {
 		return staffCode;
 	}
@@ -67,7 +77,7 @@ public class StaffMember {
 		this.staffCode = staffCode;
 	}
 
-	@Column(name="NAME")
+	@Column(name = "NAME")
 	public String getName() {
 		return name;
 	}
@@ -76,7 +86,7 @@ public class StaffMember {
 		this.name = name;
 	}
 
-	@Column(name="SURNAME")
+	@Column(name = "SURNAME")
 	public String getSurname() {
 		return surname;
 	}
@@ -84,7 +94,5 @@ public class StaffMember {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	
 
 }

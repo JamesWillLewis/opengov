@@ -21,21 +21,38 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Mailing Entry concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * A mailing entry represents an email address and the name of the person to
+ * whom the address is associated. A mailing entry is used as the destination of
+ * notifications, and aggregates various mailing roles (such as stockout
+ * notifications).
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "OPENGOV_MAIL_ENTRY")
 public class MailingEntry {
 
+	/**
+	 * Email address. Must be in address@domain format.
+	 */
 	private String address;
+	/**
+	 * Name of the person who holds the email address.
+	 */
 	private String name;
+	/**
+	 * Aggregated roles for this address.
+	 */
 	private Set<MailingRole> mailingRoles = new HashSet<MailingRole>();
-	
+
 	public MailingEntry() {
 	}
 
@@ -45,31 +62,26 @@ public class MailingEntry {
 		return address;
 	}
 
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-
-	@Column(name="NAME")
+	@Column(name = "NAME")
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@OneToMany(mappedBy="mailingEntry")
+
+	@OneToMany(mappedBy = "mailingEntry")
 	public Set<MailingRole> getMailingRoles() {
 		return mailingRoles;
 	}
-	
+
 	public void setMailingRoles(Set<MailingRole> mailingRoles) {
 		this.mailingRoles = mailingRoles;
 	}
-	
-	
-	
+
 }

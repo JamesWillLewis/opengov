@@ -29,11 +29,26 @@ import javax.persistence.Table;
 
 import za.org.opengov.stockout.service.domain.Province;
 
+/**
+ * Domain entity for Medicine-class concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * A medicine class is a high-level grouping of medicines in the medicine hierarchy. 
+ * For example, a medicine class could be antibiotics. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name="SOWS_PHARM_MEDICINE_CLASS")
 public class MedicineClass {
 
+	/**
+	 * Primary key
+	 */
 	private String uid;
+	/**
+	 * Medicines grouped under this class
+	 */
 	private Set<Medicine> medicines;
 
 	public MedicineClass() {

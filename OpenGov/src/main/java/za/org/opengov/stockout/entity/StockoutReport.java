@@ -30,6 +30,16 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+/**
+ * Domain entity for Stockout Report concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * Represents a Stockout Report, where many reports exist for one particular stockout,
+ * thus a many-to-one relationship to {@link Stockout}.
+ * 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "SOWS_STOCKOUT_REPORT")
 public class StockoutReport {

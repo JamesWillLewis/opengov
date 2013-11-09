@@ -25,6 +25,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Dosage concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * A dosage is the combination of a particular mass/volume and the form. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name="SOWS_PHARM_DOSAGE")
 public class Dosage {

@@ -88,17 +88,25 @@ public interface StockoutService extends AbstractService<Stockout, Long> {
 			String facilityCode);
 
 	/**
+	 * Get most commonly reported stock-out at a particular facility.
 	 * 
 	 * @param facilityCode
+	 *            Facility UID.
 	 * @param limit
-	 * @return
+	 *            Maximum number of stock-outs to return.
+	 * 
+	 * @return The most common stock-outs, as determined by number of stock-out
+	 *         reports for each stock-out. The list is limited to the specified
+	 *         limit.
 	 */
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
 			String facilityCode, int limit);
 
 	/**
+	 * Finds all unresolved stock-outs, meaning that the flag <i>resolved </i>
+	 * is equal to <b>false</b>.
 	 * 
-	 * @return
+	 * @return List of all unresolved stock-outs.
 	 */
 	public List<Stockout> getAllUnresolvedStockouts();
 
