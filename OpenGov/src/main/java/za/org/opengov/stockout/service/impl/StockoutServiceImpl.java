@@ -41,7 +41,9 @@ import za.org.opengov.stockout.service.StockoutService;
  */
 @Service("stockoutService")
 @Transactional
-public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stockout, Long> implements StockoutService {
+public class StockoutServiceImpl extends
+		AbstractServiceImpl<StockoutDao, Stockout, Long> implements
+		StockoutService {
 
 	@Autowired
 	public StockoutServiceImpl(StockoutDao dao) {
@@ -51,31 +53,49 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 	@Autowired
 	private IssueService issueService;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getAllStockouts() {
 		return dao.findAll();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getAllStockoutsForFacility(String facilityCode) {
 		return dao.findByFacility(facilityCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getAllStockoutsForProduct(String productCode) {
 		return dao.findByProduct(productCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Stockout getStockout(String facilityCode, String productCode) {
 		return dao.findByProductAndFacility(productCode, facilityCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void saveStockout(Stockout stockout) {
 		dao.saveOrUpdate(stockout);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Stockout getMostCommonlyReportedStockoutForFacility(
 			String facilityCode) {
@@ -88,25 +108,37 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
 			String facilityCode, int limit) {
-		return dao.getMostCommonlyReportedStockoutsForFacility(
-				facilityCode, limit);
+		return dao.getMostCommonlyReportedStockoutsForFacility(facilityCode,
+				limit);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getAllUnresolvedStockouts() {
 		return dao.findAllOrderedUnresolvedStockouts();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getMostRecentStockoutsForFacility(
 			String facilityCode, int limit) {
-		return dao.getStockoutsForFacilityOrderedByTimestamp(
-				facilityCode, limit);
+		return dao.getStockoutsForFacilityOrderedByTimestamp(facilityCode,
+				limit);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateAllStockoutPriorities() {
 
@@ -167,11 +199,10 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 				int duration = Days.daysBetween(stockoutDate, DateTime.now())
 						.getDays();
 
-				
 				int priority = issueService.calculatePriority(severity,
 						occurances, duration, minSev, minOcc, minDur, maxSev,
 						maxOcc, maxDur);
-				
+
 				stockout.getIssue().setPriority(priority);
 				issueService.put(stockout.getIssue());
 
@@ -179,42 +210,60 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getStockoutsForProvince(String provinceName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("province", provinceName);
 		return dao
 				.doQuery(
-						"select s from Stockout s where s.facility.province like :province", args);
+						"select s from Stockout s where s.facility.province like :province",
+						args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getStockoutsForDistrict(String districtName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("district", districtName);
 		return dao
 				.doQuery(
-						"select s from Stockout s where s.facility.district like :district", args);
+						"select s from Stockout s where s.facility.district like :district",
+						args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getStockoutsForTown(String townName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("town", townName);
-		return dao
-				.doQuery(
-						"select s from Stockout s where s.facility.town like :town", args);
+		return dao.doQuery(
+				"select s from Stockout s where s.facility.town like :town",
+				args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getStockoutsForMedicine(Medicine medicine) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("medName", medicine.getUid());
 		return dao
 				.doQuery(
-						"select s from Stockout s where s.product.medicine.uid = :medName", args);
+						"select s from Stockout s where s.product.medicine.uid = :medName",
+						args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getStockoutsForMedicineClass(
 			MedicineClass medicineClass) {
@@ -222,7 +271,8 @@ public class StockoutServiceImpl extends AbstractServiceImpl<StockoutDao, Stocko
 		args.put("medClassName", medicineClass.getUid());
 		return dao
 				.doQuery(
-						"select s from Stockout s where s.product.medicine.medicineClass.uid like :medClassName", args);
+						"select s from Stockout s where s.product.medicine.medicineClass.uid like :medClassName",
+						args);
 	}
 
 }

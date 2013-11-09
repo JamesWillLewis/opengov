@@ -29,8 +29,5 @@ import za.org.opengov.stockout.entity.medical.Disease;
  */
 public interface DiseaseService extends AbstractService<Disease, Long> {
 
-	public List<Disease> getListOfDiseases();
-	
-	public void saveDisease(Disease disease);
 
 }

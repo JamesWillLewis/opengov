@@ -40,6 +40,9 @@ public class MedicineClassDaoImpl extends
 		super(MedicineClass.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<MedicineClass> fetchAllEager() {
 		

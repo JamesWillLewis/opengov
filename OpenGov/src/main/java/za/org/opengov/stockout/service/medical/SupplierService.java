@@ -17,8 +17,14 @@
 package za.org.opengov.stockout.service.medical;
 
 import za.org.opengov.common.service.AbstractService;
+import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.medical.Supplier;
 
+/**
+ * Service (business object) class for {@link Supplier}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface SupplierService extends AbstractService<Supplier, Long> {
 
 }

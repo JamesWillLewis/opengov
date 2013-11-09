@@ -42,6 +42,9 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		super(Stockout.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> findByFacility(String facilityCode) {
 		Criteria criteria = getCurrentSession().createCriteria(Stockout.class);
@@ -51,6 +54,9 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		return criteria.list();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> findByProduct(String productCode) {
 		Criteria criteria = getCurrentSession().createCriteria(Stockout.class);
@@ -60,6 +66,9 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		return criteria.list();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Stockout findByProductAndFacility(String productCode,
 			String facilityCode) {
@@ -79,6 +88,9 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
 			String facilityCode, int limit) {
@@ -94,6 +106,9 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		return stockoutReports;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> findAllOrderedUnresolvedStockouts() {
 		Criteria criteria = getCurrentSession().createCriteria(Stockout.class);
@@ -103,6 +118,9 @@ public class StockoutDaoImpl extends AbstractDaoImpl<Stockout, Long> implements
 		return criteria.list();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Stockout> getStockoutsForFacilityOrderedByTimestamp(
 			String facilityCode, int limit) {

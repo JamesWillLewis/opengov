@@ -19,12 +19,30 @@ package za.org.opengov.stockout.service.medical;
 import java.util.List;
 
 import za.org.opengov.common.service.AbstractService;
+import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.medical.Medicine;
 import za.org.opengov.stockout.entity.medical.MedicineClass;
 
+/**
+ * Service (business object) class for {@link Medicine}.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface MedicineService extends AbstractService<Medicine, Long> {
 
+	/**
+	 * Find medicine of the specified name.
+	 * 
+	 * @param name Name of the medicine (excluding details/suffix)
+	 * @return The matching medicine.
+	 */
 	public Medicine findByName(String name);
 	
+	/**
+	 * Return all medicines aggregated by the given medicine class.
+	 * 
+	 * @param medicineClass Name of the medicine class, such as 'antibiotics'.
+	 * @return List of medicines.
+	 */
 	public List<Medicine> getAllMedicinesForClass(MedicineClass medicineClass);
 }

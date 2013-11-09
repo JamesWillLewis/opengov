@@ -50,6 +50,9 @@ import za.org.opengov.stockout.service.SubjectService;
 @Transactional
 public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutReportDao, StockoutReport, Long> implements StockoutReportService {
 
+	/**
+	 *	{@inheritDoc}
+	 */
 	@Autowired
 	public StockoutReportServiceImpl(StockoutReportDao dao) {
 		super(dao);
@@ -82,6 +85,9 @@ public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutRepor
 		return stockoutReport.getUid();
 	}
 
+	/**
+	 *	{@inheritDoc}
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public long submitStockoutReport(String productCode, String facilityCode,
@@ -152,6 +158,9 @@ public class StockoutReportServiceImpl extends AbstractServiceImpl<StockoutRepor
 		return submitStockoutReport(stockoutReport);
 	}
 
+	/**
+	 *	{@inheritDoc}
+	 */
 	@Override
 	public List<StockoutReport> getRecentlyReportedStockouts(int limit) {
 

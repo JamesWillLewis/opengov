@@ -111,52 +111,66 @@ public interface StockoutService extends AbstractService<Stockout, Long> {
 	public List<Stockout> getAllUnresolvedStockouts();
 
 	/**
+	 * Return list of most recently reported stock-outs, as determined by the
+	 * stock-out's issue entry, for a particular facility.
 	 * 
 	 * @param facilityCode
+	 *            Facility UID
 	 * @param limit
-	 * @return
+	 *            Maximum number of stock-outs to return.
+	 * @return List of stock-outs, ordered by most-recent first.
 	 */
 	public List<Stockout> getMostRecentStockoutsForFacility(
 			String facilityCode, int limit);
 
 	/**
+	 * Return list of all stock-outs for the given province.
 	 * 
 	 * @param provinceName
-	 * @return
+	 *            Name of the province, eg. 'Western Cape'.
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForProvince(String provinceName);
 
 	/**
+	 * Return list of all stock-outs for the given district.
 	 * 
 	 * @param districtName
-	 * @return
+	 *            Name of the district, eg. 'Cape Town'.
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForDistrict(String districtName);
 
 	/**
+	 * Return list of all stock-outs for the given town.
 	 * 
 	 * @param townName
-	 * @return
+	 *            Name of the town, eg. 'Somerset West'
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForTown(String townName);
 
 	/**
+	 * Return list of all stock-outs for the given medicine.
 	 * 
 	 * @param medicine
-	 * @return
+	 *            Name of the medicine, eg. 'Paracetamol'
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForMedicine(Medicine medicine);
 
 	/**
+	 * Return list of all stock-outs for the given medicine class.
 	 * 
 	 * @param medicineClass
-	 * @return
+	 *            Name of the medicine class, eg. 'Antibiotics'
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForMedicineClass(
 			MedicineClass medicineClass);
 
 	/**
-	 * 
+	 * Update the priorities for every stock-out.
 	 */
 	public void updateAllStockoutPriorities();
 

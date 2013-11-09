@@ -33,11 +33,17 @@ public class TestServiceImpl implements TestService {
 	//@Autowired
 	//private TestDaoImpl testDao;
 	
+	/**
+	 *	{@inheritDoc}
+	 */
 	@Transactional
 	public List<TestEntity> getAllTests(){
 		return null;
 	}
 	
+	/**
+	 *	{@inheritDoc}
+	 */
 	@Logged
 	public void testLoggedMethod(){
 		System.out.println("Logged method was called");

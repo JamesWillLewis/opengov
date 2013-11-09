@@ -29,6 +29,13 @@ import za.org.opengov.stockout.entity.Facility;
  */
 public interface FacilityDao extends AbstractDao<Facility, String> {
 
+	/**
+	 * Query for all facilities which do not have a stock-out reported
+	 * of the given product.
+	 * 
+	 * @param uid Product UID.
+	 * @return List of facilities without a stock-out of the product.
+	 */
 	public List<Facility> findAllWithoutStockoutOfProduct(String uid);
 
 }

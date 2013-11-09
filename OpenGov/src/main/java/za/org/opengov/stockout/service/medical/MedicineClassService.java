@@ -31,6 +31,15 @@ import za.org.opengov.stockout.entity.medical.MedicineClass;
  */
 public interface MedicineClassService extends AbstractService<MedicineClass, String> {
 
+	/**
+	 * Eagerly fetch the medicine class entity - in non-technical terms,
+	 * this implies the list of medicines which are aggregated by this medicine class
+	 * is populated when this method is called, and not lazily when the list if required.
+	 * This is required by various controller classes which does not utilize transaction
+	 * management which allows for transparent lazy fetches.
+	 * 
+	 * @return List of medicine classes with medicines loaded.
+	 */
 	public List<MedicineClass> getMedicineClassesEagerFetch();
 	
 }

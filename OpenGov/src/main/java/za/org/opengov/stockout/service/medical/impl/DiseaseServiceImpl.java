@@ -40,19 +40,6 @@ public class DiseaseServiceImpl extends AbstractServiceImpl<DiseaseDao, Disease,
 	@Autowired
 	public DiseaseServiceImpl(DiseaseDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Autowired
-	private DiseaseDao diseaseDao;
-
-	@Override
-	public List<Disease> getListOfDiseases() {
-		return diseaseDao.findAll();
 	}
 	
-	public void saveDisease(Disease disease){
-		diseaseDao.saveOrUpdate(disease);
-	}
-
 }

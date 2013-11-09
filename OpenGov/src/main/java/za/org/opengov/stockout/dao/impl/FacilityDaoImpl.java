@@ -41,6 +41,9 @@ public class FacilityDaoImpl extends AbstractDaoImpl<Facility, String>
 		super(Facility.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Facility> findAllWithoutStockoutOfProduct(String uid) {
 		Session session = getCurrentSession();
