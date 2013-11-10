@@ -46,6 +46,7 @@ public class MedicineClassServiceImpl extends
 		super(dao);
 	}
 	
+	@Override
 	public List<MedicineClass> getMedicineClassesEagerFetch(){
 		return dao.fetchAllEager();
 	}

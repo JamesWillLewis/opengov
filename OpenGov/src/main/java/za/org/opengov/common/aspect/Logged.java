@@ -14,28 +14,22 @@
  *  You should have received a copy of the GNU General Public License
  *  along with OpenGov.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.org.opengov.stockout.dao;
+package za.org.opengov.common.aspect;
 
-import java.util.List;
-
-import za.org.opengov.common.dao.AbstractDao;
-import za.org.opengov.common.entity.config.MailingEntry;
-import za.org.opengov.stockout.entity.Facility;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Data Access Object for {@link Facility}.
+ * Indicates that the method should have its execution
+ * logged, using Log4J (advice performed using AspectJ)
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
+ * @since 1.2
  */
-public interface FacilityDao extends AbstractDao<Facility, String> {
-
-	/**
-	 * Query for all facilities which do not have a stock-out reported
-	 * of the given product.
-	 * 
-	 * @param uid Product UID.
-	 * @return List of facilities without a stock-out of the product.
-	 */
-	public List<Facility> findAllWithoutStockoutOfProduct(String uid);
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Logged {
 
 }

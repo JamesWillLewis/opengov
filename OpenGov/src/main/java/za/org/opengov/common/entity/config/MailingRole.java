@@ -27,14 +27,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for Mailing Role concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * A mailing role is a mapping of a particular mailing-entry to a role, where a
+ * role could be 'stockout' in the case of the stock-out notification mailing
+ * service.
+ * 
+ * A mailing role allows a whole mailing list of mailing entries to be aggregated.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "OPENGOV_MAIL_ROLE")
 public class MailingRole {
-	
+
+	/**
+	 * Primary key.
+	 */
 	private Long uid;
+	/**
+	 * Mailing entry who is assigned to the role.
+	 */
 	private MailingEntry mailingEntry;
+	/**
+	 * The role ID tag (i.e. stockout).
+	 */
 	private String roleID;
-	
+
 	public MailingRole() {
 	}
 
@@ -58,8 +79,8 @@ public class MailingRole {
 	public void setMailingEntry(MailingEntry mailingEntry) {
 		this.mailingEntry = mailingEntry;
 	}
-	
-	@Column(name="ROLE")
+
+	@Column(name = "ROLE")
 	public String getRoleID() {
 		return roleID;
 	}
@@ -68,6 +89,4 @@ public class MailingRole {
 		this.roleID = roleID;
 	}
 
-	
-	
 }

@@ -13,6 +13,9 @@ import javax.persistence.Table;
 @Deprecated
 public class TestEntity {
 	
+	/**
+	 * Primary key
+	 */
 	private Long id;
 	private String name;
 	private String surname;

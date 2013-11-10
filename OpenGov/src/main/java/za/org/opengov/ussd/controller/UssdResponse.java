@@ -16,6 +16,11 @@
  */
 package za.org.opengov.ussd.controller;
 
+/**
+ * All response types for a USSD service must implement this interface.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 public interface UssdResponse {
 
 }

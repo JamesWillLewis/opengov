@@ -47,6 +47,9 @@ public class SubjectServiceImpl extends
 		super(dao);
 	}
 
+	/**
+	 *	{@inheritDoc}
+	 */
 	@Override
 	public Subject getSubjectWithContactNumber(String contactNumber) {
 		List<Subject> sameNums = dao.findByCriteria(Restrictions.like(

@@ -34,15 +34,45 @@ import javax.persistence.Table;
 import za.org.opengov.common.entity.Issue;
 import za.org.opengov.stockout.entity.medical.Product;
 
+/**
+ * Domain entity for Facility concept.
+ * Annotated to allow object-relational mapping using JPA/Hibernate.
+ * 
+ * Represents a Facility, which could be a pharmacy, hospital, clinic, etc. 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "SOWS_STOCKOUT")
 public class Stockout {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
+	
+	/**
+	 * {@link Issue} reference, in terms of the OpenGov issue resolution protocol.
+	 * There is a one-to-one relationship to {@link Issue}. 
+	 * Each {@link Stockout} is assigned to an Issue instance. 
+	 */
 	private Issue issue;
+	/**
+	 * Product which is out-of-stock.
+	 */
 	private Product product;
+	/**
+	 * Facility where the stock-out occurred. 
+	 */
 	private Facility facility;
+	/**
+	 * True if the stock-out has been resolved (i.e. the associated issue state
+	 * is set to resolved or closed)
+	 */
 	private boolean resolved;
+	/**
+	 * All the reports for this particular stock-out. 
+	 */
 	private Set<StockoutReport> stockoutReports = new HashSet<StockoutReport>();
 
 	public Stockout() {

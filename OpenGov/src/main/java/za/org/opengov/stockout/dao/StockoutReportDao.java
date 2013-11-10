@@ -29,8 +29,26 @@ import za.org.opengov.stockout.entity.StockoutReport;
  */
 public interface StockoutReportDao extends AbstractDao<StockoutReport, Long> {
 
+	/**
+	 * Get most recent stock-out reports.
+	 * 
+	 * @param limit
+	 *            Maximum number of reports to return.
+	 * @return List of most recently submitted stock-out reports.
+	 */
 	public List<StockoutReport> findMostRecentStockouts(int limit);
 
+	/**
+	 * Find all reports of a stock-out of a certain product at a certain
+	 * facility.
+	 * 
+	 * @param productCode
+	 *            Product UID.
+	 * @param facilityCode
+	 *            Facility UID.
+	 * @return List of stock-out reports which are of the product at the
+	 *         facility.
+	 */
 	public List<StockoutReport> findForFacilityAndProduct(String productCode,
 			String facilityCode);
 

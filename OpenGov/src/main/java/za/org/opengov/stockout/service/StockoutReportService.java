@@ -28,10 +28,16 @@ import za.org.opengov.stockout.entity.Subject;
  * 
  * @author James Lewis (james.will.lewis@gmail.com)
  */
-public interface StockoutReportService extends AbstractService<StockoutReport, Long>{
+public interface StockoutReportService extends
+		AbstractService<StockoutReport, Long> {
 
 	/**
-	 * Submit a stock-out report.
+	 * Submit a stock-out report. Should not be called directly - rather use
+	 * other submitStockoutReport() method to ensure all prerequisite logic is
+	 * performed. <br>
+	 * <br>
+	 * <br>
+	 * <b> This method is marked to become private. </b>
 	 * 
 	 * @param stockoutReport
 	 * @return Handle for the report (primary key)
@@ -39,6 +45,11 @@ public interface StockoutReportService extends AbstractService<StockoutReport, L
 	public long submitStockoutReport(StockoutReport stockoutReport);
 
 	/**
+	 * Submit a stock-out report. When submitting a stock-out report, this
+	 * method should always be used, since it handles generation and assignment
+	 * of various other associations/fields which a stock-out report requires,
+	 * including generating an open issue, setting time-stamps, checking for an
+	 * existing stock-out and creating a new instance if necessary, etc.
 	 * 
 	 * @param productCode
 	 * @param facilityCode
@@ -47,19 +58,22 @@ public interface StockoutReportService extends AbstractService<StockoutReport, L
 	 * @param cause
 	 * @param reportedToDOH
 	 * @param resolved
-	 * @return 
-	 * @throws IllegalArgumentException if productCode or facilityCode are null or empty strings.
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             if productCode or facilityCode are null or empty strings.
 	 */
 	public long submitStockoutReport(String productCode, String facilityCode,
-			Subject reporter, String cause,
-			boolean reportedToDOH)
+			Subject reporter, String cause, boolean reportedToDOH)
 			throws IllegalArgumentException;
-	
-	
-	
-	public List<StockoutReport> getRecentlyReportedStockoutsForDisease();
-	
+
+
+
+	/**
+	 * Get ordered list (most-recent first) of recent stock-outs.
+	 * 
+	 * @param limit Maximum number of elements to return.
+	 * @return List of most recent stock-out reports. 
+	 */
 	public List<StockoutReport> getRecentlyReportedStockouts(int limit);
-	
 
 }

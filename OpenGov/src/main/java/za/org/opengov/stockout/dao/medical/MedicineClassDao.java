@@ -29,5 +29,10 @@ import za.org.opengov.stockout.entity.medical.MedicineClass;
  */
 public interface MedicineClassDao extends AbstractDao<MedicineClass, String>{
 
+	/**
+	 * Return all MedicineClass entities, with the medicine set eagerly loaded. 
+	 * 
+	 * @return List of medicine classes. 
+	 */
 	public List<MedicineClass> fetchAllEager();
 }

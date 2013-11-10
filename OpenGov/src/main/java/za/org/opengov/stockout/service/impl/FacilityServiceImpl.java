@@ -52,11 +52,17 @@ public class FacilityServiceImpl extends
 		AbstractServiceImpl<FacilityDao, Facility, String> implements
 		FacilityService {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Autowired
 	public FacilityServiceImpl(FacilityDao dao) {
 		super(dao);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Facility validateFacilityCode(String facilityCode) {
 		facilityCode = facilityCode.toUpperCase().trim();
@@ -64,12 +70,18 @@ public class FacilityServiceImpl extends
 		return facility;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void saveFacility(Facility facility) {
 		facility.setUid(facility.getUid().toUpperCase());
 		put(facility);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Facility getClosestMatch(String facilityIdentifier) {
 		facilityIdentifier = facilityIdentifier.toUpperCase();
@@ -119,6 +131,9 @@ public class FacilityServiceImpl extends
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Facility getNearestFacilityWithStock(Product product,
 			Facility originFacility) {
@@ -159,11 +174,17 @@ public class FacilityServiceImpl extends
 		return closestFacility;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Facility> getAllFacilitiesWithStock(Product product) {
 		return dao.findAllWithoutStockoutOfProduct(product.getUid());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void populateDatabaseFromCSV(File file, String seperator,
 			String textDelimeter, FacilityType facilityType) {
@@ -204,6 +225,9 @@ public class FacilityServiceImpl extends
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String generateFacilityCode(String name) {
 
@@ -234,11 +258,17 @@ public class FacilityServiceImpl extends
 		return wholeID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<String> listAllProvinces() {
 		return dao.doQuery("select distinct s.province from Facility s", null);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<String> listAllDistrictsForProvince(String provinceName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -249,6 +279,9 @@ public class FacilityServiceImpl extends
 						args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<String> listAllTownsForDistrict(String districtName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -259,6 +292,9 @@ public class FacilityServiceImpl extends
 						args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Facility> listAllFacilitiesForTown(String townName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -267,6 +303,9 @@ public class FacilityServiceImpl extends
 				args);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public long totalStockoutsForProvince(String provinceName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -277,6 +316,9 @@ public class FacilityServiceImpl extends
 						args).get(0);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public long totalStockoutsForDistrict(String districtName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -287,6 +329,9 @@ public class FacilityServiceImpl extends
 						args).get(0);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public long totalStockoutsForTown(String townName) {
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -297,6 +342,9 @@ public class FacilityServiceImpl extends
 						args).get(0);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	private class FacilityCodeWrapper implements StringMatchable {
 
 		private Facility facility;
@@ -316,6 +364,9 @@ public class FacilityServiceImpl extends
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	private class FacilityLocalNameWrapper implements StringMatchable {
 
 		private Facility facility;
@@ -335,6 +386,9 @@ public class FacilityServiceImpl extends
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	private class FacilityDOHNameWrapper implements StringMatchable {
 
 		private Facility facility;
@@ -354,43 +408,49 @@ public class FacilityServiceImpl extends
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public LocationHeirarchy getLocationHeirarchy() {
 		LocationHeirarchy locationHeirarchy = new LocationHeirarchy();
-		
-		for(String provinceName: listAllProvinces()){
+
+		for (String provinceName : listAllProvinces()) {
 			Province province = new Province(provinceName, locationHeirarchy);
 			locationHeirarchy.addProvince(province);
-			if(provinceName==null){
+			if (provinceName == null) {
 				provinceName = "";
 			}
-			
-			for(String districtName: listAllDistrictsForProvince(provinceName)){
+
+			for (String districtName : listAllDistrictsForProvince(provinceName)) {
 				District district = new District(districtName, province);
 				province.addDistrict(district);
-				if(districtName == null){
+				if (districtName == null) {
 					districtName = "";
 				}
-				
-				for(String townName: listAllTownsForDistrict(districtName)){
+
+				for (String townName : listAllTownsForDistrict(districtName)) {
 					Town town = new Town(townName, district);
 					district.addTown(town);
-					if(townName == null){
+					if (townName == null) {
 						townName = "";
 					}
-					
-					for(Facility facility: listAllFacilitiesForTown(townName)){
+
+					for (Facility facility : listAllFacilitiesForTown(townName)) {
 						town.addFacility(facility);
 					}
-					
+
 				}
 			}
-			
+
 		}
-		
+
 		return locationHeirarchy;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Facility> listAllFacilitiesForProvince(String provinceName) {
 		return dao.findByCriteria(Restrictions.like("province", provinceName));

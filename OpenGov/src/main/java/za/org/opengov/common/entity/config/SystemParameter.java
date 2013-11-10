@@ -21,13 +21,33 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Domain entity for System Parameter concept. Annotated to allow
+ * object-relational mapping using JPA/Hibernate.
+ * 
+ * A system parameter allows various system-wide options to be persisted, as a
+ * key-value pair. Generally, a system option should following a proper
+ * hierarchical naming convention, such as 'stockout.notification.enabled'. Each
+ * system parameter should have it's default value defined in the
+ * configuration_defaults.properties file.
+ * 
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "OPENGOV_PARAMS")
 public class SystemParameter {
-	
+
+	/**
+	 * Primary key.
+	 * Name of the parameter, such as 'stockout.notification.enabled'
+	 */
 	private String parameter;
+	/**
+	 * Value of the parameter, such as 'enabled', 'true', '1', etc.
+	 */
 	private String value;
-	
+
 	public SystemParameter() {
 	}
 
@@ -41,7 +61,7 @@ public class SystemParameter {
 		this.parameter = parameter;
 	}
 
-	@Column(name="VALUE")
+	@Column(name = "VALUE")
 	public String getValue() {
 		return value;
 	}
@@ -49,7 +69,5 @@ public class SystemParameter {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
 
 }

@@ -30,17 +30,54 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+/**
+ * Domain entity for Issue concept. Annotated to allow object-relational mapping
+ * using JPA/Hibernate.
+ * 
+ * An Issue is a fundamental concept of OpenGov, which represents any possible
+ * issue within a community. A sub-system within OpenGov will typically have
+ * another entity referencing an Issue, for example, the StockOut system has a
+ * StockOut entity which has a 1:1 association to an Issue.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name = "OPENGOV_ISSUE")
 public class Issue {
 
+	/**
+	 * Primary key
+	 */
 	private Long uid;
+	/**
+	 * Date/Time when the issue was opened. i.e issueState = OPEN.
+	 */
 	private Date startTimestamp;
+	/**
+	 * Date/Time when the issue was closed. i.e issueState = CLOSED.
+	 */
 	private Date endTimestamp;
+	/**
+	 * Current state of the issue, in terms of resolution progress.
+	 */
 	private IssueState state;
+	/**
+	 * Severity of the issue, which is used in determining the issue's priority.
+	 * A more severe issue will have a higher priority.
+	 */
 	private int severity;
+	/**
+	 * Priority of the issue, as determined by a priority formula.
+	 */
 	private int priority;
+	/**
+	 * Any extra useful details about the issue.
+	 */
 	private String details;
+	/**
+	 * If follow-up is required of the issue, i.e. if the person(s) who
+	 * originally reported the issue need to be contacted.
+	 */
 	private boolean requireFollowUp;
 
 	public Issue() {

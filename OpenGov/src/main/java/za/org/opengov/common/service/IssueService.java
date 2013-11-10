@@ -17,11 +17,14 @@
 package za.org.opengov.common.service;
 
 import za.org.opengov.common.entity.Issue;
+import za.org.opengov.common.entity.IssueState;
 
 public interface IssueService extends AbstractService<Issue, Long> {
 
 	public int calculatePriority(int severity, int occurance, int duration,
 			int sevMin, int occMin, int durMin, int sevMax, int occMax,
 			int durMax);
+	
+	public void updateIssueState(Issue issue, IssueState state); 
 
 }

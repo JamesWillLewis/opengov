@@ -38,7 +38,6 @@ public class SupplierServiceImpl extends AbstractServiceImpl<SupplierDao, Suppli
 	@Autowired
 	public SupplierServiceImpl(SupplierDao dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 }

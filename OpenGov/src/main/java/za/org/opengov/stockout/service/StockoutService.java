@@ -47,97 +47,130 @@ public interface StockoutService extends AbstractService<Stockout, Long> {
 	public List<Stockout> getAllStockouts();
 
 	/**
-	 * All stockouts which occured at the specified facility UID. 
+	 * All stock-outs which occurred at the specified facility UID.
 	 * 
-	 * @param facilityCode Facility UID/Code
+	 * @param facilityCode
+	 *            Facility UID/Code
 	 * @return List of stockouts
 	 */
 	public List<Stockout> getAllStockoutsForFacility(String facilityCode);
 
 	/**
+	 * Find all stock-outs of the given product, for all facilities.
 	 * 
 	 * @param productCode
-	 * @return
+	 *            Product code.
+	 * @return List of stock-outs.
 	 */
 	public List<Stockout> getAllStockoutsForProduct(String productCode);
 
 	/**
+	 * Find a stock-out of a particular product at a facility. If there are no
+	 * stock-outs of the product at the facility, null is returned.
 	 * 
 	 * @param facilityCode
+	 *            Facility code.
 	 * @param productCode
-	 * @return
+	 *            Product code.
+	 * @return The Stockout instance, or <b>null</b> if there is no stock-out.
 	 */
 	public Stockout getStockout(String facilityCode, String productCode);
 
 	/**
+	 * Get most commonly reported stock-out at a particular facility.
 	 * 
 	 * @param facilityCode
-	 * @return
+	 *            Facility UID.
+	 * @return The most common stock-out, as determined by number of stock-out
+	 *         reports.
 	 */
 	public Stockout getMostCommonlyReportedStockoutForFacility(
 			String facilityCode);
 
 	/**
+	 * Get most commonly reported stock-out at a particular facility.
 	 * 
 	 * @param facilityCode
+	 *            Facility UID.
 	 * @param limit
-	 * @return
+	 *            Maximum number of stock-outs to return.
+	 * 
+	 * @return The most common stock-outs, as determined by number of stock-out
+	 *         reports for each stock-out. The list is limited to the specified
+	 *         limit.
 	 */
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
 			String facilityCode, int limit);
 
 	/**
+	 * Finds all unresolved stock-outs, meaning that the flag <i>resolved </i>
+	 * is equal to <b>false</b>.
 	 * 
-	 * @return
+	 * @return List of all unresolved stock-outs.
 	 */
 	public List<Stockout> getAllUnresolvedStockouts();
 
 	/**
+	 * Return list of most recently reported stock-outs, as determined by the
+	 * stock-out's issue entry, for a particular facility.
 	 * 
 	 * @param facilityCode
+	 *            Facility UID
 	 * @param limit
-	 * @return
+	 *            Maximum number of stock-outs to return.
+	 * @return List of stock-outs, ordered by most-recent first.
 	 */
 	public List<Stockout> getMostRecentStockoutsForFacility(
 			String facilityCode, int limit);
 
 	/**
+	 * Return list of all stock-outs for the given province.
 	 * 
 	 * @param provinceName
-	 * @return
+	 *            Name of the province, eg. 'Western Cape'.
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForProvince(String provinceName);
 
 	/**
+	 * Return list of all stock-outs for the given district.
 	 * 
 	 * @param districtName
-	 * @return
+	 *            Name of the district, eg. 'Cape Town'.
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForDistrict(String districtName);
 
 	/**
+	 * Return list of all stock-outs for the given town.
 	 * 
 	 * @param townName
-	 * @return
+	 *            Name of the town, eg. 'Somerset West'
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForTown(String townName);
-	
+
 	/**
+	 * Return list of all stock-outs for the given medicine.
 	 * 
 	 * @param medicine
-	 * @return
+	 *            Name of the medicine, eg. 'Paracetamol'
+	 * @return List of unordered stock-outs.
 	 */
 	public List<Stockout> getStockoutsForMedicine(Medicine medicine);
 
 	/**
+	 * Return list of all stock-outs for the given medicine class.
 	 * 
 	 * @param medicineClass
-	 * @return
+	 *            Name of the medicine class, eg. 'Antibiotics'
+	 * @return List of unordered stock-outs.
 	 */
-	public List<Stockout> getStockoutsForMedicineClass(MedicineClass medicineClass);
+	public List<Stockout> getStockoutsForMedicineClass(
+			MedicineClass medicineClass);
 
 	/**
-	 * 
+	 * Update the priorities for every stock-out.
 	 */
 	public void updateAllStockoutPriorities();
 

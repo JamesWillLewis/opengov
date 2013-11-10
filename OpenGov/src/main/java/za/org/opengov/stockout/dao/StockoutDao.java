@@ -30,20 +30,69 @@ import za.org.opengov.stockout.entity.medical.Product;
  */
 public interface StockoutDao extends AbstractDao<Stockout, Long> {
 
+	/**
+	 * Find all stock-outs at the given facility.
+	 * 
+	 * @param facilityCode
+	 *            Facility UID.
+	 * @return List of stock-outs.
+	 */
 	public List<Stockout> findByFacility(String facilityCode);
 
+	/**
+	 * Find all stock-outs of the given product.
+	 * 
+	 * @param productCode
+	 *            Product UID.
+	 * @return List of products.
+	 */
 	public List<Stockout> findByProduct(String productCode);
 
+	/**
+	 * Find stock-out of the given product for the given facility.
+	 * 
+	 * @param productCode
+	 *            Product UID.
+	 * @param facilityCode
+	 *            Facility UID.
+	 * @return Stockout instance, or <b>null</b> if no such stock-out is found.
+	 */
 	public Stockout findByProductAndFacility(String productCode,
 			String facilityCode);
 
+	/**
+	 * Get most commonly reported stock-out at a particular facility.
+	 * 
+	 * @param facilityCode
+	 *            Facility UID.
+	 * @param limit
+	 *            Maximum number of stock-outs to return.
+	 * 
+	 * @return The most common stock-outs, as determined by number of stock-out
+	 *         reports for each stock-out. The list is limited to the specified
+	 *         limit.
+	 */
 	public List<Stockout> getMostCommonlyReportedStockoutsForFacility(
 			String facilityCode, int limit);
 
+	/**
+	 * Find all unresolved stock-outs.
+	 * 
+	 * @return List of unresolved stock-outs.
+	 */
 	public List<Stockout> findAllOrderedUnresolvedStockouts();
 
+	/**
+	 * Return a list of stock-outs, at a particular facility, ordered by the
+	 * time-stamp (when the issue was opened) of the stock-out.
+	 * 
+	 * @param facilityCode
+	 *            Facility UID.
+	 * @param limit
+	 *            Maximum number of stock-outs to return.
+	 * @return List of stock-outs.
+	 */
 	public List<Stockout> getStockoutsForFacilityOrderedByTimestamp(
 			String facilityCode, int limit);
 
-	
 }

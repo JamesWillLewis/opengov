@@ -38,19 +38,31 @@ import za.org.opengov.common.dao.AbstractDao;
 public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 		AbstractDao<E, I> {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	private Class<E> entityClass;
 
 	protected AbstractDaoImpl(Class<E> entityClass) {
 		this.entityClass = entityClass;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public E findById(I id) {
 		return (E) getCurrentSession().get(entityClass, id);
@@ -61,11 +73,17 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 		getCurrentSession().saveOrUpdate(e);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void delete(E e) {
 		getCurrentSession().delete(e);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<E> findByCriteria(Criterion criterion) {
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
@@ -74,12 +92,18 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 		return criteria.list();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<E> findAll() {
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
 		return criteria.list();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public <T> List<T> doQuery(String query, HashMap<String, Object> args) {
 		if (args == null) {
@@ -90,6 +114,9 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<E> findPage(int page, int resultsPerPage) {
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
@@ -99,6 +126,9 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements
 		return criteria.list();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public long getCount() {
 		return (Long) getCurrentSession().createCriteria(entityClass).setProjection(Projections.rowCount()).uniqueResult();

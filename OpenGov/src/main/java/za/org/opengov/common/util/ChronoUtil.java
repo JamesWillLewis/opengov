@@ -19,18 +19,35 @@ package za.org.opengov.common.util;
 import java.util.Date;
 
 /**
+ * Various chronological utilities.
  * 
  * @author James Lewis
- * @deprecated Instead use the Joda library (org.joda.time)
+ * @deprecated Use the Joda library (org.joda.time)
  */
 @Deprecated
 public class ChronoUtil {
 
+	/**
+	 * Milliseconds in a second.
+	 */
 	public static final long MILLIS_IN_SECOND = 1000;
+	/**
+	 * Milliseconds in a minute.
+	 */
 	public static final long MILLIS_IN_MINUTE = 60 * MILLIS_IN_SECOND;
+	/**
+	 * Milliseconds in an hour.
+	 */
 	public static final long MILLIS_IN_HOUR = 60 * MILLIS_IN_MINUTE;
+	/**
+	 * Milliseconds in a day.
+	 */
 	public static final long MILLIS_IN_DAY = MILLIS_IN_HOUR * 24;
 
+	/**
+	 * 
+	 * Represents the difference between two discrete points in time.
+	 */
 	public static class ChronoDifference {
 		public final long diffSeconds;
 		public final long diffMinutes;
@@ -47,6 +64,15 @@ public class ChronoUtil {
 
 	}
 
+	/**
+	 * Determine difference between two discrete points in time.
+	 * 
+	 * @param former
+	 *            The more recent point in time.
+	 * @param latter
+	 *            The less recent point in time.
+	 * @return The chronological difference.
+	 */
 	public static ChronoDifference getChronoDifference(Date former, Date latter) {
 		long diff = latter.getTime() - former.getTime();
 
@@ -54,8 +80,9 @@ public class ChronoUtil {
 		long diffMinutes = diff / MILLIS_IN_MINUTE % 60;
 		long diffHours = diff / MILLIS_IN_HOUR % 24;
 		long diffDays = diff / MILLIS_IN_DAY;
-		
-		return new ChronoDifference(diffSeconds, diffMinutes, diffHours, diffDays);
+
+		return new ChronoDifference(diffSeconds, diffMinutes, diffHours,
+				diffDays);
 	}
 
 }

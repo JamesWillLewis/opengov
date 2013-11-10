@@ -45,37 +45,144 @@ public interface FacilityService extends AbstractService<Facility, String> {
 	 */
 	public Facility validateFacilityCode(String facilityCode);
 
+	/**
+	 * Create/update the facility.
+	 * 
+	 * @param facility
+	 *            facility to create/update
+	 */
+	@Deprecated
 	public void saveFacility(Facility facility);
 
+	/**
+	 * Find facility whose official or local name most closely matches the
+	 * provided name. Matching is performed using a string-closeness algorithm.
+	 * 
+	 * @param facilityIdentifier
+	 *            Official or local name of the facility, or the facility code.
+	 * @return Closest matching facility.
+	 */
 	public Facility getClosestMatch(String facilityIdentifier);
 
+	/**
+	 * Find all facilities which do <b>not</b> have a stock-out of the specified
+	 * product.
+	 * 
+	 * @param product
+	 *            product to search against.
+	 * @return Facilities which have no stock-out of given product.
+	 */
 	public List<Facility> getAllFacilitiesWithStock(Product product);
 
+	/**
+	 * Find nearest facility (using geographical coordinates) which does not
+	 * have a stock-out of the given product.
+	 * 
+	 * @param product
+	 *            Product to search against.
+	 * @param originFacility
+	 *            Facility to use as the 'current' location.
+	 * @return Facility which has no reported stock-out of given product, as is
+	 *         geographically closest to the given origin facility.
+	 */
 	public Facility getNearestFacilityWithStock(Product product,
 			Facility originFacility);
 
+	/**
+	 * Perform back-fill of the database facility table from a CSV file.
+	 * 
+	 * @param file
+	 *            CSV file of facility entries.
+	 * @param seperator
+	 *            Separator token used in CSV file.
+	 * @param textDelimeter
+	 *            Delimiter token used in CSV file.
+	 * @param facilityType
+	 *            Type of facility
+	 */
 	public void populateDatabaseFromCSV(File file, String seperator,
 			String textDelimeter, FacilityType facilityType);
-	
+
+	/**
+	 * Generate facility code from a facility name.
+	 * 
+	 * @param name
+	 *            Name of facility.
+	 * @return Facility code.
+	 */
 	public String generateFacilityCode(String name);
-	
-	
+
+	/**
+	 * Return list of provinces.
+	 * 
+	 * @return List of province name.
+	 */
 	public List<String> listAllProvinces();
-	
+
+	/**
+	 * Find all districts for the given province.
+	 * 
+	 * @param provinceName
+	 *            Province name.
+	 * @return List of district names.
+	 */
 	public List<String> listAllDistrictsForProvince(String provinceName);
-	
+
+	/**
+	 * Find all towns for given district.
+	 * 
+	 * @param districtName
+	 *            District name.
+	 * @return List of town names.
+	 */
 	public List<String> listAllTownsForDistrict(String districtName);
-	
+
+	/**
+	 * Find all facilities for given town.
+	 * 
+	 * @param townName
+	 *            Town name.
+	 * @return List of facilities.
+	 */
 	public List<Facility> listAllFacilitiesForTown(String townName);
-	
+
+	/**
+	 * @param provinceName
+	 *            Province name.
+	 * @return Total number of stock-outs for the province.
+	 */
 	public long totalStockoutsForProvince(String provinceName);
-	
+
+	/**
+	 * 
+	 * @param districtName District name.
+	 * @return Total number of stock-outs for the district. 
+	 */
 	public long totalStockoutsForDistrict(String districtName);
-	
+
+	/**
+	 * 
+	 * @param townName Town name.
+	 * @return Total number of stock-outs for the town.
+	 */
 	public long totalStockoutsForTown(String townName);
 
+	/**
+	 * Generates and returns a full location hierarchy, as
+	 * determined from all the facilities and the provinces, districts, and towns
+	 * where the facilities reside. 
+	 * The hierarchy is in the order: province > district > town > facility.
+	 * 
+	 * @return Complete location hierarchy.
+	 */
 	public LocationHeirarchy getLocationHeirarchy();
-	
+
+	/**
+	 * Find all facilities in a particular province.
+	 * 
+	 * @param provinceName Province name.
+	 * @return List of facilities. 
+	 */
 	public List<Facility> listAllFacilitiesForProvince(String provinceName);
-	
+
 }

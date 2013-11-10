@@ -29,7 +29,14 @@ import javax.persistence.Table;
 
 import za.org.opengov.common.util.StringMatchable;
 
-
+/**
+ * Domain entity for Product concept. Annotated to allow object-relational
+ * mapping using JPA/Hibernate.
+ * 
+ * Represents a Product, which is a particular brand and dosage of a specific medicine.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ */
 @Entity
 @Table(name="SOWS_PHARM_PRODUCT")
 public class Product {
@@ -52,7 +59,7 @@ public class Product {
 	 */
 	private Dosage dosage;
 	/**
-	 * Quantity of dosages for this product. 
+	 * Quantity of dosages for this product (i.e. number of servings). 
 	 */
 	private int volume;
 	/**

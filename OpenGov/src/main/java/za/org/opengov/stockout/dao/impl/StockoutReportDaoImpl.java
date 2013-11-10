@@ -40,6 +40,9 @@ public class StockoutReportDaoImpl extends AbstractDaoImpl<StockoutReport, Long>
 		super(StockoutReport.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<StockoutReport> findMostRecentStockouts(int limit) {
 		
@@ -50,6 +53,9 @@ public class StockoutReportDaoImpl extends AbstractDaoImpl<StockoutReport, Long>
 		return criteria.list();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<StockoutReport> findForFacilityAndProduct(String productCode,
 			String facilityCode) {
