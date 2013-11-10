@@ -27,7 +27,8 @@
 <body>
 
 <div class="container">
-<%@ include file="../Security.jsp" %>
+
+	<%@ include file="../Security.jsp" %>
 
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h3>Administrator Home</h3></div>

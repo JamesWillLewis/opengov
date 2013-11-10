@@ -16,6 +16,8 @@
 	             document.getElementById("staffmembers").className += " active";}
 			else if ($(document).find("title").text() == "Stockouts"){
 	             document.getElementById("stockouts").className += " active";}
+			else if ($(document).find("title").text() == "System Settings"){
+	             document.getElementById("systemsettings").className += " active";}
            }
      	</script>
 
@@ -30,5 +32,6 @@
 	<li id="issues"><a href="<c:url value="/sows/admin/issues"/>">Issues</a></li>
 	<li id="assignments"><a href="<c:url value="/sows/admin/assignments"/>">Assignments</a></li>
 	<li id="staffmembers"><a href="<c:url value="/sows/admin/staffmembers"/>">Staff Members</a><li>
+	<li id="systemsettings"><a href="<c:url value="/sows/admin/system"/>">System Settings</a><li>
 	</ul>
 	</div>

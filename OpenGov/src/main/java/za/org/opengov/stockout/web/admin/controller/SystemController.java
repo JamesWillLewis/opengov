@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import za.org.opengov.common.entity.config.MailingEntry;
 import za.org.opengov.common.entity.security.User;
@@ -68,13 +69,22 @@ public class SystemController extends AbstractPaginationController {
 
 	@RequestMapping(value = "updateSettings", method = RequestMethod.POST, produces = "text/html")
 	public String updateSettings(SystemParamsWrapper systemParamsWrapper,
-			BindingResult result, Model model) {
+			BindingResult result,RedirectAttributes redirectAttrs, Model model) {
 
 		systemParameterService.setParam("stockout.ussd.enabled",
 				systemParamsWrapper.getEnableUSSDService() ? "1" : "0");
 		systemParameterService.setParam("stockout.notifications.period",
 				systemParamsWrapper.getPeriod());
-
+		
+		String UssdEnabled;
+		if (systemParamsWrapper.getEnableUSSDService()){
+			UssdEnabled = "enabled";
+		}
+		else{UssdEnabled ="disabled";}
+		
+		redirectAttrs.addFlashAttribute("ussd_message", "USSD service is now " + UssdEnabled);
+		redirectAttrs.addFlashAttribute("notification_message", "Notifications will be sent " + systemParamsWrapper.getPeriod());
+		
 		return "redirect:/sows/admin/system";
 	}
 
