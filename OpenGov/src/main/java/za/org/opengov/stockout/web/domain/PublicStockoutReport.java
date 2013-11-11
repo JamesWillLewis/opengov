@@ -34,29 +34,27 @@ import org.springframework.format.annotation.NumberFormat.Style;
  * before being submitted.  **/
 public class PublicStockoutReport implements Serializable {
 
-	@Size(min=2, max=30)
+	@Size(min=2, max=30, message="Please enter a name between the length of 2-30 characters long")
 	private String Name;
 	
-	@Size(max=30)
+	@Size(max=30, message="Name of designation may not exceed 30 characters")
 	private String Designation;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-    @NotNull @Past
+    @NotNull @Past(message="Date of occurrence cannot be in the future")
 	private Date dateOfOccurence;
 	
-	@NotNull
-	@NotEmpty
+	@NotEmpty(message="Please enter a facility name before proceeding")
 	private String facilityName;
 
-	@Size(min=10,max=12)
+	@Size(min=10,max=12, message="Please check that you have entered a correct cellphone number")
 	private String cellNumber;
 	
-	@NotEmpty @Email
+	@NotEmpty(message="Please enter an email address") @Email
 	private String emailAddress;
 	
 	private String reasonForOccurrence;
 	
-	@NotNull
 	@NotEmpty(message="You must select a medicine to report")
 	private String selectedMedicines;
 

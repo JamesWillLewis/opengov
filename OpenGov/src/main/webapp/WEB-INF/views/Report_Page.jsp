@@ -76,7 +76,7 @@
 				
 					<c:if test="${message != null}">
 					<div class="row form-group">
-						<div class="alert alert-success col-lg-9">
+						<div class="alert alert-success col-lg-9 center-block">
 						Stock-out/s of "${Medicine}" have successfully been reported by "${Name}"
 						</div>
 						</div>
@@ -106,13 +106,13 @@
      					</div>
      				<div class="col-lg-5">	
       				<form:input path="Designation" type="text" class="form-control input-sm" 
-      					id="inputDesignotion" placeholder="Enter Designation" style="visibility:hidden"></form:input>
+      					id="inputDesignation" placeholder="Enter Designation" style="visibility:hidden"></form:input>
       				</div>
       				</div>
       				
       				<div class="row row-padding form-group">
 						<label class="col-lg-2" for="datepicker">Date of Occurrence</label>
-						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd/MM/yyyy">
+						<div class="col-lg-4 input-group input-append date" id="datepicker" data-date="${date}" data-date-format="dd/mm/yyyy">
     						<span class="input-group-addon add-on"><i class="glyhicon glyphicon-calendar"></i></span>
     						<form:input class="form-control span2" type="text" value="${date}" readonly="true" path="dateOfOccurence"></form:input>
     						<font color="red"><form:errors path="dateOfOccurence" cssclass="error"></form:errors></font>
@@ -216,7 +216,9 @@
    					<div class="col-lg-8">
    						<label for="medicineList">List of Medicines</label>
    							<form:select id="medicineList" multiple="multiple" class="form-control" path="selectedMedicines">
-							
+							<c:forEach var="med" items="${medicineSelection}">
+							<option value="${med}">${med}</option>
+							</c:forEach>
 							</form:select>
 						<font color="red"><form:errors path="selectedMedicines" cssclass="error"></form:errors></font>
 						</br>

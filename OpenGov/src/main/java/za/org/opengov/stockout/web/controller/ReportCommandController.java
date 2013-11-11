@@ -144,6 +144,9 @@ public class ReportCommandController {
 			model.addAttribute("medicineCategories", medicineClasses);
 			model.addAttribute("date",dateFormat.format(date));
 			model.addAttribute("provinces",provinces);
+			String[] selectedMeds = publicStockoutReport.getSelectedMedicines().split(",");
+			model.addAttribute("medicineSelection",selectedMeds);
+			
             return "Report_Page";
         }
 
