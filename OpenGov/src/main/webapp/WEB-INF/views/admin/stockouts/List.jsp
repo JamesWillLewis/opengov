@@ -39,18 +39,22 @@
 		<tr>
 			<th>UID</th>
 			<th>Issue</th>
+			<th>Start Date</th>
 			<th>Product</th>
 			<th>Facility</th>
 			<th>Status</th>
+			<th>Priority</th>
 		</tr>
 
 		<c:forEach items="${stockouts}" var="so">
 			<tr>
 				<td>${so.uid}</td>
 				<td>${so.issue.uid}</td>
+				<td>${so.issue.startTimestamp}</td>
 				<td>${so.product.uid}</td>
 				<td>${so.facility.uid}</td>
-				<td>${so.resolved}</td>
+				<td>${so.issue.state}</td>
+				<td>${so.issue.priority}</td>
 				<td><a href="<c:url value="/sows/admin/stockouts/${so.uid}"/>">Edit    <span class="glyphicon glyphicon-edit"></span></a></td>
 			</tr>
 		</c:forEach>

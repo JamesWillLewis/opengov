@@ -75,15 +75,12 @@
             <div class="well sidebar-nav">
             <ul class="nav">
             <li>External Links</li> 
-            <li><a href="#">Stockout Project Website</a></li>
+            <li><a href="http://pubs.cs.uct.ac.za/honsproj/cgi-bin/view/2013/lewis_siedentopf.zip/New%20StockOut%20Site/index.html">Stockout Project Website</a></li>
             <li class="active">
            	Other Links</li> 
             <li><a href="#">Link</a></li>  
             <li><a href="#">Link</a></li>
              <li><a href="#">Link</a></li>
-               <li>Other Links</li> 
-               <li><a href="#">Link</a></li> 
-               <li><a href="#">Link</a></li>
                </ul>
                </div>
                </div>

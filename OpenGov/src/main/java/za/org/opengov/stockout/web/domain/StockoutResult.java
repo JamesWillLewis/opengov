@@ -20,6 +20,9 @@ import java.util.Date;
 
 import za.org.opengov.stockout.entity.Stockout;
 
+
+/**This class is used to store information to load up the search results table on the stockout home page.
+ * Variables correspond to columns in the table and each stockoutresult class represents one stockout search result*/
 public class StockoutResult {
 
 	private String province;

@@ -100,7 +100,7 @@ public class IssueController extends AbstractPaginationController {
 		IssueState iss = (issue.getIssueState());
 		newIssue.setState(iss);
 
-		issueService.put(newIssue);
+		issueService.updateIssueState(newIssue, issue.getIssueState());
 
 		return "redirect:/sows/admin/issues";
 	}

@@ -2,6 +2,7 @@ package za.org.opengov.stockout.web.admin.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**Wraps data for/from the Medicine Class table for client side display*/
 public class MedicineClassWrapper {
 
 	@NotEmpty

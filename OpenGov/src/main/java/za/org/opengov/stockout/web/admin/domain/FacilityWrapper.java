@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import za.org.opengov.stockout.entity.Facility;
 import za.org.opengov.stockout.entity.FacilityType;
 
-
+/**Wraps data for/from the Facilities table for client side display*/
 public class FacilityWrapper {
 	
 	

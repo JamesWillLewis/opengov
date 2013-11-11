@@ -16,17 +16,22 @@
  */
 package za.org.opengov.stockout.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import za.org.opengov.stockout.entity.Facility;
+import za.org.opengov.stockout.entity.medical.MedicineClass;
 import za.org.opengov.stockout.service.FacilityService;
 
 @Controller
@@ -39,12 +44,31 @@ private static final Logger LOG = LoggerFactory.getLogger(ReportCommandControlle
 private FacilityService facilityService;
 
 
+/**Load up list containing names of facilities and their assosciated contact information based on parameter values
+ * (values entered by users when choosing to search for a facility)*/
+
 	@RequestMapping(value="/loadcontacts",method=RequestMethod.GET)
-	public String getReportPage(Model model){
+	public String getReportPage(@RequestParam (value = "facilityName", required = false, defaultValue = "") String facilityName,
+			@RequestParam (value = "province", required = false, defaultValue = "all") String province
+			,Model model){
+		List<Facility> facilities = new ArrayList<Facility>();
+		List<String> provinces = new ArrayList<String>();
 		
-		List<Facility> facilities = facilityService.getAll();
+		if (facilityName.length()>0){
+			facilities.add(facilityService.getClosestMatch(facilityName));
+		}
+		else if (province.equals("all")){		
+			facilities = facilityService.getAll();
+		}  
+		else{
+			facilities = facilityService.listAllFacilitiesForProvince(province);
+		}
+		
+		provinces = facilityService.listAllProvinces();
+		model.addAttribute("provinces",provinces);	
 		model.addAttribute("facilities", facilities);
 		
 		return("Contacts_Page");
 	}
+	
 }

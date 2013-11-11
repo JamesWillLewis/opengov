@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import za.org.opengov.common.entity.Issue;
+import za.org.opengov.common.entity.IssueState;
 import za.org.opengov.common.entity.StaffMember;
 import za.org.opengov.common.service.IssueService;
 import za.org.opengov.common.service.StaffMemberService;
@@ -28,6 +29,7 @@ import za.org.opengov.stockout.service.FacilityService;
 import za.org.opengov.stockout.service.StockoutService;
 import za.org.opengov.stockout.service.medical.ProductService;
 import za.org.opengov.stockout.web.admin.domain.FacilityWrapper;
+import za.org.opengov.stockout.web.admin.domain.IssueWrapper;
 import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
 
@@ -43,6 +45,9 @@ public class StockoutController extends AbstractPaginationController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private IssueService issueService;
 	
  
 	@RequestMapping(method = RequestMethod.GET, produces = "text/html")
@@ -61,7 +66,6 @@ public class StockoutController extends AbstractPaginationController {
 		model.addAttribute("currentPage", page);
 		model.addAttribute("noOfPages", noOfPages);
 		model.addAttribute("stockouts", stockouts);
-
 		return "admin/stockouts/List";
 	}
 
@@ -74,6 +78,14 @@ public class StockoutController extends AbstractPaginationController {
 
 		List<Product> products = productService.getAll();
 		List<Facility> facilities = facilityService.getAll();
+		
+		IssueState[] is = IssueState.values(); 
+		
+		//IssueWrapper issue = new IssueWrapper(issueService.get(uid));
+		
+		//model.addAttribute("iss", issue);
+		model.addAttribute("states",is);
+		//model.addAttribute("uid",uid);
 		
 		model.addAttribute("uid", uid);
 		model.addAttribute("facilities", facilities);
@@ -97,6 +109,13 @@ public class StockoutController extends AbstractPaginationController {
 		
 		updateStockout.setProduct(productService.get(stockout.getProductUID()));
 		updateStockout.setFacility(facilityService.get(stockout.getFacilityUID()));
+		
+		Issue newIssue = stockoutService.get(uid).getIssue();
+		IssueState iss = (stockout.getIssueState());
+		newIssue.setState(iss);
+
+		issueService.put(newIssue);
+		
 		stockoutService.put(updateStockout);
 		
 		return "redirect:/sows/admin/stockouts";

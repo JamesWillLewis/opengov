@@ -82,6 +82,7 @@ public class StockoutHomeController {
 	private MedicineService medicineService;
 	
 	/**Load up initial data to populate dropdown boxes and forms on the home page**/
+	
 	@RequestMapping(value = "/stockouthome",method = RequestMethod.GET)
 	public String getHomePage(Model model){
 		

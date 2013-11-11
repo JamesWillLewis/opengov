@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import za.org.opengov.stockout.entity.medical.Product;
 
-
+/**Wraps data for/from the Products table for client side display*/
 public class ProductWrapper {
 	
 	@NotEmpty
