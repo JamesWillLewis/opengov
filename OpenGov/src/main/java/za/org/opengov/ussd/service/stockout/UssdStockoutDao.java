@@ -25,20 +25,26 @@ import org.springframework.stereotype.Repository;
 import za.org.opengov.ussd.service.UssdDao;
 
 /**
- * Data for the service will be found here
+ * USSD data access object for retrieving menu text.
  * 
- * Still a WIP
- * 
- * @author james
+ * @author James Lewis (james.will.lewis@gmail.com)
  *
  */
 @Repository("ussdStockoutDao")
 public class UssdStockoutDao implements UssdDao {
 	
+	/**
+	 * The properties file which contains menu text for the given locale.
+	 * 
+	 * The default locale chosen is English(EN).
+	 */
 	@Resource(name="ussdStockoutEN")
 	private Properties menuData;
 	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getMenu(int menuId) {
 		return menuData.getProperty("ussd.stockout." + menuId);	

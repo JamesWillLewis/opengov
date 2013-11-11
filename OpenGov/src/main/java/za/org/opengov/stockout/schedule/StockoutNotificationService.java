@@ -25,6 +25,8 @@ import org.joda.time.MonthDay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import za.org.opengov.common.entity.config.MailingEntry;
 import za.org.opengov.common.service.config.MailingEntryService;
@@ -33,9 +35,21 @@ import za.org.opengov.common.util.MailUtil;
 import za.org.opengov.stockout.entity.Stockout;
 import za.org.opengov.stockout.service.StockoutService;
 
-@Component
+/**
+ * A service which sends scheduled notifications of all outstanding stock-outs
+ * to a mailing list. The notifications can be scheduled to be monthly, weekly,
+ * daily, hourly, or disabled.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ * 
+ */
+@Service
 public class StockoutNotificationService {
 
+	/**
+	 * Different time periods in which the notifications can be sent.
+	 * 
+	 */
 	public enum Period {
 
 		MONTHLY("Monthly", 0), WEEKLY("Weekly", 1), DAILY("Daily", 2), HOURLY(
@@ -71,60 +85,88 @@ public class StockoutNotificationService {
 	@Autowired
 	private SystemParameterService systemParameterService;
 
+	/**
+	 * The given sender address.
+	 */
 	private String sender;
 
+	/**
+	 * Tag of the mailing list for this notification service.
+	 */
 	private String stockoutReportRoleTag;
 
-	/**
-	 * Send email notifications to email list, every Monday, at 11:00 AM.
-	 * 
-	 */
 	@Scheduled(cron = "${cron.stockout.notification.monthly}")
 	public void sendNotificationsMonthly() {
-		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
-		if(period == Period.MONTHLY.id){
+		int period = Integer.valueOf(systemParameterService
+				.getParam("stockout.notifications.period"));
+		if (period == Period.MONTHLY.id) {
 			sendStockoutNotifications();
 		}
 	}
-	
+
 	@Scheduled(cron = "${cron.stockout.notification.weekly}")
 	public void sendNotificationsWeekly() {
-		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
-		if(period == Period.WEEKLY.id) {
+		int period = Integer.valueOf(systemParameterService
+				.getParam("stockout.notifications.period"));
+		if (period == Period.WEEKLY.id) {
 			sendStockoutNotifications();
 		}
 	}
-	
+
 	@Scheduled(cron = "${cron.stockout.notification.daily}")
 	public void sendNotificationsDaily() {
-		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
-		if(period == Period.DAILY.id) {
+		int period = Integer.valueOf(systemParameterService
+				.getParam("stockout.notifications.period"));
+		if (period == Period.DAILY.id) {
 			sendStockoutNotifications();
 		}
 	}
-	
+
 	@Scheduled(cron = "${cron.stockout.notification.hourly}")
 	public void sendNotificationsHourly() {
-		int period = Integer.valueOf(systemParameterService.getParam("stockout.notifications.period"));
-		if(period == Period.HOURLY.id) {
+		int period = Integer.valueOf(systemParameterService
+				.getParam("stockout.notifications.period"));
+		if (period == Period.HOURLY.id) {
 			sendStockoutNotifications();
 		}
 	}
 
+	/**
+	 * 
+	 * 
+	 */
 	public void sendStockoutNotifications() {
+
+		// update priorities of all stock-outs
+		// TODO: don't update stockouts which have been resolved?
 		stockoutService.updateAllStockoutPriorities();
+
+		// all stock-outs where the issue state != resolved or closed
 		List<Stockout> stockouts = stockoutService.getAllUnresolvedStockouts();
 
+		// list of all addresses for the StockOut service
 		List<MailingEntry> mailingList = mailingEntryService
 				.getAllMailingEntriesForRole(stockoutReportRoleTag);
 
-		String mail = "there are " + stockouts.size()
-				+ " stockouts with priority "
-				+ stockouts.get(0).getIssue().getPriority();
-		// TODO
-		mailUtil.sendMail(sender, "james.will.lewis@gmail.com",
-				"StockOut report", mail);
+		String body = "There are currently " + stockouts.size()
+				+ " unresolved stock-outs.";
+		body += "\n\n The following list is ordered from highest to lowest priority:";
 
+		for (int i = 0; i < stockouts.size(); i++) {
+			Stockout s = stockouts.get(i);
+			body += "\n" + (i + 1) + ". "
+					+ s.getFacility().getOfficialDOHName() + " " + s.getFacility().getFacilityType().getReadable() + " - "
+					+ s.getProduct().getName() + " ("
+					+ s.getProduct().getDescription() + ")";
+		}
+
+		for (MailingEntry mailingEntry : mailingList) {
+			String mail = "Hello " + mailingEntry.getName() + ",\n\n";
+			mail += body;
+
+			mailUtil.sendMail(sender, mailingEntry.getAddress(),
+					"OpenGov: StockOut Notification", mail);
+		}
 	}
 
 	public void setSender(String sender) {

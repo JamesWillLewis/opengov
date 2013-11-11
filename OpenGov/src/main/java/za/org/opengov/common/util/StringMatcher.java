@@ -20,6 +20,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 
+ * Provides string-matching to one or more other strings based on closeness. In
+ * other words, allows for the most similar string(s) to be found which are most
+ * similar in spelling (word distance) to a given string.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ * 
+ */
 public class StringMatcher {
 
 	private List<Element> elements;
@@ -28,6 +37,10 @@ public class StringMatcher {
 		elements = new LinkedList<StringMatcher.Element>();
 	}
 
+	/**
+	 * 
+	 * @param elementsToCompare
+	 */
 	public StringMatcher(List<StringMatchable> elementsToCompare) {
 		this();
 		if (elementsToCompare == null) {
@@ -42,10 +55,21 @@ public class StringMatcher {
 
 	}
 
+	/**
+	 * 
+	 * @param stringMatchable
+	 */
 	public void addStringMatchable(StringMatchable stringMatchable) {
 		elements.add(new Element(stringMatchable));
 	}
 
+	/**
+	 * Returns the string which has the lowest string-distance value to the
+	 * given string.
+	 * 
+	 * @param stringMatchableToMatch
+	 * @return
+	 */
 	public StringMatchable getClosestMatch(String stringMatchableToMatch) {
 
 		if (stringMatchableToMatch == null) {
@@ -72,6 +96,12 @@ public class StringMatcher {
 		return closestMatchable.stringMatchable;
 	}
 
+	/**
+	 * 
+	 * @param stringMatchableToMatch
+	 * @param limit
+	 * @return
+	 */
 	public List<StringMatchable> getClosestMatches(
 			StringMatchable stringMatchableToMatch, int limit) {
 
@@ -105,13 +135,19 @@ public class StringMatcher {
 		return orderedResults;
 	}
 
+	/**
+	 * 
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
 	private int computeLevenshteinDistance(String s1, String s2) {
 
 		s1 = s1.toLowerCase();
-		
+
 		s2 = s2.toLowerCase();
-		//trimming the word allows better matching to a word prefix
-		if(s2.length() > s1.length()){
+		// trimming the word allows better matching to a word prefix
+		if (s2.length() > s1.length()) {
 			s2 = s2.substring(0, s1.length());
 		}
 
@@ -138,6 +174,11 @@ public class StringMatcher {
 		return costs[s2.length()];
 	}
 
+	/**
+	 * 
+	 * @author james
+	 * 
+	 */
 	private class Element implements Comparable<Element> {
 
 		private int distance;

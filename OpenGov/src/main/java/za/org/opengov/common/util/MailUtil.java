@@ -22,16 +22,40 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
+/**
+ * Provides a simple email service.
+ * 
+ * @author James Lewis (james.will.lewis@gmail.com)
+ * 
+ */
 @Component
 public class MailUtil {
 
 	@Resource(name = "mailSender")
 	private MailSender mailSender;
 
+	/**
+	 * Set the email address used to send emails.
+	 * 
+	 * @param mailSender
+	 *            Mail sender instance.
+	 */
 	public void setMailSender(MailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 
+	/**
+	 * Send an email to the given address.
+	 * 
+	 * @param from
+	 *            The source email address.
+	 * @param to
+	 *            The destination email address.
+	 * @param subject
+	 *            The email subject.
+	 * @param msg
+	 *            The email body.
+	 */
 	public void sendMail(String from, String to, String subject, String msg) {
 
 		SimpleMailMessage message = new SimpleMailMessage();

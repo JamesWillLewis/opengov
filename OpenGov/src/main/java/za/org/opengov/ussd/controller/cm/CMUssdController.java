@@ -16,9 +16,10 @@
  */
 package za.org.opengov.ussd.controller.cm;
 
-
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -31,28 +32,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import za.org.opengov.common.controller.jsp.HomeController;
 import za.org.opengov.ussd.controller.UssdController;
 import za.org.opengov.ussd.util.KeyValueStore;
+
 /**
+ * Provides a USSD web-service using the ChannelMobile protocol.
  * 
- * This can be easily tested using curl on the command line:
+ * This service can be easily tested using curl on the command line:
+ * eg.
  * 
- * " curl -GET -H "msisdn: 0792784894" -H "provider: Vodacom" -H "ussdSessionId: 3" -H "request: 1" -H "requestid: 123" http://localhost:8080/opengov/ussd/cm/stockout "
+ * " curl -GET -H "msisdn: 0792784894" -H "provider: Vodacom" -H "ussdSessionId:
+ * 3" -H "request: 1" -H "requestid:
+ * 123" http://localhost:8080/opengov/ussd/cm/stockout "
  * 
- * @author James Lewis
- * @author Sven Siedentopf
+ * @author James Lewis (james.will.lewis@gmail.com)
  * 
- *
  */
 @Controller
 @RequestMapping("ussd/cm")
-public class CMUssdController extends UssdController<CMUssdRequest, CMUssdResponse>{
-	
-	
+public class CMUssdController extends
+		UssdController<CMUssdRequest, CMUssdResponse> {
+
+	/**
+	 * Log4J logger
+	 */
+	private static final Logger logger = LoggerFactory
+			.getLogger(HomeController.class);
+
 	public CMUssdController() {
 		super("cm");
 	}
-	
+
 	/**
 	 * This would be called via a USSD gateway, as an HTTP message, with a GET
 	 * method, and various headers with values.
@@ -65,38 +76,35 @@ public class CMUssdController extends UssdController<CMUssdRequest, CMUssdRespon
 	 * 
 	 * http://localhost:8080/opengov/ussd/cm/stockout
 	 * 
-	 * Be sure to include necessary headers. 
+	 * Be sure to include necessary headers.
 	 * 
 	 * @param ussdRequest
-	 * @return
+	 * @return Response body, which includes requestID and display text.
 	 */
-	
 	@RequestMapping(value = "{ussdServiceTag}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public @ResponseBody
-	CMUssdResponse callService(
-			@RequestHeader(value = "msisdn") String msisdn,
+	CMUssdResponse callService(@RequestHeader(value = "msisdn") String msisdn,
 			@RequestHeader(value = "provider") String provider,
 			@RequestHeader(value = "ussdSessionId") String ussdSessionID,
 			@RequestHeader(value = "request") String request,
 			@RequestHeader(value = "requestid") String requestID,
 			@PathVariable String ussdServiceTag) {
 
-		//just for testing
-		System.out.println("Invoking USSD service: " + ussdServiceTag);
-		System.out.println("Received cell number: " + msisdn);
-		System.out.println("Provider: " + provider);
-		System.out.println("USSD Session ID: " + ussdSessionID);
-		System.out.println("Request String: " + request);
-		System.out.println("Request ID: " + requestID);
-		
-		
-		//construct request object from HTTP headers
-		CMUssdRequest ussdRequest = new CMUssdRequest(msisdn, provider, ussdSessionID, request, requestID);
+		// just for testing
+		logger.info("USSD service called: " + "\n Invoking USSD service: "
+				+ ussdServiceTag + "\n Received cell number: " + msisdn
+				+ "\n Provider: " + provider + "\n USSD Session ID: "
+				+ ussdSessionID + "\n Request String: " + request
+				+ "\n Request ID: " + requestID);
 
-		//delegates to service tier
-		CMUssdResponse response = delegateToServices(ussdServiceTag, ussdRequest);
-		
+		// construct request object from HTTP headers
+		CMUssdRequest ussdRequest = new CMUssdRequest(msisdn, provider,
+				ussdSessionID, request, requestID);
+
+		// delegates to service tier
+		CMUssdResponse response = delegateToServices(ussdServiceTag,
+				ussdRequest);
+
 		return response;
 	}
-
 }

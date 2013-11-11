@@ -36,7 +36,7 @@ public class LoggingAspect {
 	
 
 	/**
-	 * Any method annotated with @Logged will be intercepted, and
+	 * Any method annotated with {@link Logged} will be intercepted, and
 	 * this method will be called prior to the intercepted method's execution. 
 	 * 
 	 */

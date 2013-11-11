@@ -26,23 +26,11 @@ import za.org.opengov.stockout.service.medical.ProductService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration("classpath:/WEB-INF/spring/appServlet/servlet-context.xml")
-@Transactional
 public class NotificationServiceTest {
-	
-	@Autowired 
-	private StockoutService stockoutService;
-	
-	@Autowired
-	private StockoutReportService stockoutReportService;
-	
+
 	@Autowired
 	private StockoutNotificationService notificationService;
 
-	@Autowired
-	private FacilityService facilityService;
-	
-	@Autowired
-	private ProductService productService;
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,26 +42,9 @@ public class NotificationServiceTest {
 
 	@Test
 	public void testSendStockoutNotifications() {
-		Facility f = new Facility();
-		f.setUid("TEST PROD");
-		Product p = new Product();
-		p.setUid("TEST FAC");
-		
-		productService.saveProduct(p);
-		facilityService.saveFacility(f);
-		
-		stockoutReportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test1", false);
-		stockoutReportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test2", false);
-		stockoutReportService.submitStockoutReport(p.getUid(), f.getUid(), null, "test3", false);
-		
-		List<Stockout> stockouts = stockoutService.getAllStockouts();
 
-		Assert.assertEquals(1, stockouts.size());
-		Assert.assertEquals(3, stockouts.get(0).getStockoutReports().size());
+		notificationService.sendStockoutNotifications();
 		
-		notificationService.sendNotificationsWeekly();
-		
-		//must manually check email to ensure email was sent
 	}
 
 }

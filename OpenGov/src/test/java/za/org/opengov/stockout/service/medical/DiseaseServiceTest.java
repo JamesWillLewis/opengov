@@ -45,11 +45,11 @@ public class DiseaseServiceTest {
 		disease2.setName("DISEASE 2");
 		disease3.setName("DISEASE 3");
 		
-		diseaseService.saveDisease(disease1);
-		diseaseService.saveDisease(disease2);
-		diseaseService.saveDisease(disease3);
+		diseaseService.put(disease1);
+		diseaseService.put(disease2);
+		diseaseService.put(disease3);
 		
-		List<Disease> diseases = diseaseService.getListOfDiseases();
+		List<Disease> diseases = diseaseService.getAll();
 		
 		assertEquals(3, diseases.size());
 	}
