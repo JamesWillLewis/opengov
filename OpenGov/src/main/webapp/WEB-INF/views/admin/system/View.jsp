@@ -78,7 +78,11 @@
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h4>Users with administrator permissions</h4></div>
         <div class="panel panel-body">
-        
+        <form action="<c:url value="/sows/admin/system/newAdmin"/>" >
+    		<button type="submit" class="btn btn-primary">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		Add New Admin</button></form>
+    		
 	<table class="table table-bordered">
 
 		<tr>
@@ -88,6 +92,9 @@
 		<c:forEach items="${users}" var="user">
 			<tr>
 				<td>${user.username}</td>
+				<td><a onclick="return confirm('Are you sure you wish to delete this admin user?')"
+					href="<c:url value="/sows/admin/system/${user.username}/deleteAdmin"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
+			
 			</tr>
 		</c:forEach>
 
@@ -98,18 +105,27 @@
 	<div class="panel panel-default">
     	<div class="panel panel-heading"><h4>Notification mailing list</h4></div>
         <div class="panel panel-body">
+<form action="<c:url value="/sows/admin/system/newListMember"/>" >
+    		<button type="submit" class="btn btn-primary">
+    		<span class="glyphicon glyphicon-plus"></span>
+    		Add New Mailing List Member</button></form>
+
 
 	<table class="table table-bordered">
 
 		<tr>
 			<th>Name</th>
 			<th>Email Address</th>
+			
 		</tr>
 
 		<c:forEach items="${mailingEntries}" var="mailingEntry">
 			<tr>
 				<td>${mailingEntry.name}</td>
 				<td>${mailingEntry.address}</td>
+				<td><a onclick="return confirm('Are you sure you wish to delete this member?')"
+					href="<c:url value="/sows/admin/system/${mailingEntry.name}/deleteMember"/>">Delete    <span class="glyphicon glyphicon-remove"></span></a></td>
+			
 			</tr>
 		</c:forEach>
 

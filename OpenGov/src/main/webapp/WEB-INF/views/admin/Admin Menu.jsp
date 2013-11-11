@@ -4,8 +4,8 @@
               document.getElementById("assignments").className += " active";}
 			else if ($(document).find("title").text() == "Facilities"){
 	             document.getElementById("facilities").className += " active";}
-			else if ($(document).find("title").text() == "Issues"){
-	             document.getElementById("issues").className += " active";}
+			/*else if ($(document).find("title").text() == "Issues"){
+	             document.getElementById("issues").className += " active";}*/
 			else if ($(document).find("title").text() == "Medicine Classes"){
 	             document.getElementById("medicineclasses").className += " active";}
 			else if ($(document).find("title").text() == "Products"){
@@ -29,7 +29,7 @@
 	<li id="products"><a href="<c:url value="/sows/admin/products"/>">Products</a></li>
 	<li id="medicines"><a href="<c:url value="/sows/admin/medicines"/>">Medicines</a></li>
 	<li id="medicineclasses"><a href="<c:url value="/sows/admin/medicineclasses"/>">Medicine Classes</a></li>
-	<li id="issues"><a href="<c:url value="/sows/admin/issues"/>">Issues</a></li>
+	<!--  <li id="issues"><a href="<c:url value="/sows/admin/issues"/>">Issues</a></li>-->
 	<li id="assignments"><a href="<c:url value="/sows/admin/assignments"/>">Assignments</a></li>
 	<li id="staffmembers"><a href="<c:url value="/sows/admin/staffmembers"/>">Staff Members</a><li>
 	<li id="systemsettings"><a href="<c:url value="/sows/admin/system"/>">System Settings</a><li>

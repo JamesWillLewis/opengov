@@ -36,7 +36,7 @@
         <div class="panel panel-body">
 	
 			<form:form action="${uid}/update" method="POST" modelAttribute="stockout"
-			onsubmit="return confirm('Are you sure you want to add a new stockout?')">
+			onsubmit="return confirm('Are you sure you want to update this stockout?')">
 				
 				<div class="row form form-group">
 				<label class="control-label col-lg-2" for="facility"> Facility: </label>
@@ -54,6 +54,17 @@
 								</c:forEach>
 					</form:select></div>
 				</div>
+				
+				<div class="row form form-group">
+				<label class="control-label col-lg-2" for="selectIssue"> Select State: </label>
+				<div class=col-lg-6>
+				<form:select class="form-control input-sm" path="issueState">
+				<c:forEach var="state" items="${states}">
+        		<form:option value="${state}"><c:out value="${state}"/></form:option>
+    		</c:forEach>
+    		</form:select>
+		 		</div>
+		 		</div>
 				
 		<div class="row form container row-padding">	
 		<button class="btn btn-success btn-lg text-center" type="submit" value="Save">Save<span class="glyphicon glyphicon-saved"></span></button>

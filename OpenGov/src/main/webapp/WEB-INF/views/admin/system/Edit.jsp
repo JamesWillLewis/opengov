@@ -15,7 +15,7 @@
 		<script src="../../../resources/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../../../resources/js/jquery-1.10.2.min.js"></script>
 		
-<title>Stockouts</title>
+<title>System Settings</title>
 </head>
 <%@ include file="../../layout.jsp" %>
 <body>
@@ -24,7 +24,7 @@
 	<%@ include file="../../Security.jsp" %>
 	
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>Administrator Stock-outs View</h3></div>
+    	<div class="panel panel-heading"><h3>Administrator Create View</h3></div>
         <div class="panel panel-body">
      <div class="row">
      <div class="col-lg-3">
@@ -32,27 +32,26 @@
 	</div>
 	<div class="col-lg-8">
 	<div class="panel panel-default">
-    	<div class="panel panel-heading"><h3>Edit Stockouts</h3></div>
+    	<div class="panel panel-heading"><h3>Create Admin</h3></div>
         <div class="panel panel-body">
 	
-			<form:form action="${uid}/update" method="POST" modelAttribute="stockout"
-			onsubmit="return confirm('Are you sure you want to add a new stockout?')">
-				
-				<div class="row form form-group">
-				<label class="control-label col-lg-2" for="facility"> Facility: </label>
-				<div class=col-lg-6>
-				<form:select class="form-control input-sm" path="facilityUID" items="${facilities}" itemLabel="officialDOHName" itemValue="uid"/>
-		 		</div>
-		 		</div>
+			<form:form action="addAdmin" method="POST" modelAttribute="admin"
+			onsubmit="return confirm('Are you sure you want to create this admin member?')">
 				
 				<div class="row form form-group row-padding">
-				<label class="control-label col-lg-2" for="product"> Product: </label>
-				<div class="col-lg-6">
-					<form:select class="form-control input-sm" path="productUID">
-					<c:forEach items="${products}" var="product">			
-							<form:option value="${product.uid}"><c:out value="${product.name} ${product.description}"/></form:option>
-								</c:forEach>
-					</form:select></div>
+				<label class="control-label col-lg-2" for="password"> Enter Name: </label>
+				<div class=col-lg-6>
+				<form:input type="text" class="form-control input-sm" id="inputName" 
+    							path="name"></form:input>
+		 		</div>
+				</div>
+				
+				<div class="row form form-group row-padding">
+				<label class="control-label col-lg-2" for="password"> Enter Password: </label>
+				<div class=col-lg-6>
+				<form:input type="password" class="form-control input-sm" id="inputName" 
+    							path="password"></form:input>
+		 		</div>
 				</div>
 				
 		<div class="row form container row-padding">	
