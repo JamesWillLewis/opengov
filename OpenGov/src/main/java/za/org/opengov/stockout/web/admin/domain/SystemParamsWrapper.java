@@ -6,6 +6,7 @@ import java.util.Map;
 
 import za.org.opengov.stockout.schedule.StockoutNotificationService;
 
+/**Wraps data used for client-side changing/editing of system settings*/
 public class SystemParamsWrapper {
 
 	private String period;

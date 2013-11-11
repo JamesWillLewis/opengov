@@ -2,6 +2,8 @@ package za.org.opengov.stockout.web.admin.domain;
 
 import za.org.opengov.common.entity.Assignment;
 
+/**Wraps data for/from the Assignments table for client side display*/
+
 public class AssignmentWrapper {
 	
 	private Long issueUID;

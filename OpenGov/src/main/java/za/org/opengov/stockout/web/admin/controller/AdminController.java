@@ -14,6 +14,8 @@ import za.org.opengov.stockout.entity.Facility;
 @RequestMapping("sows/admin")
 public class AdminController {
 	
+	
+	/**Show the admin page when user logs in*/
 	@RequestMapping(method = RequestMethod.GET, produces = "text/html")
 	public String list(Model model) {
 

@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import za.org.opengov.stockout.entity.medical.Medicine;
 
+/**Wraps data for/from the Medicines table for client side display*/
 public class MedicineWrapper {
 
 	@NotEmpty

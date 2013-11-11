@@ -34,6 +34,8 @@ import za.org.opengov.stockout.web.admin.domain.ProductWrapper;
 import za.org.opengov.stockout.web.admin.domain.StaffMemberWrapper;
 import za.org.opengov.stockout.web.admin.domain.StockoutWrapper;
 
+
+/**Handles client-side viewing,editing and adding of assignments to the assignments table*/
 @Controller
 @RequestMapping(value = "sows/admin/assignments")
 public class AssignmentController extends AbstractPaginationController {
@@ -56,7 +58,8 @@ public class AssignmentController extends AbstractPaginationController {
 	@Autowired
 	private StaffMemberService staffMemberService;
 	
-	 
+	 /**Handles the listing of all data in the assignments table, uses pagination to display a limited number of
+	  * results per page. Page numbers determine which results are returned to the client*/
 	@RequestMapping(method = RequestMethod.GET, produces = "text/html")
 	public String list(
 			@RequestParam(value = "page", required = false, defaultValue = "1") long page,
@@ -77,6 +80,8 @@ public class AssignmentController extends AbstractPaginationController {
 		return "admin/assignments/List";
 	}
 	
+	/**Handles creation of the New assignments page, list of issues and staffmembers are listed for user to assign
+	 * issues to staff members*/
 	@RequestMapping(value="new",method = RequestMethod.GET, produces = "text/html")
 	public String NewPage(Model model){
 		
@@ -97,6 +102,9 @@ public class AssignmentController extends AbstractPaginationController {
         return new AssignmentWrapper();
     }
 	
+	/**Handles binding of user enter data in the select page to an appropriate wrapper class.
+	 * Checks to see that the user enter data is valid.
+	 * Uses the wrapper class and assignments service to create a new row of data in the assignmnents table*/
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html")
 	public String add(@Valid @ModelAttribute AssignmentWrapper assignment,BindingResult result,Model model) {
 		
@@ -119,7 +127,9 @@ public class AssignmentController extends AbstractPaginationController {
 	
 	}
 
-	
+	/**Handles loading edit page for editing of information within a selected row in the assignments table.
+	 * Data already present in the table is preloaded into a wrapper, to be preloaded into user selection/entry fields.
+	 * uid is the primary key of the table that uniquely identifies an assignment */
 	@RequestMapping(value = "{uid}", produces = "text/html")
 	public String edit(@PathVariable("uid") long uid, Model model) {
 
@@ -135,6 +145,9 @@ public class AssignmentController extends AbstractPaginationController {
 		return "admin/assignments/Edit";
 	}
 
+	
+	/**Handles deletion of a row in the assingments table
+	 * assignment service is used to remove the row with the corresponding uid*/
 	@RequestMapping(value = "{uid}/delete", produces = "text/html")
 	public String delete(@PathVariable("uid") long uid, Model model) {
 		
@@ -143,6 +156,10 @@ public class AssignmentController extends AbstractPaginationController {
 		return ("redirect:/sows/admin/assignments");
 	}
 
+	
+	/** Handles user editing row data using the unchanged uid of the row to identify the corresponding
+	 * row in the database to update. user updates are checked for validity and assignment service is
+	 * called to update the correct row.*/
 	@RequestMapping(value = "{uid}/update", method = RequestMethod.POST, produces = "text/html")
 	public String update(@Valid @ModelAttribute AssignmentWrapper assignment,BindingResult result, 
 			@PathVariable("uid") long uid,Model model) {

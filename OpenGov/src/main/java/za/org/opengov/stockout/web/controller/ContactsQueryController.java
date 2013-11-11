@@ -44,6 +44,9 @@ private static final Logger LOG = LoggerFactory.getLogger(ReportCommandControlle
 private FacilityService facilityService;
 
 
+/**Load up list containing names of facilities and their assosciated contact information based on parameter values
+ * (values entered by users when choosing to search for a facility)*/
+
 	@RequestMapping(value="/loadcontacts",method=RequestMethod.GET)
 	public String getReportPage(@RequestParam (value = "facilityName", required = false, defaultValue = "") String facilityName,
 			@RequestParam (value = "province", required = false, defaultValue = "all") String province

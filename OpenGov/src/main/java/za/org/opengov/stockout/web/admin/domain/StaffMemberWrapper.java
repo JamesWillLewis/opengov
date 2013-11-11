@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import za.org.opengov.common.entity.StaffMember;
 
-
+/**Wraps data for/from the Staff Member table for client side display*/
 public class StaffMemberWrapper {
 	
 	@NotEmpty

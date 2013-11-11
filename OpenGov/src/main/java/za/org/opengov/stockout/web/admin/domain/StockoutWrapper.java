@@ -2,6 +2,7 @@ package za.org.opengov.stockout.web.admin.domain;
 
 import za.org.opengov.stockout.entity.Stockout;
 
+/**Wraps data for/from the Stockout table for client side display*/
 public class StockoutWrapper {
 
 	private Stockout stockout;
